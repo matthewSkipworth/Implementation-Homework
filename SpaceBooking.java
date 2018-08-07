@@ -1,5 +1,6 @@
 /**
- * 
+ * Represents an space booking with a visitor license, date of visit, space number,
+ * booking id and staff number.
  * @author Matthew Skipworth and Jake McKenzie
  * @version 6 August 2018
  */

@@ -47,31 +47,54 @@ public class SpaceBooking {
 	public Integer getSpaceNumber() {
 		return spaceNumber;
 	}
-	
+/**
+ * method getStaffNumber returns this booking's company staff ID number.
+ * @return returns this booking's company staff ID number.
+ */
 	public Integer getStaffNumber() {
 		return staffNumber;
 	}
-	
+/**
+ * method getDateOfVisit returns this booking's planned date of visit.	
+ * @return returns this booking's planned date of visit.	
+ */
 	public String getDateOfVisit() {
 		return dateOfVisit;
 	}
-	
+/**
+ * method setVisitorLicense updates the visitor's vehicle license number.	
+ * @param newLicense represents the new license number for the booking to 
+ * update to.
+ */
 	public void setVisitorLicense(Integer newLicense) {
-		this.visitorLicense = newLicense;
+		this.visitorLicense = newLicense;	
 	}
 	
-	public void setBookingId(Integer newBookingId) {
-		this.BookingId = newBookingId;
-	}
-	
+	//public void setBookingId(Integer newBookingId) {
+	//	this.BookingId = newBookingId;
+	//}
+/**
+ * method setSpaceNumber updates the parking lot space number for this booking
+ * to a new space number.	
+ * @param newSpaceNumber represents the parking lot space number for which this
+ * booking will update to
+ * 
+ */
 	public void setSpaceNumber(Integer newSpaceNumber) {
 		this.spaceNumber = newSpaceNumber;
 	}
-	
+/**
+ * method setStaffNumber updates the staff members company ID number to a new
+ * staff member's ID number.
+ * @param newStaffNumber represents the new staff member's company ID number.
+ */
 	public void setStaffNumber(Integer newStaffNumber) {
 		this.staffNumber = newStaffNumber;
 	}
-	
+/**
+ * method setDateOfVisit updates the planned date of visit.	
+ * @param newDateOfVisit represents the updated visit date.
+ */
 	public void setDateOfVisit(String newDateOfVisit) {
 		this.dateOfVisit = newDateOfVisit;
 	}

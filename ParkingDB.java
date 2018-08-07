@@ -103,17 +103,16 @@ public class ParkingDB {
 		//String title = movie.getTitle();
         Integer telephoneExt = staff.getTelephoneExt();
         Integer vehicleLicenseNumber = staff.getVehicleLicenseNumber();
-        int year = movie.getYear();
-		String sql = "update Movies set " + columnName + " = ?  where title= ? and year = ? ";
+		String sql = "update Staff set " + columnName + " = ?  where telephoneExt= ? and vehicleLicenseNumber = ? ";
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = sConnection.prepareStatement(sql);
-			if (data instanceof String)
+			if (data instanceof Integer)
 				preparedStatement.setString(1, (String) data);
 			else if (data instanceof Integer)
 				preparedStatement.setInt(1, (Integer) data);
-			preparedStatement.setString(2, title);
-			preparedStatement.setInt(3, year);
+			preparedStatement.setString(2, telephoneExt);
+			preparedStatement.setInt(3, vehicleLicenseNumber);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -1,7 +1,7 @@
 /**
  * Represents a lot with a location, a capacity, floors and a lot name.
  * @author Jake McKenzie, Matthew Skipworth
- *
+ * @version 6 August 2018
  */
 public class Lot {
 	private Integer capacity,floors;

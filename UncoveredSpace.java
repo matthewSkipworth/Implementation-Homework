@@ -1,99 +1,39 @@
 /**
  * Represents an uncovered space with a space number.
  * @author Jake McKenzie, Matthew Skipworth
- *
+ * @version 6 August 2018
  */
 public class UncoveredSpace {
 	private Integer spaceNumber;
 	
 	
 	/**
-	 * Initialize the lot parameters.
+	 * Initialize the uncovered space parameter.
 	 * @param spaceNumber
 	 * @throws IllegalArgumentException if title or lot type or lot name are null or empty
 	 */
-    public Lot(Integer capacity, Integer floors, String location, String lotName) {
-        setCapacity(capacity);
-        setFloors(floors);
-		setLocation(location);
-		setLotName(lotName);
+    public UncoveredSpace(Integer spaceNumber) {
+        setSpaceNumber(spaceNumber);
 	}
 	
 	@Override
 	public String toString() {
-        return "lot [capacity=" + capacity + 
-                ", floors=" + floors + ", location=" + 
-                location + ", lotName=" + lotName + "]";
+        return "UncoveredSpace [spaceNumber=" + spaceNumber +"]";
 	}
 
 	/**
-	 * Returns the capacity of the lot.
-	 * @return capacity
+	 * Returns the sapce number of the uncovered space.
+	 * @return spaceNumber
 	 */
-	public Integer getCapacity() {
-		return capacity;
+	public Integer getSpaceNumber() {
+		return spaceNumber;
 	}
 	
 	/**
-	 * Modifies the capacity of the lot.
-	 * @param capacity
-	 * @throws IllegalArgumentException if title is null or empty.
+	 * Modifies the space number of the uncovered space.
+	 * @param spaceNumber
 	 */
-	public void setCapacity(Integer capacity) {
-		this.capacity = capacity;
-	}
-	
-	/**
-	 * Returns the floors for the the lot.
-	 * @return floors
-	 */
-	public Integer getFloors() {
-		return floors;
-	}
-	
-	/**
-	 * Sets the floors.
-	 *	return floors
-	 * @param floors
-	*/
-	public void setFloors(Integer floors) {
-		this.floors = floors;
-	}
-	
-	/**
-	 * Returns the location for the lot.
-	 * @return location
-	 */
-	public String getLocation() {
-		return location;
-	}
-	
-	/**
-	 * Sets the location for the lot.
-		return location
-	 * @param location
-	*/
-	public void setLocation(String location) {
-		if (location == null || location.length() == 0 )
-			throw new IllegalArgumentException("Please supply a valid location.");
-		this.location = location;
-    }
-    /**
-	 * Returns the lot name for the lot.
-	 * @return lotName
-	 */
-	public String getLotName() {
-		return lotName;
-	}
-	
-	/**
-	 * Sets the lot name for the lot.
-		return lotName
-	 * @param lotName
-	*/
-	public void setLotName(String lotName) {
-		if (lotName == null || lotName.length() == 0 )
-			throw new IllegalArgumentException("Please supply a valid lot name.");
-		this.lotName = lotName;
+	public void setSpaceNumber(Integer spaceNumber) {
+		this.spaceNumber = spaceNumber;
 	}
 }

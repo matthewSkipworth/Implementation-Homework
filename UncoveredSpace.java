@@ -1,7 +1,7 @@
 /**
  * Represents an uncovered space with a space number.
  * @author Jake McKenzie, Matthew Skipworth
- *
+ * @version 6 August 2018
  */
 public class UncoveredSpace {
 	private Integer spaceNumber;
@@ -12,18 +12,13 @@ public class UncoveredSpace {
 	 * @param spaceNumber
 	 * @throws IllegalArgumentException if title or lot type or lot name are null or empty
 	 */
-    public Lot(Integer capacity, Integer floors, String location, String lotName) {
-        setCapacity(capacity);
-        setFloors(floors);
-		setLocation(location);
-		setLotName(lotName);
+    public Lot(Integer spaceNumber) {
+        setSpaceNumber(spaceNumber);
 	}
 	
 	@Override
 	public String toString() {
-        return "lot [capacity=" + capacity + 
-                ", floors=" + floors + ", location=" + 
-                location + ", lotName=" + lotName + "]";
+        return "UncoveredSpace [spaceNumber=" + spaceNumber +"]";
 	}
 
 	/**

@@ -4,19 +4,18 @@
  *
  */
 public class Space {
-	private int spaceNumber;
+	private Integer spaceNumber;
 	private String spaceType, lotName;
 	
 	
 	/**
-	 * Initialize the Space parameters.
+	 * Initialize the space parameters.
 	 * @param spaceNumber
 	 * @param spaceType
 	 * @param lotName
 	 * @throws IllegalArgumentException if title or space type or lot name are null or empty
-     * @throws IllegalArgumentException if space number is not an integer
 	 */
-    public Space(int spaceNumber, String spaceType, String lotName) {
+    public Space(Integer spaceNumber, String spaceType, String lotName) {
 		setSpaceNumber(spaceNumber);
 		setSpaceType(spaceType);
 		setLotName(lotName);
@@ -30,48 +29,43 @@ public class Space {
 	}
 
 	/**
-	 * Returns the title of the Space.
-	 * @return Space title
+	 * Returns the space number of the space.
+	 * @return space number
 	 */
-	public String getSpaceNumber() {
+	public Integer getSpaceNumber() {
 		return spaceNumber;
 	}
 	
 	/**
-	 * Modifies the spaceNumber of the Space.
+	 * Modifies the space number of the space.
 	 * @param spaceNumber
 	 * @throws IllegalArgumentException if title is null or empty.
 	 */
 	public void setSpaceNumber(int spaceNumber) {
-		if (spaceNumber instanceof Integer) {
-            this.spaceNumber = spaceNumber;
-        } else {
-            throw new IllegalArgumentException("Please supply a valid spaceNumber.");
-        }
+		this.spaceNumber = spaceNumber;
 	}
 	
 	/**
-	 * Returns the lot name for the the Space.
+	 * Returns the lot name for the the space.
 	 * @return spaceType
 	 */
-	public int getSpaceTypee() {
+	public String getSpaceType() {
 		return spaceType;
 	}
 	
 	/**
-	 * Sets the Space year.
-		return spaceType
+	 * Sets the space year.
+		return space type
 	 * @param spaceType
 	*/
-	public void setSpaceType(String spaceType)
-	{
+	public void setSpaceType(String spaceType) {
 		if (spaceType == null || spaceType.length() == 0 )
 			throw new IllegalArgumentException("Please supply a valid space type.");
 		this.spaceType = spaceType;
 	}
 	
 	/**
-	 * Returns the year the Space was made.
+	 * Returns the lot name for the space.
 	 * @return lotName
 	 */
 	public String getLotName() {
@@ -79,14 +73,13 @@ public class Space {
 	}
 	
 	/**
-	 * Sets the lotName year.
+	 * Sets the lot name for the space.
 		return lotName
 	 * @param lotName
 	*/
-	public void setLotName(String lotName)
-	{
+	public void setLotName(String lotName) {
 		if (lotName == null || lotName.length() == 0 )
-			throw new IllegalArgumentException("Please supply a valid space type.");
+			throw new IllegalArgumentException("Please supply a valid space lot name.");
 		this.lotName = lotName;
 	}
 	

@@ -23,7 +23,7 @@ public class ParkingDB {
     private List<Space> spaceList;
     private List<StaffSpace> staffSpaceList;
     private List<Staff> staffList;
-    
+    private List<SpaceBooking> bookingList;
 
 
 	/**
@@ -123,6 +123,50 @@ public class ParkingDB {
 		} 
 		
 	}
+    /**
+     * method getVisitorSpaces returns all records of visitor space booking
+     * requests.
+     * @return returns all records of visitor space booking
+     * requests.
+     * @throws Exception
+     */
+    public List<SpaceBooking> getVisitorSpaces() throws Exception {
+		if (sConnection == null) {
+			createConnection();
+		}
+		Statement stmt = null;
+		String query = "select BookingId, spaceNumber, visitorLicense, "
+						+ "dateOfVisit" + "from SpaceBooking";
+		bookingList = new ArrayList<SpaceBooking>();
+		try {
+			stmt = sConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Integer BookingId = rs.getInt("BookingId");
+				Integer spaceNumber = rs.getInt("spaceNumber");
+				Integer visitorLicense = rs.getInt("visitorLicense");
+				String dateOfVisit = rs.getString("dateOfVisit");
+				Integer staffNumber = rs.getInt("staffNumber");
+				
+
+			//	public SpaceBooking(Integer visitorLicense, String dateOfVisit, 
+			//						Integer spaceNumber, Integer BookingId, Integer staffNumber) {
+				SpaceBooking request = new SpaceBooking(visitorLicense, 
+						dateOfVisit, spaceNumber, BookingId, staffNumber);
+				bookingList.add(request);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new Exception("Unable to retrieve list of visitor space "
+					+ "booking requests." + e.getMessage());
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return bookingList;
+	}
+    
     /**
 	 * Modifies the staffSpace information corresponding to the index in the list.
 	 * @param row index of the element in the list

@@ -196,6 +196,11 @@ public class ParkingDB {
 			} 
 			
 		}
+	/**
+	 * method getStaff returns the company's staff roster.
+	 * @return returns the company's staff roster.
+	 * @throws Exception
+	 */
 	public List<Staff> getStaff() throws Exception {
 		if (sConnection == null) {
 			createConnection();

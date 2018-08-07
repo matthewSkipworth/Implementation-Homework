@@ -21,6 +21,9 @@ public class ParkingDB {
 	private static Connection sConnection;
     private List<Lot> lotList;
     private List<Space> spaceList;
+    private List<StaffSpace> staffSpaceList;
+    private List<Staff> staffList;
+    
 
 
 	/**
@@ -99,7 +102,7 @@ public class ParkingDB {
     }
     public void updateStaff(int row, String columnName, Object data) throws Exception {
 		
-		Staff staff = list.get(row);
+		Staff staff = staffList.get(row);
 		//String title = movie.getTitle();
         Integer telephoneExt = staff.getTelephoneExt();
         Integer vehicleLicenseNumber = staff.getVehicleLicenseNumber();
@@ -111,7 +114,7 @@ public class ParkingDB {
 				preparedStatement.setString(1, (String) data);
 			else if (data instanceof Integer)
 				preparedStatement.setInt(1, (Integer) data);
-			preparedStatement.setString(2, telephoneExt);
+			preparedStatement.setInt(2, telephoneExt);
 			preparedStatement.setInt(3, vehicleLicenseNumber);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -120,4 +123,32 @@ public class ParkingDB {
 		} 
 		
 	}
+    /**
+	 * Modifies the staffSpace information corresponding to the index in the list.
+	 * @param row index of the element in the list
+	 * @param columnName attribute to modify
+	 * @param data value to supply
+	 * @throws Exception 
+	 */
+	
+	public void updateStaffSpace(int row, String columnName, Object data) throws Exception {
+			
+			StaffSpace staffSpace = staffSpaceList.get(row);
+			Integer spaceNumber = staffSpace.getSpaceNumber();
+			Integer staffNumber = staffSpace.getStaffNumber();
+			String sql = "update StaffSpace set " + columnName + " = ?  where spaceNumber= ? and staffNumber = ? ";
+			PreparedStatement preparedStatement = null;
+			try {
+				preparedStatement = sConnection.prepareStatement(sql);
+				 if (data instanceof Integer)
+					preparedStatement.setInt(1, spaceNumber);
+					preparedStatement.setInt(2, staffNumber);
+					//preparedStatement.setInt(3, year);
+					preparedStatement.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new Exception("Unable to add Movie: " + e.getMessage());
+			} 
+			
+		}
 }

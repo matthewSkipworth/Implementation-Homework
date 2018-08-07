@@ -100,6 +100,14 @@ public class ParkingDB {
 			throw new Exception("Unable to add staff member: " + e.getMessage());
 		} 
     }
+	/**
+	 * method updateStaff updates staff member's telephone extension number
+	 * and/or vehicle license number.
+	 * @param row represents the relation tuple.
+	 * @param columnName represents the relation attribute.
+	 * @param data represents the new/updated data.
+	 * @throws Exception
+	 */
     public void updateStaff(int row, String columnName, Object data) throws Exception {
 		
 		Staff staff = staffList.get(row);

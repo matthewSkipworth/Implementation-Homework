@@ -130,7 +130,8 @@ public class ParkingDB {
      * requests.
      * @throws Exception
      */
-    public List<SpaceBooking> getVisitorSpaces() throws Exception {
+    //returns the SpaceBooking object
+    public List<SpaceBooking> getSpaceBooking() throws Exception {
 		if (sConnection == null) {
 			createConnection();
 		}
@@ -195,4 +196,39 @@ public class ParkingDB {
 			} 
 			
 		}
+	public List<Staff> getStaff() throws Exception {
+		if (sConnection == null) {
+			createConnection();
+		}
+		Statement stmt = null;
+		String query = "select staffNumber, telephoneExt, vehicleLicenseNumber"
+						+ "from SpaceBooking";
+		staffList = new ArrayList<Staff>();
+		try {
+			stmt = sConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Integer staffNumber = rs.getInt("staffNumber");
+				Integer telephoneExt = rs.getInt("telephoneExt");
+				Integer vehicleLicenseNumber = rs.getInt("vehicleLicenseNumber");
+			//	String dateOfVisit = rs.getString("dateOfVisit");
+			//	Integer staffNumber = rs.getInt("staffNumber");
+				
+
+			//	public SpaceBooking(Integer visitorLicense, String dateOfVisit, 
+			//						Integer spaceNumber, Integer BookingId, Integer staffNumber) {
+				Staff staffMember = new Staff(staffNumber, telephoneExt, vehicleLicenseNumber);
+				staffList.add(staffMember);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new Exception("Unable to retrieve list of Staff Members "
+					 + e.getMessage());
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return staffList;
+	}
 }

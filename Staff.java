@@ -18,6 +18,7 @@ public class Staff {
 					Integer vehicleLicenseNumber) {
 		this.staffNumber = staffNumber;
 		this.telephoneExt = telephoneExt;
+		this.vehicleLicenseNumber = vehicleLicenseNumber;
 	}
 /**
  * method getStaffNumber returns the staff member's company ID number.

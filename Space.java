@@ -9,7 +9,6 @@ public class Space {
 	
 	
 	/**
-	 * Class constructor.
 	 * Initialize the space parameters.
 	 * @param spaceNumber
 	 * @param spaceType

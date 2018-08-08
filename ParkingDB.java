@@ -27,11 +27,11 @@ public class ParkingDB {
     private List<SpaceBooking> bookingList;
 
 
-/**
- * Creates a sql connection to MySQL using the properties for
- * userid, password and server information.
- * @throws SQLException if a connection cannot be made.
- */
+	/**
+	 * Creates a sql connection to MySQL using the properties for
+	 * userid, password and server information.
+	 * @throws SQLException
+	 */
 	public static void createConnection() throws SQLException {
 		sConnection =  DriverManager
 				.getConnection("jdbc:mysql://" + serverName + "/" + userName + "?user=" + userName + "&password=" + password);
@@ -40,11 +40,11 @@ public class ParkingDB {
 	}
 
 
-/**
- * Adds a new lot to the lot table.
- * @param lot represents the lot to be added.
- * @throws Exception is thrown if the lot cannot be added.
- */
+	/**
+	 * Adds a new lot to the lot table.
+	 * @param lot 
+	 * @throws Exception 
+	 */
 	public void addLot(Lot lot) throws Exception {
 		String sql = "insert into Lot values " + "(?, ?, ?, ?, null); ";
 
@@ -61,11 +61,11 @@ public class ParkingDB {
 			throw new Exception("Unable to add Lot: " + e.getMessage());
 		} 
     }
-/**
- * Adds a new space to the space table.
- * @param space represents the new space being added.
- * @throws Exception is thrown if the space cannot be added.
- */
+    /**
+	 * Adds a new space to the space table.
+	 * @param space 
+	 * @throws Exception 
+	 */
 	public void addSpace(Space space) throws Exception {
 		String sql = "insert into Space values " + "(?, ?, ?, null); ";
 
@@ -81,11 +81,11 @@ public class ParkingDB {
 			throw new Exception("Unable to add Space: " + e.getMessage());
 		} 
 	}
-/**
- * Adds a new staff member to the staff table.
- * @param staff represents the new staff member to be added.
- * @throws Exception is thrown if the new staff member cannot be added.
- */
+    /**
+	 * Adds a new staff member to the staff table.
+	 * @param staff 
+	 * @throws Exception 
+	 */
 	public void addStaff(Staff staff) throws Exception {
 		String sql = "insert into Staff values " + "(?, ?, ?, null); ";
 
@@ -98,8 +98,7 @@ public class ParkingDB {
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new Exception("Unable to add staff member: " 
-							+ e.getMessage());
+			throw new Exception("Unable to add staff member: " + e.getMessage());
 		} 
     }
 	/**
@@ -108,7 +107,7 @@ public class ParkingDB {
 	 * @param row represents the relation tuple.
 	 * @param columnName represents the relation attribute.
 	 * @param data represents the new/updated data.
-	 * @throws Exception is thrown if change cannot be made.
+	 * @throws Exception
 	 */
     public void updateStaff(int row, String columnName, Object data) throws Exception {
 		
@@ -129,7 +128,7 @@ public class ParkingDB {
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new Exception("Unable to update Staff: " + e.getMessage());
+			throw new Exception("Unable to add Movie: " + e.getMessage());
 		} 
 		
 	}
@@ -138,7 +137,7 @@ public class ParkingDB {
      * requests.
      * @return returns all records of visitor space booking
      * requests.
-     * @throws Exception if list retrieval cannot be made.
+     * @throws Exception
      */
     //returns the SpaceBooking object
     public List<SpaceBooking> getSpaceBooking() throws Exception {
@@ -245,41 +244,5 @@ public class ParkingDB {
 			}
 		}
 		return staffList;
-	}
-/**
- * method getLot returns the Lot relation.	
- * @return returns the lot relation
- * @throws Exception
- */
-	public List<Lot> getLot() throws Exception {
-		if (sConnection == null) {
-			createConnection();
-		}
-		Statement stmt = null;
-		String query = "select capacity, floors, location, lotName" + 
-						"from Lot";
-		lotList = new ArrayList<Lot>();
-		try {
-			stmt = sConnection.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				Integer capacity = rs.getInt("capacity");
-				Integer floors = rs.getInt("floors");
-				String location = rs.getString("location");
-				String lotName = rs.getString("lotName");
-			
-				Lot newLot = new Lot(capacity, floors, location, lotName);
-				lotList.add(newLot);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new Exception("Unable to retrieve list of Parking Lots."
-								+ e.getMessage());
-		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-		}
-		return lotList;
 	}
 }

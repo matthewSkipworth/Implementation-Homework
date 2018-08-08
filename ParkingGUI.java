@@ -18,85 +18,45 @@ import javax.swing.table.TableModel;
  */
 public class ParkingGUI extends JFrame implements ActionListener, TableModelListener {
 	private static final long serialVersionUID = 7295690032713970188L;
-<<<<<<< HEAD
-	private JButton btnStaffList, 
-					btnSpaceList, 
-					btnMakeLot, 
-					btnMakeSpace, 
-					btnMakeStaff,
-					btnUpdateStaff,
-					btnAssignSpot,
-					btnReserveSpot,
-					btnCheckSpace;
-	
-	private JPanel pnlButtons, 
-					pnlContent;
-	private ParkingDB db;
-	private List<Lot> lotList;
-    private List<Space> spaceList;
-    private List<StaffSpace> staffSpaceList;
-    private List<Staff> staffList;
-    private List<SpaceBooking> bookingList;
-    
-	private String[] columnNames = {"Title",
-            "Year",
-            "Length",
-            "Genre",
-            "StudioName"};
-=======
-	private JButton btnStaffList, btnSpaceList, btnMakeLot,btnMakeSpace,
-					btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
-					btnCheckSpace;
-	private JPanel pnlButtons, pnlContent;
+
 	private ParkingDB db;
 	
 	private List<Lot> list;
 
-	private String[] columnNames = {"capacity",
-            "floors",
-            "location",
-			"lotName",};
->>>>>>> e264f9a2075975b5d96c85b84d0bd9ddd3d06bf2
+	private String[] columnNames = {"capacity", "floors", "location", "lotName",};
 	
 	private Object[][] data;
 	private JTable table;
 	private JScrollPane scrollPane;
-
-	private JPanel pnlSearch;
-	
-	private JLabel lblTitle;
-	private JTextField txfTitle;
-	
-	private JButton btnTitleSearch;
-	
-	private JPanel pnlAdd;
 	private JLabel[] txfLabel = new JLabel[5];
 	private JTextField[] txfField = new JTextField[5];
 	private JButton btnAddMovie;
-	
+
+	private JButton btnStaffList, btnSpaceList, btnMakeLot,btnMakeSpace,
+					btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
+					btnCheckSpace;
+
+	private JPanel 	pnlButtons, pnlStaffList, pnlSpaceList, pnlMakeLot,pnlMakeSpace,
+					pnlMakeStaff,pnlUpdateStaff,pnlAssignSpot,pnlReserveSpot,
+					pnlCheckSpace;
 	
 	/**
 	 * Creates the frame and components and launches the GUI.
 	 */
 	public ParkingGUI() {
-<<<<<<< HEAD
-		super("Movie Store");
-=======
 		super("Parking Lot");
->>>>>>> e264f9a2075975b5d96c85b84d0bd9ddd3d06bf2
 		
 		db = new ParkingDB();
 		try
 		{
-			lotList = db.();
+			list = db.getLots();
 			
 			data = new Object[list.size()][columnNames.length];
 			for (int i=0; i<list.size(); i++) {
-				data[i][0] = list.get(i).getTitle();
-				data[i][1] = list.get(i).getYear();
-				data[i][2] = list.get(i).getLength();
-				data[i][3] = list.get(i).getGenre();
-				data[i][4] = list.get(i).getStudioName();
+				data[i][0] = list.get(i).getCapacity();
+				data[i][1] = list.get(i).getFloors();
+				data[i][2] = list.get(i).getLocation();
+				data[i][3] = list.get(i).getLotName();
 				
 			}
 			
@@ -107,24 +67,48 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		}
 		createComponents();
 		setVisible(true);
-		setSize(500, 500);
+		setSize(800, 500);
 	}
+
+	
     
 	/**
 	 * Creates panels for Movie list, search, add and adds the corresponding 
 	 * components to each panel.
 	 */
-	private void createComponents()
-	{
+	private void createComponents() {
 		pnlButtons = new JPanel();
-		btnList = new JButton("Movie List");
-		btnList.addActionListener(this);
+
+		// private JButton btnStaffList, btnSpaceList, btnMakeLot,btnMakeSpace,
+		// 			btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
+		// 			btnCheckSpace;
+
+		btnStaffList = new JButton("Staff List");
+		btnStaffList.addActionListener(this);
 		
-		btnSearch = new JButton("Movie Search");
-		btnSearch.addActionListener(this);
+		btnSpaceList = new JButton("Spaces List");
+		btnSpaceList.addActionListener(this);
 		
-		btnAdd = new JButton("Add Movie");
-		btnAdd.addActionListener(this);
+		btnMakeLot = new JButton("Add Lot");
+		btnMakeLot.addActionListener(this);
+
+		btnMakeSpace = new JButton("Add Space");
+		btnMakeSpace.addActionListener(this);
+
+		btnMakeStaff = new JButton("Add Staff");
+		btnMakeStaff.addActionListener(this);
+
+		btnUpdateStaff = new JButton("Update Staff");
+		btnUpdateStaff.addActionListener(this);
+
+		btnAssignSpot = new JButton("Assign Staff Spot");
+		btnAssignSpot.addActionListener(this);
+
+		btnReserveSpot = new JButton("Reserve Visitor Spot");
+		btnReserveSpot.addActionListener(this);
+
+		btnCheckSpace = new JButton("Check Spot");
+		btnCheckSpace.addActionListener(this);
 		
 		pnlButtons.add(btnList);
 		pnlButtons.add(btnSearch);

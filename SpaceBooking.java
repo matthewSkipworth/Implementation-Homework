@@ -48,56 +48,31 @@ public class SpaceBooking {
 	public Integer getSpaceNumber() {
 		return spaceNumber;
 	}
-/**
- * method getStaffNumber returns the staff member's Company ID number.
- * @return returns the staff member's Company ID number.
- */
+	
 	public Integer getStaffNumber() {
 		return staffNumber;
 	}
-/**
- * method getDateOfVisit returns the visitor's planned date of visit.	
- * @return returns the visitor's planned date of visit.	
- */
+	
 	public String getDateOfVisit() {
 		return dateOfVisit;
 	}
-/**
- * metheod setVisitorLicense update's the visitor's vehicle license
- * number.	
- * @param newLicense represents the license number that the visitor's license
- * number will be updated to.
- */
+	
 	public void setVisitorLicense(Integer newLicense) {
 		this.visitorLicense = newLicense;
 	}
-/**
- * method setBookingId updates the booking ID number	
- * @param newBookingId represents the updated booking ID number.
- */
+	
 	public void setBookingId(Integer newBookingId) {
 		this.BookingId = newBookingId;
 	}
-/**
- * method setSpaceNumber updates the requested visitor space number.	
- * @param newSpaceNumber represents the new space number for the SpaceBooking
- * object to update to.
- */
+	
 	public void setSpaceNumber(Integer newSpaceNumber) {
 		this.spaceNumber = newSpaceNumber;
 	}
-/**
- * method setStaffNumber updates the staff member number on the visitor parking
- * request form.	
- * @param newStaffNumber represents the new staff member's number.
- */
+	
 	public void setStaffNumber(Integer newStaffNumber) {
 		this.staffNumber = newStaffNumber;
 	}
-/**
- * method setDateOfVisit updates the visitor's planned date of visit.	
- * @param newDateOfVisit represents the new planned visit date.
- */
+	
 	public void setDateOfVisit(String newDateOfVisit) {
 		this.dateOfVisit = newDateOfVisit;
 	}

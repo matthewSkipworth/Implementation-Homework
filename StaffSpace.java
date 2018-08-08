@@ -1,26 +1,26 @@
 /**
- * Represents an uncovered space with a space number and monthly rate.
+ * Represents a staff space with a space number and staff number.
  * @author Jake McKenzie, Matthew Skipworth
  * @version 6 August 2018
  */
-public class CoveredSpace {
+public class StaffSpace {
     private Integer spaceNumber;
-    private Double monthlyRate;
+    private Integer staffNumber;
 	/**
-	 * Initialize the covered space parameter.
+	 * Initialize the staff space parameter.
 	 * @param spaceNumber
-     * @param monthlyRate
+     * @param staffNumber
 	 * @throws IllegalArgumentException if title or lot type or lot name are null or empty
 	 */
-    public CoveredSpace(Integer spaceNumber, Double monthlyRate) {
+    public StaffSpace(Integer spaceNumber, Integer monthlyRate) {
         setSpaceNumber(spaceNumber);
-        setMonthlyRate(monthlyRate);
+        setStaffNumber(staffNumber);
 	}
 	
 	@Override
 	public String toString() {
         return "CoveredSpace [spaceNumber=" + spaceNumber +
-                "monthlyRate=" + monthlyRate + "]";
+                "staffNumber=" + staffNumber + "]";
 	}
 
 	/**
@@ -39,18 +39,18 @@ public class CoveredSpace {
 		this.spaceNumber = spaceNumber;
     }
     /**
-	 * Returns the monthly rate of the covered space.
-	 * @return monthlyRate
+	 * Returns the staff number of the staff space.
+	 * @return staffNumber
 	 */
-	public Double getMonthlyRate() {
-		return monthlyRate;
+	public Integer getStaffNumber() {
+		return staffNumber;
 	}
 	
 	/**
-	 * Modifies the monthly rate of the covered space.
-	 * @param monthlyRate
+	 * Modifies the staff number of the staff space.
+	 * @param staffNumber
 	 */
-	public void setMonthlyRate(Double monthlyRate) {
-		this.monthlyRate = monthlyRate;
+	public void setStaffNumber(Integer staffNumber) {
+		this.staffNumber = staffNumber;
 	}
 }

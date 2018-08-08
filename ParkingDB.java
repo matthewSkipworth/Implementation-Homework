@@ -245,4 +245,35 @@ public class ParkingDB {
 		}
 		return staffList;
 	}
+	public List<Lot> getLot() throws Exception {
+		if (sConnection == null) {
+			createConnection();
+		}
+		Statement stmt = null;
+		String query = "select capacity, floors, location, lotName" + 
+						"from Lot";
+		lotList = new ArrayList<Lot>();
+		try {
+			stmt = sConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Integer capacity = rs.getInt("capacity");
+				Integer floors = rs.getInt("floors");
+				String location = rs.getString("location");
+				String lotName = rs.getString("lotName");
+			
+				Lot newLot = new Lot(capacity, floors, location, lotName);
+				lotList.add(newLot);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new Exception("Unable to retrieve list of Parking Lots."
+								+ e.getMessage());
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return lotList;
+	}
 }

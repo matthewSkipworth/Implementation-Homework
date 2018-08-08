@@ -10,13 +10,20 @@ public class CoveredSpace {
 	 * Initialize the covered space parameter.
 	 * @param spaceNumber
      * @param monthlyRate
-	 * @throws IllegalArgumentException if title or lot type or lot name are null or empty
+	 * @throws IllegalArgumentException if title or lot type or lot name are
+	 *  null or empty.
 	 */
     public CoveredSpace(Integer spaceNumber, Double monthlyRate) {
         setSpaceNumber(spaceNumber);
         setMonthlyRate(monthlyRate);
 	}
 	
+    /**
+     * toString method returns a string representation of the CoveredSpace 
+     * object.
+     * @return returns a string representation of the CoveredSpace 
+     * object.
+     */
 	@Override
 	public String toString() {
         return "CoveredSpace [spaceNumber=" + spaceNumber +

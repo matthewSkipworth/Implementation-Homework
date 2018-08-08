@@ -203,6 +203,11 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
+		// private JButton btnStaffList, btnSpaceList, btnMakeLot,btnMakeSpace,
+		// 			btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
+		// 			btnCheckSpace;
+
 		if (e.getSource() == btnList) {
 			try {
 				list = db.getMovies();

@@ -18,6 +18,7 @@ import javax.swing.table.TableModel;
  */
 public class ParkingGUI extends JFrame implements ActionListener, TableModelListener {
 	private static final long serialVersionUID = 7295690032713970188L;
+<<<<<<< HEAD
 	private JButton btnStaffList, 
 					btnSpaceList, 
 					btnMakeLot, 
@@ -42,13 +43,30 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
             "Length",
             "Genre",
             "StudioName"};
+=======
+	private JButton btnStaffList, btnSpaceList, btnMakeLot,btnMakeSpace,
+					btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
+					btnCheckSpace;
+	private JPanel pnlButtons, pnlContent;
+	private ParkingDB db;
+	
+	private List<Lot> list;
+
+	private String[] columnNames = {"capacity",
+            "floors",
+            "location",
+			"lotName",};
+>>>>>>> e264f9a2075975b5d96c85b84d0bd9ddd3d06bf2
 	
 	private Object[][] data;
 	private JTable table;
 	private JScrollPane scrollPane;
+
 	private JPanel pnlSearch;
-	private JLabel lblTitle;;
+	
+	private JLabel lblTitle;
 	private JTextField txfTitle;
+	
 	private JButton btnTitleSearch;
 	
 	private JPanel pnlAdd;
@@ -61,7 +79,11 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	 * Creates the frame and components and launches the GUI.
 	 */
 	public ParkingGUI() {
+<<<<<<< HEAD
 		super("Movie Store");
+=======
+		super("Parking Lot");
+>>>>>>> e264f9a2075975b5d96c85b84d0bd9ddd3d06bf2
 		
 		db = new ParkingDB();
 		try

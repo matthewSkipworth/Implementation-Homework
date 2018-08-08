@@ -18,22 +18,28 @@ import javax.swing.table.TableModel;
  */
 public class ParkingGUI extends JFrame implements ActionListener, TableModelListener {
 	private static final long serialVersionUID = 7295690032713970188L;
-	private JButton btnStaffList, btnSpaceList, btnMakeLot,btnMakeSpace,btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,btnCheckSpace;
+	private JButton btnStaffList, btnSpaceList, btnMakeLot,btnMakeSpace,
+					btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
+					btnCheckSpace;
 	private JPanel pnlButtons, pnlContent;
-	private MovieDB db;
-	private List<Movie> list;
-	private String[] columnNames = {"Title",
-            "Year",
-            "Length",
-            "Genre",
-            "StudioName"};
+	private ParkingDB db;
+	
+	private List<Lot> list;
+
+	private String[] columnNames = {"capacity",
+            "floors",
+            "location",
+			"lotName",};
 	
 	private Object[][] data;
 	private JTable table;
 	private JScrollPane scrollPane;
+
 	private JPanel pnlSearch;
-	private JLabel lblTitle;;
+	
+	private JLabel lblTitle;
 	private JTextField txfTitle;
+	
 	private JButton btnTitleSearch;
 	
 	private JPanel pnlAdd;
@@ -45,10 +51,10 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	/**
 	 * Creates the frame and components and launches the GUI.
 	 */
-	public MovieGUI() {
-		super("Movie Store");
+	public ParkingGUI() {
+		super("Parking Lot");
 		
-		db = new MovieDB();
+		db = new ParkingDB();
 		try
 		{
 			list = db.getMovies();

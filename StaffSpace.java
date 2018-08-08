@@ -8,15 +8,18 @@ public class StaffSpace {
     private Integer staffNumber;
 	/**
 	 * Initialize the staff space parameter.
-	 * @param spaceNumber
-     * @param staffNumber
-	 * @throws IllegalArgumentException if title or lot type or lot name are null or empty
+	 * @param spaceNumber represents a space ID number assigned to this space.
+     * @param staffNumber represents the employee's company ID number.
+	 * @throws IllegalArgumentException if title or lot type or lot name are null or empty.
 	 */
     public StaffSpace(Integer spaceNumber, Integer monthlyRate) {
         setSpaceNumber(spaceNumber);
         setStaffNumber(staffNumber);
 	}
-	
+	/**
+	 * method toString returns a String representation of this StaffSpace.
+	 * @return returns a String representation of this StaffSpace.
+	 */
 	@Override
 	public String toString() {
         return "CoveredSpace [spaceNumber=" + spaceNumber +
@@ -24,8 +27,9 @@ public class StaffSpace {
 	}
 
 	/**
-	 * Returns the space number of the covered space.
-	 * @return spaceNumber
+	 * method getSpaceNumber returns the space number belonging to this staff
+	 * space.
+	 * @return returns the space number belonging to this staff space.
 	 */
 	public Integer getSpaceNumber() {
 		return spaceNumber;
@@ -33,14 +37,15 @@ public class StaffSpace {
 	
 	/**
 	 * Modifies the space number of the covered space.
-	 * @param spaceNumber
+	 * @param spaceNumber represents the new staffSpace ID number.
 	 */
 	public void setSpaceNumber(Integer spaceNumber) {
 		this.spaceNumber = spaceNumber;
     }
     /**
 	 * Returns the staff number of the staff space.
-	 * @return staffNumber
+	 * @return staffNumber represents the staff member's ID number
+	 * corresponding to this StaffSpace.
 	 */
 	public Integer getStaffNumber() {
 		return staffNumber;
@@ -48,7 +53,8 @@ public class StaffSpace {
 	
 	/**
 	 * Modifies the staff number of the staff space.
-	 * @param staffNumber
+	 * @param staffNumber represents the new staff member's ID number 
+	 * corresponding to this StaffSpace.
 	 */
 	public void setStaffNumber(Integer staffNumber) {
 		this.staffNumber = staffNumber;

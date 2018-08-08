@@ -10,7 +10,8 @@ import java.util.Properties;
 
 /**
  * A class that consists of the database operations to insert and update the Movie information.
- * @author mmuppa
+ * @author Matthew Skipworth and Jake McKenzie
+ * @version 6 August 2018
  *
  */
 

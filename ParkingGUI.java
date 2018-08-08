@@ -18,7 +18,7 @@ import javax.swing.table.TableModel;
  */
 public class ParkingGUI extends JFrame implements ActionListener, TableModelListener {
 	private static final long serialVersionUID = 7295690032713970188L;
-	private JButton btnStaffList, btnSpaceList, btnMakeLot;
+	private JButton btnStaffList, btnSpaceList, btnMakeLot,btnMakeSpace,btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,btnCheckSpace;
 	private JPanel pnlButtons, pnlContent;
 	private MovieDB db;
 	private List<Movie> list;

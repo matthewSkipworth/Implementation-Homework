@@ -37,8 +37,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 					btnCheckSpace;
 
 	private JPanel 	pnlButtons, pnlStaffList, pnlSpaceList, pnlMakeLot,pnlMakeSpace,
-					pnlMakeStaff,pnlUpdateStaff,pnlAssignSpot,pnlReserveSpot,
-					pnlCheckSpace;
+					pnlUpdateStaff,pnlAssignSpot,pnlReserveSpot,pnlCheckSpace;
 	
 	/**
 	 * Creates the frame and components and launches the GUI.
@@ -79,10 +78,6 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	private void createComponents() {
 		pnlButtons = new JPanel();
 
-		// private JButton btnStaffList, btnSpaceList, btnMakeLot,btnMakeSpace,
-		// 			btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
-		// 			btnCheckSpace;
-
 		btnStaffList = new JButton("Staff List");
 		btnStaffList.addActionListener(this);
 		
@@ -110,48 +105,85 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		btnCheckSpace = new JButton("Check Spot");
 		btnCheckSpace.addActionListener(this);
 		
-		pnlButtons.add(btnList);
-		pnlButtons.add(btnSearch);
-		pnlButtons.add(btnAdd);
+		pnlButtons.add(btnStaffList);
+		pnlButtons.add(btnSpaceList);
+		pnlButtons.add(btnMakeLot);
+		pnlButtons.add(btnMakeSpace);
+		pnlButtons.add(btnMakeStaff);
+		pnlButtons.add(btnUpdateStaff);
+		pnlButtons.add(btnAssignSpot);
+		pnlButtons.add(btnReserveSpot);
+		pnlButtons.add(btnCheckSpace);
 		add(pnlButtons, BorderLayout.NORTH);
 		
-		//List Panel
-		pnlContent = new JPanel();
+		// private JPanel 	pnlButtons, pnlStaffList, pnlSpaceList, pnlMakeLot,pnlMakeSpace,
+		// 			pnlMakeStaff,pnlUpdateStaff,pnlAssignSpot,pnlReserveSpot,
+		// 			pnlCheckSpace;
+
+		//Staff list button
+		pnlStaffList = new JPanel();
 		table = new JTable(data, columnNames);
 		scrollPane = new JScrollPane(table);
 		pnlContent.add(scrollPane);
 		table.getModel().addTableModelListener(this);
 		
-		//Search Panel
-		pnlSearch = new JPanel();
-		lblTitle = new JLabel("Enter Title: ");
-		txfTitle = new JTextField(25);
-		btnTitleSearch = new JButton("Search");
-		btnTitleSearch.addActionListener(this);
-		pnlSearch.add(lblTitle);
-		pnlSearch.add(txfTitle);
-		pnlSearch.add(btnTitleSearch);
-		
-		//Add Panel
-		pnlAdd = new JPanel();
-		pnlAdd.setLayout(new GridLayout(6, 0));
-		String labelNames[] = {"Enter Title: ", "Enter Year: ", "Enter Length: ", "Enter Genre: ", "Enter Studio Name: "};
-		for (int i=0; i<labelNames.length; i++) {
-			JPanel panel = new JPanel();
-			txfLabel[i] = new JLabel(labelNames[i]);
-			txfField[i] = new JTextField(25);
-			panel.add(txfLabel[i]);
-			panel.add(txfField[i]);
-			pnlAdd.add(panel);
-		}
-		JPanel panel = new JPanel();
-		btnAddMovie = new JButton("Add");
-		btnAddMovie.addActionListener(this);
-		panel.add(btnAddMovie);
-		pnlAdd.add(panel);
-		
+		//parking space list button
+		pnlSpaceList = new JPanel();
+		table = new JTable(data, columnNames);
+		scrollPane = new JScrollPane(table);
+		pnlContent.add(scrollPane);
+		table.getModel().addTableModelListener(this);
+
+		//make lot button
+		pnlMakeLot = new JPanel();
+		table = new JTable(data, columnNames);
+		scrollPane = new JScrollPane(table);
+		pnlContent.add(scrollPane);
+		table.getModel().addTableModelListener(this);
+
+		//make lot button
+		pnlMakeLot = new JPanel();
+		table = new JTable(data, columnNames);
+		scrollPane = new JScrollPane(table);
+		pnlContent.add(scrollPane);
+		table.getModel().addTableModelListener(this);
+
+		//make parking space button
+		pnlMakeSpace = new JPanel();
+		table = new JTable(data, columnNames);
+		scrollPane = new JScrollPane(table);
+		pnlContent.add(scrollPane);
+		table.getModel().addTableModelListener(this);
+
+		//update parking space button
+		pnlUpdateStaff = new JPanel();
+		table = new JTable(data, columnNames);
+		scrollPane = new JScrollPane(table);
+		pnlContent.add(scrollPane);
+		table.getModel().addTableModelListener(this);
+
+		//assign staff parking space button
+		pnlAssignSpot = new JPanel();
+		table = new JTable(data, columnNames);
+		scrollPane = new JScrollPane(table);
+		pnlContent.add(scrollPane);
+		table.getModel().addTableModelListener(this);
+
+		//reserve visitor parking space button
+		pnlReserveSpot = new JPanel();
+		table = new JTable(data, columnNames);
+		scrollPane = new JScrollPane(table);
+		pnlContent.add(scrollPane);
+		table.getModel().addTableModelListener(this);
+
+		//check to see if parking space button
+		pnlCheckSpace = new JPanel();
+		table = new JTable(data, columnNames);
+		scrollPane = new JScrollPane(table);
+		pnlContent.add(scrollPane);
+		table.getModel().addTableModelListener(this);
+
 		add(pnlContent, BorderLayout.CENTER);
-		
 		
 	}
 
@@ -160,8 +192,8 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	 */
 	public static void main(String[] args)
 	{
-		MovieGUI movieGUI = new MovieGUI();
-		movieGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ParkingGUI parkingGUI = new ParkingGUI();
+		parkingGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
 

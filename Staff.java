@@ -1,5 +1,7 @@
 /**
- * 
+ * This Class represents a company Staff member. Each company Staff member
+ * is assigned a staffNumber, telephoneExt, and vehicleLicenseNumber.
+ * Each Staff member may be assigned to a single parking Space.
  * @author Matthew Skipworth and Jake McKenzie
  * @version 6 August 2018
  */

@@ -245,6 +245,11 @@ public class ParkingDB {
 		}
 		return staffList;
 	}
+/**
+ * method getLot returns the Lot relation.	
+ * @return returns the lot relation
+ * @throws Exception
+ */
 	public List<Lot> getLot() throws Exception {
 		if (sConnection == null) {
 			createConnection();

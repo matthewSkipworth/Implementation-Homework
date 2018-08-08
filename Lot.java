@@ -10,19 +10,26 @@ public class Lot {
 	
 	/**
 	 * Initialize the lot parameters.
-	 * @param capacity
-	 * @param floors
-	 * @param location
-     * @param lotName
-	 * @throws IllegalArgumentException if title or lot type or lot name are null or empty
+	 * @param capacity represents the Lot's parking Space capacity.
+	 * @param floors represents the Lot's number of floors.
+	 * @param location represents the Lot's geographical location.
+     * @param lotName represents the Lot's name.
+	 * @throws IllegalArgumentException if title or lot type or lot name are
+	 *  null or empty
 	 */
-    public Lot(Integer capacity, Integer floors, String location, String lotName) {
+    public Lot(Integer capacity, Integer floors, String location, 
+    		String lotName) {
         setCapacity(capacity);
         setFloors(floors);
 		setLocation(location);
 		setLotName(lotName);
 	}
-	
+	/**
+	 * toString method returns a String representation of the data contained
+	 * in this Lot.
+	 * @return returns this Lot's capacity, number of floors, location, and 
+	 * lotName.
+	 */
 	@Override
 	public String toString() {
         return "lot [capacity=" + capacity + 
@@ -32,7 +39,7 @@ public class Lot {
 
 	/**
 	 * Returns the capacity of the lot.
-	 * @return capacity
+	 * @return returns this Lot's maximum capacity.
 	 */
 	public Integer getCapacity() {
 		return capacity;
@@ -40,7 +47,7 @@ public class Lot {
 	
 	/**
 	 * Modifies the capacity of the lot.
-	 * @param capacity
+	 * @param capacity represents an updated parking space capacity.
 	 * @throws IllegalArgumentException if title is null or empty.
 	 */
 	public void setCapacity(Integer capacity) {
@@ -49,24 +56,24 @@ public class Lot {
 	
 	/**
 	 * Returns the floors for the the lot.
-	 * @return floors
+	 * @return floors. This Lot's number of floors.
 	 */
 	public Integer getFloors() {
 		return floors;
 	}
 	
 	/**
-	 * Sets the floors.
-	 *	return floors
-	 * @param floors
+	 * method setFloors updates this Lot's floor count.
+	 * @param floors represents the number of floors for this Lot to update to. 
 	*/
 	public void setFloors(Integer floors) {
 		this.floors = floors;
 	}
 	
 	/**
+	 * method getLocations 
 	 * Returns the location for the lot.
-	 * @return location
+	 * @return location. This Lot's geographical location.
 	 */
 	public String getLocation() {
 		return location;
@@ -74,8 +81,7 @@ public class Lot {
 	
 	/**
 	 * Sets the location for the lot.
-		return location
-	 * @param location
+	 * @param location represents this Lot's updated location.
 	*/
 	public void setLocation(String location) {
 		if (location == null || location.length() == 0 )
@@ -84,7 +90,7 @@ public class Lot {
     }
     /**
 	 * Returns the lot name for the lot.
-	 * @return lotName
+	 * @return lotName. Returns the Lot's name.
 	 */
 	public String getLotName() {
 		return lotName;
@@ -93,7 +99,7 @@ public class Lot {
 	/**
 	 * Sets the lot name for the lot.
 		return lotName
-	 * @param lotName
+	 * @param lotName represents this Lot's updated name.
 	*/
 	public void setLotName(String lotName) {
 		if (lotName == null || lotName.length() == 0 )

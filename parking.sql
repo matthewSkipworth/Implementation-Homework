@@ -43,9 +43,13 @@ create table UncoveredSpace(spaceNumber integer,
 										primary key(spaceNumber),
 										foreign key (spaceNumber) references Space(spaceNumber)
 										);
-select spaceNumber, monthlyRate from CoveredSpace;
+select * from Staff;
 
 insert into CoveredSpace values
+	(1,94,1234),
+    (2,75,9874);
+    
+insert into Staff values
 	(1,2.17),
     (2,3.14);
     

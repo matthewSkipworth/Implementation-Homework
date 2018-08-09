@@ -43,24 +43,22 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	 * Creates the frame and components and launches the GUI.
 	 */
 	public ParkingGUI() {
-		super("Parking Lot");
+		super("Space Bookings");
 		
 		db = new ParkingDB();
-		try
-		{
-			list = db.getLots();
-			
+		try {
+			list = db.getSpaceBooking();
+			//Integer visitorLicense, String dateOfVisit, Integer spaceNumber, Integer BookingId, Integer staffNumber
 			data = new Object[list.size()][columnNames.length];
 			for (int i=0; i<list.size(); i++) {
-				data[i][0] = list.get(i).getCapacity();
-				data[i][1] = list.get(i).getFloors();
-				data[i][2] = list.get(i).getLocation();
-				data[i][3] = list.get(i).getLotName();
-				
+				data[i][0] = list.get(i).getVisitorLicense();
+				data[i][1] = list.get(i).getDateOfVisit();
+				data[i][2] = list.get(i).getSpaceNumber();
+				data[i][3] = list.get(i).getBookingId();
+				data[i][4] = list.get(i).getStaffNumber();
 			}
 			
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this,"Error: " + e.getMessage());
 			return;
 		}
@@ -190,11 +188,9 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		ParkingGUI parkingGUI = new ParkingGUI();
 		parkingGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 	}
 
 	/**
@@ -210,18 +206,16 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 
 		if (e.getSource() == btnList) {
 			try {
-				list = db.getMovies();
+				list = db.getCoveredSpace();
 			} catch (Exception exception) {
 				JOptionPane.showMessageDialog(this, exception.getMessage());
 				return;
 			}
 			data = new Object[list.size()][columnNames.length];
 			for (int i=0; i<list.size(); i++) {
-				data[i][0] = list.get(i).getTitle();
-				data[i][1] = list.get(i).getYear();
-				data[i][2] = list.get(i).getLength();
-				data[i][3] = list.get(i).getGenre();
-				data[i][4] = list.get(i).getStudioName();
+				//private Integer spaceNumber; private Double monthlyRate;
+				data[i][0] = list.get(i).getSpaceNumber();
+				data[i][1] = list.get(i).getMonthlyRate();
 			}
 			pnlContent.removeAll();
 			table = new JTable(data, columnNames);

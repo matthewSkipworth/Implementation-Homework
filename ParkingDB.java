@@ -20,8 +20,8 @@ public class ParkingDB {
 	private static String password = "Hersoyds";
 	private static String serverName = "cssgate.insttech.washington.edu";
 	private static Connection sConnection;
-    private List<Lot> lotList;
-    private List<Space> spaceList;
+    // private List<Lot> lotList;
+    // private List<Space> spaceList;
     private List<StaffSpace> staffSpaceList;
     private List<Staff> staffList;
     private List<SpaceBooking> bookingList;
@@ -244,5 +244,65 @@ public class ParkingDB {
 			}
 		}
 		return staffList;
+	}
+
+	public List<CoveredSpace> getCoveredSpace() throws Exception {
+		if (sConnection == null) {
+			createConnection();
+		}
+		Statement stmt = null;
+		String query = "select spaceNumber, monthlyRate" 
+						+ "from CoveredSpace";
+		coveredSpaceList = new ArrayList<CoveredSpace>();
+		try {
+			stmt = sConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Integer spaceNumber = rs.getInt("spaceNumber");
+				Double monthlyRate = rs.getDouble("monthlyRate");
+				CoveredSpace newCoveredSpace = new CoveredSpace(spaceNumber, 
+																monthlyRate);
+				coveredSpaceList.add(newCoveredSpace);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new Exception("Unable to recover the list of "
+					+ "covered spaces");
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return coveredSpaceList;
+	}
+	public List<UncoveredSpace> getUncoveredSpace() throws Exception {
+		if (sConnection == null) {
+			createConnection();
+		}
+		Statement stmt = null;
+		String query = "select spaceNumber" 
+						+ "from UncoveredSpace";
+		uncoveredSpaceList = new ArrayList<UncoveredSpace>();
+		try {
+			stmt = sConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Integer spaceNumber = rs.getInt("spaceNumber");
+				//Double monthlyRate = rs.getDouble("monthlyRate");
+				UncoveredSpace newUncoveredSpace = new UncoveredSpace(spaceNumber);
+				uncoveredSpaceList.add(newUncoveredSpace);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new Exception("Unable to recover the list of "
+					+ "uncovered spaces");
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return uncoveredSpaceList;
 	}
 }

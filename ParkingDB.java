@@ -374,4 +374,18 @@ public class ParkingDB {
 		
 		
 	}
+	public List <Space> getAvailableSpaces() throws Exception {
+		if (sConnection == null) {
+			createConnection();
+		}
+		Statement stmt = null;
+		String query = "SELECT spaceNumber\n"
+					+ "FROM Space\n"
+					+ "MINUS\n"
+					+ "SELECT spaceNumber\n"
+					+ "FROM StaffSpace\n"
+					+ "UNION\n"
+					+ "SELECT spaceNumber\n"
+					+ "FROM SpaceBooking";
+	}
 }

@@ -9,13 +9,17 @@ public class UncoveredSpace {
 	
 	/**
 	 * Initialize the uncovered space parameter.
-	 * @param spaceNumber
-	 * @throws IllegalArgumentException if title or lot type or lot name are null or empty
+	 * @param spaceNumber represents this UncoveredSpace's space ID number
+	 * @throws IllegalArgumentException if title or lot type or lot name are 
+	 * null or empty
 	 */
     public UncoveredSpace(Integer spaceNumber) {
         setSpaceNumber(spaceNumber);
 	}
-	
+	/**
+	 * method toString returns a String representation of this UncoveredSpace
+	 * @return returns this UncoveredSpace's spaceNumber.
+	 */
 	@Override
 	public String toString() {
         return "UncoveredSpace [spaceNumber=" + spaceNumber +"]";

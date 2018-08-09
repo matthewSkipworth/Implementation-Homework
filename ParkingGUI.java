@@ -36,9 +36,9 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 					btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
 					btnCheckSpace;
 
-	private JPanel 	pnlButtons, pnlStaffList, pnlSpaceList, pnlMakeLot,pnlMakeSpace,
-					pnlMakeStaff,pnlUpdateStaff,pnlAssignSpot,pnlReserveSpot,
-					pnlCheckSpace;
+	// private JPanel 	pnlButtons, pnlStaffList, pnlSpaceList, pnlMakeLot,pnlMakeSpace,
+	// 				pnlMakeStaff,pnlUpdateStaff,pnlAssignSpot,pnlReserveSpot,
+	// 				pnlCheckSpace;
 	
 	/**
 	 * Creates the frame and components and launches the GUI.
@@ -49,7 +49,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		db = new ParkingDB();
 		try
 		{
-			list = db.getLots();
+			list = db.getLot();
 			
 			data = new Object[list.size()][columnNames.length];
 			for (int i=0; i<list.size(); i++) {
@@ -110,9 +110,22 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		btnCheckSpace = new JButton("Check Spot");
 		btnCheckSpace.addActionListener(this);
 		
-		pnlButtons.add(btnList);
-		pnlButtons.add(btnSearch);
-		pnlButtons.add(btnAdd);
+		// pnlButtons.add(btnList);
+		// pnlButtons.add(btnSearch);
+		// pnlButtons.add(btnAdd);
+		pnlButtons.add(pnlStaffList);
+		pnlButtons.add(pnlSpaceList);
+		pnlButtons.add(pnlMakeLot);
+		pnlButtons.add(pnlMakeSpace);
+		pnlButtons.add(pnlMakeStaff);
+		pnlButtons.add(pnlUpdateStaff);
+		pnlButtons.add(pnlAssignSpot);
+		pnlButtons.add(pnlReserveSpot);
+		pnlButtons.add(pnlCheckSpace);
+		// private JPanel 	pnlButtons, pnlStaffList, pnlSpaceList, pnlMakeLot,pnlMakeSpace,
+		// 			pnlMakeStaff,pnlUpdateStaff,pnlAssignSpot,pnlReserveSpot,
+		// 			pnlCheckSpace;
+
 		add(pnlButtons, BorderLayout.NORTH);
 		
 		//List Panel
@@ -158,8 +171,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		MovieGUI movieGUI = new MovieGUI();
 		movieGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -173,18 +185,18 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnList) {
 			try {
-				list = db.getMovies();
+				list = db.getLot();
 			} catch (Exception exception) {
 				JOptionPane.showMessageDialog(this, exception.getMessage());
 				return;
 			}
 			data = new Object[list.size()][columnNames.length];
+			//Integer capacity, Integer floors, String location, String lotName
 			for (int i=0; i<list.size(); i++) {
-				data[i][0] = list.get(i).getTitle();
-				data[i][1] = list.get(i).getYear();
-				data[i][2] = list.get(i).getLength();
-				data[i][3] = list.get(i).getGenre();
-				data[i][4] = list.get(i).getStudioName();
+				data[i][0] = list.get(i).getCapacity();
+				data[i][1] = list.get(i).getFloors();
+				data[i][2] = list.get(i).getLocation();
+				data[i][3] = list.get(i).getLotName();
 			}
 			pnlContent.removeAll();
 			table = new JTable(data, columnNames);
@@ -193,7 +205,9 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 			pnlContent.add(scrollPane);
 			pnlContent.revalidate();
 			this.repaint();
-			
+			// private JButton btnStaffList, btnSpaceList, btnMakeLot,btnMakeSpace,
+			// 		btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
+			// 		btnCheckSpace;
 		} else if (e.getSource() == btnSearch) {
 			pnlContent.removeAll();
 			pnlContent.add(pnlSearch);

@@ -28,6 +28,7 @@ public class ParkingDB {
     private List<CoveredSpace> coveredSpaceList;
     private List<UncoveredSpace> uncoveredSpaceList;
     private List<Space> spaceList;
+    private List<Space> availableSpaceList;
 
 
 /**
@@ -379,13 +380,33 @@ public class ParkingDB {
 			createConnection();
 		}
 		Statement stmt = null;
-		String query = "SELECT spaceNumber\n"
+		String query = "SELECT *\n"
 					+ "FROM Space\n"
-					+ "MINUS\n"
-					+ "SELECT spaceNumber\n"
-					+ "FROM StaffSpace\n"
-					+ "UNION\n"
-					+ "SELECT spaceNumber\n"
-					+ "FROM SpaceBooking";
+					+ "WHERE spaceNumber IN (SELECT spaceNumber\n"
+						+ "FROM Space\n"
+						+ "MINUS\n"
+						+ "SELECT spaceNumber\n"
+						+ "FROM StaffSpace\n"
+						+ "UNION\n"
+						+ "SELECT spaceNumber\n"
+						+ "FROM SpaceBooking)";
+		availableSpaceList = new ArrayList<Space>();
+		try {
+			stmt = sConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Integer spaceNumber = rs.getInt("spaceNumber");
+				String spaceType = rs.getString("spaceType");
+				String lotName = rs.getString("lotName");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new Exception("Unable to retrieve spaces.");
+		} finally {
+			if (stmt !=null) {
+				stmt.close();
+			}
+		}
+		return availableSpaceList;
 	}
 }

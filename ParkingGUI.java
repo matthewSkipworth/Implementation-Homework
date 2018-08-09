@@ -46,7 +46,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 
 	private JButton btnStaffList, btnSpaceList, btnMakeLot,btnMakeSpace,
 					btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
-					btnCheckSpace,btnViewCoveredSpace;
+					btnCheckSpace,btnViewCoveredSpace,btnAdd,btnAddLot;
 
 	private JPanel 	pnlButtons, pnlContent, pnlStaffList, pnlSpaceList, pnlMakeLot,
 					pnlMakeSpace,pnlUpdateStaff,pnlAssignSpot,pnlReserveSpot,pnlCheckSpace
@@ -94,8 +94,8 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		btnSpaceList = new JButton("Spaces List");
 		btnSpaceList.addActionListener(this);
 		
-		btnMakeLot = new JButton("Add Lot");
-		btnMakeLot.addActionListener(this);
+		btnAddLot = new JButton("Add Lot");
+		btnAddLot.addActionListener(this);
 
 		btnMakeSpace = new JButton("Add Space");
 		btnMakeSpace.addActionListener(this);
@@ -118,7 +118,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		pnlButtons.add(btnStaffList);
 		pnlButtons.add(btnSpaceList);
 		pnlButtons.add(btnViewCoveredSpace);
-		pnlButtons.add(btnMakeLot);
+		pnlButtons.add(btnAddLot);
 		pnlButtons.add(btnMakeSpace);
 		pnlButtons.add(btnMakeStaff);
 		pnlButtons.add(btnUpdateStaff);
@@ -155,10 +155,10 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		pnlAddLot = new JPanel();
 		pnlAddLot.setLayout(new GridLayout(4, 0));
 		//private Integer capacity,floors; ivate String location, lotName;
-		String labelNames[] = {"Enter Capacity: ", "Enter Floors: ", "Enter Location: ", "Enter Lot Name: "};
-		for (int i=0; i<labelNames.length; i++) {
+		String labelNamesLot[] = {"Enter Capacity: ", "Enter Floors: ", "Enter Location: ", "Enter Lot Name: "};
+		for (int i=0; i<labelNamesLot.length; i++) {
 			JPanel panel = new JPanel();
-			txfLabel[i] = new JLabel(labelNames[i]);
+			txfLabel[i] = new JLabel(labelNamesLot[i]);
 			txfField[i] = new JTextField(25);
 			panel.add(txfLabel[i]);
 			panel.add(txfField[i]);
@@ -170,7 +170,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		panel.add(btnMakeLot);
 		pnlAddLot.add(panel);
 		
-		add(pnlAddLot, BorderLayout.CENTER);		
+		add(pnlContent, BorderLayout.CENTER);		
 	}
 
 	/**
@@ -266,6 +266,12 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 			for (int i=0; i<txfField.length; i++) {
 				txfField[i].setText("");
 			}
+			
+		} else if (e.getSource() == btnAdd) {
+			pnlContent.removeAll();
+			pnlContent.add(pnlAddLot);
+			pnlContent.revalidate();
+			this.repaint();
 			
 		}
 

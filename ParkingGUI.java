@@ -28,9 +28,11 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	
 	private List<CoveredSpace> listCoveredSpace;
 	private List<Staff> listStaff;
+	private List<Space> listSpace;
 
 	private String[] columnNamesCovered = {"Space Number", "Monthly Rate"};
 	private String[] columnNamesStaff = {"Staff Number", "Telephone Extensionm", "License Plate Number"};
+	private String[] columnNamesSpace = {"Space Number", "Space Type", "Lot Namer"};
 	
 	private Object[][] data;
 
@@ -46,7 +48,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 					btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
 					btnCheckSpace,btnViewCoveredSpace;
 
-	private JPanel 	pnlButtons, pnlCoveredSpace, pnlStaffList, pnlSpaceList, pnlMakeLot,
+	private JPanel 	pnlButtons, pnlContent, pnlStaffList, pnlSpaceList, pnlMakeLot,
 					pnlMakeSpace,pnlUpdateStaff,pnlAssignSpot,pnlReserveSpot,pnlCheckSpace
 					,pnlViewCoveredSpace;
 	
@@ -55,14 +57,11 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	 */
 	public ParkingGUI() {
 		super("Staff List");
-		
 		db = new ParkingDB();
 		try {
 			listStaff = db.getStaff();
-			//Integer visitorLicense, String dateOfVisit, Integer spaceNumber, Integer BookingId, Integer staffNumber
 			data = new Object[listStaff.size()][columnNamesStaff.length];
 			for (int i=0; i<listStaff.size(); i++) {
-				//private Integer spaceNumber; private Double monthlyRate;
 				data[i][0] = listStaff.get(i).getStaffNumber();
 				data[i][1] = listStaff.get(i).getTelephoneExt();
 				data[i][2] = listStaff.get(i).getVehicleLicenseNumber();
@@ -136,22 +135,22 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		// pnlStaff.add(scrollPane);
 		// table.getModel().addTableModelListener(this);
 
-		// //Staff list button
-		pnlStaffList = new JPanel();
-		table = new JTable(data, columnNamesStaff);
-		scrollPane = new JScrollPane(table);
-		pnlStaffList.add(scrollPane);
-		table.getModel().addTableModelListener(this);
+		// // //Staff list button
+		// pnlStaffList = new JPanel();
+		// table = new JTable(data, columnNamesStaff);
+		// scrollPane = new JScrollPane(table);
+		// pnlStaffList.add(scrollPane);
+		// table.getModel().addTableModelListener(this);
 
 		//covered space button
-		pnlCoveredSpace = new JPanel();
-		table = new JTable(data, columnNamesCovered);
+		pnlContent = new JPanel();
+		table = new JTable(data, columnNamesStaff);
 		scrollPane = new JScrollPane(table);
-		pnlCoveredSpace.add(scrollPane);
+		pnlContent.add(scrollPane);
 		table.getModel().addTableModelListener(this);
 
 
-		add(pnlCoveredSpace, BorderLayout.CENTER);
+		add(pnlContent, BorderLayout.CENTER);
 		
 	}
 
@@ -169,27 +168,8 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnViewCoveredSpace) {
-			try {
-				listCoveredSpace = db.getCoveredSpace();
-			} catch (Exception exception) {
-				JOptionPane.showMessageDialog(this, exception.getMessage());
-				return;
-			}
-			data = new Object[listCoveredSpace.size()][columnNamesCovered.length];
-			for (int i=0; i<listCoveredSpace.size(); i++) {
-				data[i][0] = listCoveredSpace.get(i).getSpaceNumber();
-				data[i][1] = listCoveredSpace.get(i).getMonthlyRate();
-			}
-			pnlCoveredSpace.removeAll();
-			table = new JTable(data, columnNamesCovered);
-			table.getModel().addTableModelListener(this);
-			scrollPane = new JScrollPane(table);
-			pnlCoveredSpace.add(scrollPane);
-			pnlCoveredSpace.revalidate();
-			this.repaint();
+		if (e.getSource() == btnStaffList) {
 			
-		} else if (e.getSource() == btnStaffList) {
 			try {
 				listStaff = db.getStaff();
 			} catch (Exception exception) {
@@ -203,13 +183,55 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 				data[i][1] = listStaff.get(i).getTelephoneExt();
 				data[i][2] = listStaff.get(i).getVehicleLicenseNumber();
 			}
-			pnlCoveredSpace.removeAll();
+			pnlContent.removeAll();
 			table = new JTable(data, columnNamesStaff);
 			table.getModel().addTableModelListener(this);
 			scrollPane = new JScrollPane(table);
-			pnlCoveredSpace.add(scrollPane);
-			pnlCoveredSpace.revalidate();
+			pnlContent.add(scrollPane);
+			pnlContent.revalidate();
 			this.repaint();
+			
+		} else if (e.getSource() == btnViewCoveredSpace) {
+			try {
+				listCoveredSpace = db.getCoveredSpace();
+			} catch (Exception exception) {
+				JOptionPane.showMessageDialog(this, exception.getMessage());
+				return;
+			}
+			data = new Object[listCoveredSpace.size()][columnNamesCovered.length];
+			for (int i=0; i<listCoveredSpace.size(); i++) {
+				data[i][0] = listCoveredSpace.get(i).getSpaceNumber();
+				data[i][1] = listCoveredSpace.get(i).getMonthlyRate();
+			}
+			pnlContent.removeAll();
+			table = new JTable(data, columnNamesCovered);
+			table.getModel().addTableModelListener(this);
+			scrollPane = new JScrollPane(table);
+			pnlContent.add(scrollPane);
+			pnlContent.revalidate();
+			this.repaint();
+			
+		} else if (e.getSource() == btnSpaceList) {
+			try {
+				listSpace = db.getSpace();
+			} catch (Exception exception) {
+				JOptionPane.showMessageDialog(this, exception.getMessage());
+				return;
+			}
+			data = new Object[listSpace.size()][columnNamesSpace.length];
+			for (int i=0; i<listSpace.size(); i++) {
+				data[i][0] = listSpace.get(i).getSpaceNumber();
+				data[i][1] = listSpace.get(i).getSpaceType();
+				data[i][1] = listSpace.get(i).getLotName();
+			}
+			pnlContent.removeAll();
+			table = new JTable(data, columnNamesSpace);
+			table.getModel().addTableModelListener(this);
+			scrollPane = new JScrollPane(table);
+			pnlContent.add(scrollPane);
+			pnlContent.revalidate();
+			this.repaint();
+			
 		}
 
 

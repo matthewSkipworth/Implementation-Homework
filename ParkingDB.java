@@ -27,6 +27,7 @@ public class ParkingDB {
 	private List<SpaceBooking> bookingList;
 	private List<CoveredSpace> coveredSpaceList;
 	private List<UncoveredSpace> uncoveredSpaceList;
+	private List<Space> spaceList;
 
 
 	/**
@@ -217,7 +218,7 @@ public class ParkingDB {
 			createConnection();
 		}
 		Statement stmt = null;
-		String query = "select staffNumber, telephoneExt, vehicleLicenseNumber"
+		String query = "SELECT staffNumber, telephoneExt, vehicleLicenseNumber"
 						+ " from Staff";
 		staffList = new ArrayList<Staff>();
 		try {
@@ -233,8 +234,8 @@ public class ParkingDB {
 
 			//	public SpaceBooking(Integer visitorLicense, String dateOfVisit, 
 			//						Integer spaceNumber, Integer BookingId, Integer staffNumber) {
-				Staff staffMember = new Staff(staffNumber, telephoneExt, vehicleLicenseNumber);
-				staffList.add(staffMember);
+				Staff staff = new Staff(staffNumber, telephoneExt, vehicleLicenseNumber);
+				staffList.add(staff);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -246,6 +247,43 @@ public class ParkingDB {
 			}
 		}
 		return staffList;
+	}
+
+	public List<Space> getSpace() throws Exception {
+		if (sConnection == null) {
+			createConnection();
+		}
+		Statement stmt = null;
+		String query = "select spaceNumber, spaceType, lotName"
+						+ " from Space";
+		
+		spaceList = new ArrayList<Space>();
+		try {
+			stmt = sConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Integer spaceNumber = rs.getInt("spaceNumber");
+				String spaceType = rs.getString("spaceType");
+				String lotName = rs.getString("lotName");
+			//	String dateOfVisit = rs.getString("dateOfVisit");
+			//	Integer staffNumber = rs.getInt("staffNumber");
+				
+
+			//	public SpaceBooking(Integer visitorLicense, String dateOfVisit, 
+			//						Integer spaceNumber, Integer BookingId, Integer staffNumber) {
+				Space space = new Space(spaceNumber, spaceType, lotName);
+				spaceList.add(space);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new Exception("Unable to retrieve list of Spaces: "
+					 + e.getMessage());
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return spaceList;
 	}
 
 	public List<CoveredSpace> getCoveredSpace() throws Exception {

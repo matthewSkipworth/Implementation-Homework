@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
+//import java.util.Properties;
 
 /**
  * A class that consists of the database operations to insert and update the Movie information.
@@ -21,10 +21,11 @@ public class ParkingDB {
 	private static String serverName = "cssgate.insttech.washington.edu";
 	private static Connection sConnection;
     private List<Lot> lotList;
-    private List<Space> spaceList;
+    //private List<Space> spaceList;
     private List<StaffSpace> staffSpaceList;
     private List<Staff> staffList;
     private List<SpaceBooking> bookingList;
+    private List<CoveredSpace> coveredSpaceList;
 
 
 /**
@@ -281,5 +282,35 @@ public class ParkingDB {
 			}
 		}
 		return lotList;
+	}
+	public List<CoveredSpace> getCoveredSpace() throws Exception {
+		if (sConnection == null) {
+			createConnection();
+		}
+		Statement stmt = null;
+		String query = "select spaceNumber, monthlyRate" 
+						+ "from CoveredSpace";
+		coveredSpaceList = new ArrayList<CoveredSpace>();
+		try {
+			stmt = sConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Integer spaceNumber = rs.getInt("spaceNumber");
+				Double monthlyRate = rs.getDouble("monthlyRate");
+				CoveredSpace newCoveredSpace = new CoveredSpace(spaceNumber, 
+																monthlyRate);
+				coveredSpaceList.add(newCoveredSpace);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new Exception("Unable to recover the list of "
+					+ "covered spaces");
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return coveredSpaceList;
 	}
 }

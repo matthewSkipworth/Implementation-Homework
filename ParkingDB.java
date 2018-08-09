@@ -16,8 +16,8 @@ import java.util.List;
  */
 
 public class ParkingDB {
-	private static String userName = "jake314";
-	private static String password = "Hersoyds";
+	private static String userName = "mfskipwo";
+	private static String password = "OkvofUt6";
 	private static String serverName = "cssgate.insttech.washington.edu";
 	private static Connection sConnection;
     private List<Lot> lotList;
@@ -27,6 +27,7 @@ public class ParkingDB {
     private List<SpaceBooking> bookingList;
     private List<CoveredSpace> coveredSpaceList;
     private List<UncoveredSpace> uncoveredSpaceList;
+    private List<Space> spaceList;
 
 
 /**
@@ -135,6 +136,9 @@ public class ParkingDB {
 		} 
 		
 	}
+    public void updateCoveredSpace(int row, String columnName, Object data) throws Exception {
+    	
+    }
     /**
      * method getVisitorSpaces returns all records of visitor space booking
      * requests.
@@ -218,8 +222,8 @@ public class ParkingDB {
 			createConnection();
 		}
 		Statement stmt = null;
-		String query = "select staffNumber, telephoneExt, vehicleLicenseNumber"
-						+ "from SpaceBooking";
+		String query = "select staffNumber, telephoneExt, vehicleLicenseNumber "
+						+ " from Staff";
 		staffList = new ArrayList<Staff>();
 		try {
 			stmt = sConnection.createStatement();
@@ -259,7 +263,7 @@ public class ParkingDB {
 		}
 		Statement stmt = null;
 		String query = "select capacity, floors, location, lotName" + 
-						"from Lot";
+						" from Lot";
 		lotList = new ArrayList<Lot>();
 		try {
 			stmt = sConnection.createStatement();
@@ -290,7 +294,7 @@ public class ParkingDB {
 		}
 		Statement stmt = null;
 		String query = "select spaceNumber, monthlyRate" 
-						+ "from CoveredSpace";
+						+ " from CoveredSpace";
 		coveredSpaceList = new ArrayList<CoveredSpace>();
 		try {
 			stmt = sConnection.createStatement();
@@ -320,7 +324,7 @@ public class ParkingDB {
 		}
 		Statement stmt = null;
 		String query = "select spaceNumber" 
-						+ "from UncoveredSpace";
+						+ " from UncoveredSpace";
 		uncoveredSpaceList = new ArrayList<UncoveredSpace>();
 		try {
 			stmt = sConnection.createStatement();
@@ -342,5 +346,32 @@ public class ParkingDB {
 			}
 		}
 		return uncoveredSpaceList;
+	}
+	public List<Space> getSpace() throws Exception{ 
+		if (sConnection == null) {
+			createConnection();
+		}
+		Statement stmt = null;
+		String query = "select spaceNumber, spaceType, lot Name from Space";
+		spaceList = new ArrayList<Space>();
+		try {
+			stmt = sConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Integer spaceNumber = rs.getInt("spaceNumber");
+				String spaceType = rs.getString("spaceType");
+				String lotName = rs.getString("lotName");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new Exception("Unable to retrieve space.");
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return spaceList;
+		
+		
 	}
 }

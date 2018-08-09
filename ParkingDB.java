@@ -49,15 +49,15 @@ public class ParkingDB {
 	 * @throws Exception 
 	 */
 	public void addLot(Lot lot) throws Exception {
-		String sql = "insert into Lot values " + "(?, ?, ?, ?, null); ";
+		String sql = "INSERT INTO Lot VALUES\n" + "\t(?, ?, ?, ?); ";
 
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = sConnection.prepareStatement(sql);
-			preparedStatement.setInt(1, lot.getCapacity());
-			preparedStatement.setInt(2, lot.getFloors());
-			preparedStatement.setString(3, lot.getLocation());
-			preparedStatement.setString(4, lot.getLotName());
+			preparedStatement.setString(1, lot.getLotName());
+			preparedStatement.setString(2, lot.getLocation());
+			preparedStatement.setInt(3, lot.getCapacity());
+			preparedStatement.setInt(4, lot.getFloors());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

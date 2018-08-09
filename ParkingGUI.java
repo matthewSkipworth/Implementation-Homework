@@ -155,7 +155,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		pnlAddLot = new JPanel();
 		pnlAddLot.setLayout(new GridLayout(4, 0));
 		//private Integer capacity,floors; ivate String location, lotName;
-		String labelNamesLot[] = {"Enter Capacity: ", "Enter Floors: ", "Enter Location: ", "Enter Lot Name: "};
+		String labelNamesLot[] = { "Enter Lot Name: ", "Enter Location: ","Enter Capacity: ", "Enter Floors: "};
 		for (int i=0; i<labelNamesLot.length; i++) {
 			JPanel panel = new JPanel();
 			txfLabel[i] = new JLabel(labelNamesLot[i]);
@@ -253,8 +253,8 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 			
 		} else if (e.getSource() == btnMakeLot) {
 			
-			Lot lot = new Lot(Integer.parseInt(txfField[0].getText()), Integer.parseInt(txfField[1].getText())
-					,txfField[2].getText(), txfField[3].getText() );
+			Lot lot = new Lot(txfField[1].getText(), txfField[1].getText(),
+			Integer.parseInt(txfField[2].getText()), Integer.parseInt(txfField[3].getText()));
 			try {
 				db.addLot(lot);
 			}
@@ -267,7 +267,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 				txfField[i].setText("");
 			}
 			
-		} else if (e.getSource() == btnAdd) {
+		} else if (e.getSource() == btnAddLot) {
 			pnlContent.removeAll();
 			pnlContent.add(pnlAddLot);
 			pnlContent.revalidate();

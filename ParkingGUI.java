@@ -30,15 +30,14 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	private JScrollPane scrollPane;
 	private JLabel[] txfLabel = new JLabel[5];
 	private JTextField[] txfField = new JTextField[5];
-	private JButton btnAddMovie;
 
 	private JButton btnStaffList, btnSpaceList, btnMakeLot,btnMakeSpace,
 					btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
 					btnCheckSpace;
 
-	// private JPanel 	pnlButtons, pnlStaffList, pnlSpaceList, pnlMakeLot,pnlMakeSpace,
-	// 				pnlMakeStaff,pnlUpdateStaff,pnlAssignSpot,pnlReserveSpot,
-	// 				pnlCheckSpace;
+	private JPanel 	pnlButtons, pnlContent, pnlStaffList, pnlSpaceList, pnlMakeLot,
+					pnlMakeSpace, pnlMakeStaff, pnlUpdateStaff, pnlAssignSpot,
+					pnlReserveSpot, pnlCheckSpace;
 	
 	/**
 	 * Creates the frame and components and launches the GUI.
@@ -60,8 +59,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 				
 			}
 			
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this,"Error: " + e.getMessage());
 			return;
 		}
@@ -137,9 +135,9 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		
 		//Search Panel
 		pnlSearch = new JPanel();
-		lblTitle = new JLabel("Enter Title: ");
+		lblTitle = new JLabel("Enter Lot Name: ");
 		txfTitle = new JTextField(25);
-		btnTitleSearch = new JButton("Search");
+		btnTitleSearch = new JButton("Search Among Lot");
 		btnTitleSearch.addActionListener(this);
 		pnlSearch.add(lblTitle);
 		pnlSearch.add(txfTitle);

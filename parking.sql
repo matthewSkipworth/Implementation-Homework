@@ -36,7 +36,7 @@ create table SpaceBooking(BookingId integer ,
 											);
 
 create table CoveredSpace(spaceNumber integer,
-											monthlyRate decimal,
+											monthlyRate decimal(10,2),
                                             primary key(spaceNumber),
                                             foreign key(spaceNumber) references `Space`(spaceNumber));
 

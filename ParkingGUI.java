@@ -32,7 +32,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 
 	private String[] columnNamesCovered = {"Space Number", "Monthly Rate"};
 	private String[] columnNamesStaff = {"Staff Number", "Telephone Extensionm", "License Plate Number"};
-	private String[] columnNamesSpace = {"Space Number", "Space Type", "Lot Namer"};
+	private String[] columnNamesSpace = {"Space Number", "Space Type", "Lot Name"};
 	
 	private Object[][] data;
 
@@ -222,7 +222,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 			for (int i=0; i<listSpace.size(); i++) {
 				data[i][0] = listSpace.get(i).getSpaceNumber();
 				data[i][1] = listSpace.get(i).getSpaceType();
-				data[i][1] = listSpace.get(i).getLotName();
+				data[i][2] = listSpace.get(i).getLotName();
 			}
 			pnlContent.removeAll();
 			table = new JTable(data, columnNamesSpace);

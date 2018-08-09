@@ -54,17 +54,18 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	 * Creates the frame and components and launches the GUI.
 	 */
 	public ParkingGUI() {
-		super("Covered Spaces");
+		super("Staff List");
 		
 		db = new ParkingDB();
 		try {
-			listCoveredSpace = db.getCoveredSpace();
+			listStaff = db.getStaff();
 			//Integer visitorLicense, String dateOfVisit, Integer spaceNumber, Integer BookingId, Integer staffNumber
-			data = new Object[listCoveredSpace.size()][columnNamesCovered.length];
-			for (int i=0; i<listCoveredSpace.size(); i++) {
+			data = new Object[listStaff.size()][columnNamesStaff.length];
+			for (int i=0; i<listStaff.size(); i++) {
 				//private Integer spaceNumber; private Double monthlyRate;
-				data[i][0] = listCoveredSpace.get(i).getSpaceNumber();
-				data[i][1] = listCoveredSpace.get(i).getMonthlyRate();
+				data[i][0] = listStaff.get(i).getStaffNumber();
+				data[i][1] = listStaff.get(i).getTelephoneExt();
+				data[i][2] = listStaff.get(i).getVehicleLicenseNumber();
 			}
 			
 		} catch (Exception e) {
@@ -127,6 +128,13 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		pnlButtons.add(btnCheckSpace);
 		add(pnlButtons, BorderLayout.NORTH);
 		
+		
+		// //Staff Panel
+		// pnlStaff = new JPanel();
+		// table = new JTable(data, columnNames);
+		// scrollPane = new JScrollPane(table);
+		// pnlStaff.add(scrollPane);
+		// table.getModel().addTableModelListener(this);
 
 		// //Staff list button
 		pnlStaffList = new JPanel();
@@ -142,68 +150,6 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		pnlCoveredSpace.add(scrollPane);
 		table.getModel().addTableModelListener(this);
 
-		//covered staff button
-		// pnlContentStaff = new JPanel();
-		// table = new JTable(data, columnNamesStaff);
-		// scrollPane = new JScrollPane(table);
-		// pnlContent.add(scrollPane);
-		// table.getModel().addTableModelListener(this);
-		
-		// //parking space list button
-		// pnlSpaceList = new JPanel();
-		// table = new JTable(data, columnNames);
-		// scrollPane = new JScrollPane(table);
-		// pnlContent.add(scrollPane);
-		// table.getModel().addTableModelListener(this);
-
-		// //make lot button
-		// pnlMakeLot = new JPanel();
-		// table = new JTable(data, columnNames);
-		// scrollPane = new JScrollPane(table);
-		// pnlContent.add(scrollPane);
-		// table.getModel().addTableModelListener(this);
-
-		// //make lot button
-		// pnlMakeLot = new JPanel();
-		// table = new JTable(data, columnNames);
-		// scrollPane = new JScrollPane(table);
-		// pnlContent.add(scrollPane);
-		// table.getModel().addTableModelListener(this);
-
-		// //make parking space button
-		// pnlMakeSpace = new JPanel();
-		// table = new JTable(data, columnNames);
-		// scrollPane = new JScrollPane(table);
-		// pnlContent.add(scrollPane);
-		// table.getModel().addTableModelListener(this);
-
-		// //update parking space button
-		// pnlUpdateStaff = new JPanel();
-		// table = new JTable(data, columnNames);
-		// scrollPane = new JScrollPane(table);
-		// pnlContent.add(scrollPane);
-		// table.getModel().addTableModelListener(this);
-
-		// //assign staff parking space button
-		// pnlAssignSpot = new JPanel();
-		// table = new JTable(data, columnNames);
-		// scrollPane = new JScrollPane(table);
-		// pnlContent.add(scrollPane);
-		// table.getModel().addTableModelListener(this);
-
-		// //reserve visitor parking space button
-		// pnlReserveSpot = new JPanel();
-		// table = new JTable(data, columnNames);
-		// scrollPane = new JScrollPane(table);
-		// pnlContent.add(scrollPane);
-		// table.getModel().addTableModelListener(this);
-
-		// //check to see if parking space button
-		// pnlCheckSpace = new JPanel();
-		// table = new JTable(data, columnNames);
-		// scrollPane = new JScrollPane(table);
-		// pnlContent.add(scrollPane);
-		// table.getModel().addTableModelListener(this);
 
 		add(pnlCoveredSpace, BorderLayout.CENTER);
 		
@@ -257,69 +203,16 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 				data[i][1] = listStaff.get(i).getTelephoneExt();
 				data[i][2] = listStaff.get(i).getVehicleLicenseNumber();
 			}
-			pnlStaffList.removeAll();
+			pnlCoveredSpace.removeAll();
 			table = new JTable(data, columnNamesStaff);
 			table.getModel().addTableModelListener(this);
 			scrollPane = new JScrollPane(table);
-			pnlStaffList.add(scrollPane);
-			pnlStaffList.revalidate();
+			pnlCoveredSpace.add(scrollPane);
+			pnlCoveredSpace.revalidate();
 			this.repaint();
 		}
 
 
-		// else if (e.getSource() == btnCheckSpace) {
-		// 	pnlContent.removeAll();
-		// 	pnlContent.add(pnlCheckSpace);
-		// 	pnlContent.revalidate();
-		// 	this.repaint();
-		// } else if (e.getSource() == btnMakeSpace) {
-		// 	pnlContent.removeAll();
-		// 	pnlContent.add(pnlMakeSpace);
-		// 	pnlContent.revalidate();
-		// 	this.repaint();
-			
-		// } 
-		// else if (e.getSource() == btnTitleSearch) {
-		// 	String title = txfTitle.getText();
-		// 	if (title.length() > 0) {
-		// 		try {
-		// 			list = db.getMovies(title);
-		// 		}
-		// 		catch(Exception exception) {
-		// 			JOptionPane.showMessageDialog(this, exception.getMessage());
-		// 			return;
-		// 		}
-		// 		data = new Object[list.size()][columnNames.length];
-		// 		for (int i=0; i<list.size(); i++) {
-		// 			data[i][0] = list.get(i).getTitle();
-		// 			data[i][1] = list.get(i).getYear();
-		// 			data[i][2] = list.get(i).getLength();
-		// 			data[i][3] = list.get(i).getGenre();
-		// 			data[i][4] = list.get(i).getStudioName();
-		// 		}
-		// 		pnlContent.removeAll();
-		// 		table = new JTable(data, columnNames);
-		// 		table.getModel().addTableModelListener(this);
-		// 		scrollPane = new JScrollPane(table);
-		// 		pnlContent.add(scrollPane);
-		// 		pnlContent.revalidate();
-		// 		this.repaint();
-		// 	}
-		// } else if (e.getSource() == btnAddMovie) {
-		// 	Movie movie = new Movie(txfField[0].getText(), Integer.parseInt(txfField[1].getText())
-		// 			,Integer.parseInt(txfField[2].getText()), txfField[3].getText(), txfField[4].getText() );
-		// 	try {
-		// 		db.addMovie(movie);
-		// 	} catch(Exception exception) {
-		// 		JOptionPane.showMessageDialog(this, exception.getMessage());
-		// 		return;
-		// 	}
-		// 	JOptionPane.showMessageDialog(null, "Added Successfully!");
-		// 	for (int i=0; i<txfField.length; i++) {
-		// 		txfField[i].setText("");
-		// 	}
-		// }
-		
 	}
 
 	/**

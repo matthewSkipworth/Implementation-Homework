@@ -57,11 +57,11 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		try {
 			listCoveredSpace = db.getCoveredSpace();
 			//Integer visitorLicense, String dateOfVisit, Integer spaceNumber, Integer BookingId, Integer staffNumber
-			data = new Object[listCoveredSpace.size()][columnNamesCoveredSpace.length];
+			dataCoveredSpace = new Object[listCoveredSpace.size()][columnNamesCoveredSpace.length];
 			for (int i=0; i<listCoveredSpace.size(); i++) {
 				//private Integer spaceNumber; private Double monthlyRate;
-				data[i][0] = listCoveredSpace.get(i).getSpaceNumber();
-				data[i][1] = listCoveredSpace.get(i).getMonthlyRate();
+				dataCoveredSpace[i][0] = listCoveredSpace.get(i).getSpaceNumber();
+				dataCoveredSpace[i][1] = listCoveredSpace.get(i).getMonthlyRate();
 			}
 			
 		} catch (Exception e) {
@@ -202,7 +202,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		// pnlContent.add(scrollPane);
 		// table.getModel().addTableModelListener(this);
 
-		add(pnlContent, BorderLayout.CENTER);
+		add(pnlContentCoveredSpace, BorderLayout.CENTER);
 		
 	}
 

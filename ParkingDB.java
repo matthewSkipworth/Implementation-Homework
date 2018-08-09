@@ -26,6 +26,7 @@ public class ParkingDB {
     private List<Staff> staffList;
     private List<SpaceBooking> bookingList;
     private List<CoveredSpace> coveredSpaceList;
+    private List<UncoveredSpace> uncoveredSpaceList;
 
 
 /**
@@ -312,5 +313,34 @@ public class ParkingDB {
 			}
 		}
 		return coveredSpaceList;
+	}
+	public List<UncoveredSpace> getUncoveredSpace() throws Exception {
+		if (sConnection == null) {
+			createConnection();
+		}
+		Statement stmt = null;
+		String query = "select spaceNumber" 
+						+ "from UncoveredSpace";
+		uncoveredSpaceList = new ArrayList<UncoveredSpace>();
+		try {
+			stmt = sConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Integer spaceNumber = rs.getInt("spaceNumber");
+				//Double monthlyRate = rs.getDouble("monthlyRate");
+				UncoveredSpace newUncoveredSpace = new UncoveredSpace(spaceNumber);
+				uncoveredSpaceList.add(newUncoveredSpace);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new Exception("Unable to recover the list of "
+					+ "uncovered spaces");
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return uncoveredSpaceList;
 	}
 }

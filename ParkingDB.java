@@ -24,7 +24,9 @@ public class ParkingDB {
     // private List<Space> spaceList;
     private List<StaffSpace> staffSpaceList;
     private List<Staff> staffList;
-    private List<SpaceBooking> bookingList;
+	private List<SpaceBooking> bookingList;
+	private List<CoveredSpace> coveredSpaceList;
+	private List<UncoveredSpace> uncoveredSpaceList;
 
 
 	/**

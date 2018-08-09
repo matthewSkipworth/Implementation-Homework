@@ -254,7 +254,7 @@ public class ParkingDB {
 		}
 		Statement stmt = null;
 		String query = "select spaceNumber, monthlyRate" 
-						+ "from CoveredSpace";
+						+ " from CoveredSpace";
 		coveredSpaceList = new ArrayList<CoveredSpace>();
 		try {
 			stmt = sConnection.createStatement();
@@ -307,4 +307,25 @@ public class ParkingDB {
 		}
 		return uncoveredSpaceList;
 	}
+	/**
+	 * Filters the movie list to find the given title. Returns a list with the
+	 * movie objects that match the title provided.
+	 * @param title
+	 * @return list of movies that contain the title.
+	 */
+	// public List<CoveredSpace> getCoveredSpace(String title) throws Exception {
+	// 	List<CoveredSpace> filterList = new ArrayList<CoveredSpace>();
+	// 	try {
+	// 		list = getCoveredSpace();
+	// 	} catch (SQLException e) {
+	// 		e.printStackTrace();
+	// 		throw new Exception("Unable to retrieve covered spaces: " + e.getMessage());
+	// 	}
+	// 	for (CoveredSpace cs : list) {
+	// 		if (cs.getSpaceNumber().toLowerCase().contains(title.toLowerCase())) {
+	// 			filterList.add(cs);
+	// 		}
+	// 	}
+	// 	return filterList;
+	// }
 }

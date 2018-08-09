@@ -36,9 +36,17 @@ create table SpaceBooking(BookingId integer ,
 									);
 
 create table CoveredSpace(spaceNumber   integer,
-										monthlyRate decimal);
+						monthlyRate decimal(10,2),
+                        primary key(spaceNumber));
 
 create table UncoveredSpace(spaceNumber integer,
 										primary key(spaceNumber),
 										foreign key (spaceNumber) references Space(spaceNumber)
-										);                           
+										);
+select spaceNumber, monthlyRate from CoveredSpace;
+
+insert into CoveredSpace values
+	(1,2.17),
+    (2,3.14);
+    
+DROP TABLE CoveredSpace;

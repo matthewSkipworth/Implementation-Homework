@@ -51,6 +51,7 @@ create table UncoveredSpace(spaceNumber integer,
 select * FROM Staff;
 select * FROM `Space`;
 select * FROM CoveredSpace;
+select * FROM Lot;
 
 insert into Staff values
 	(1,94,1234),

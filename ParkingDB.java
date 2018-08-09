@@ -103,7 +103,41 @@ public class ParkingDB {
 			e.printStackTrace();
 			throw new Exception("Unable to add staff member: " + e.getMessage());
 		} 
-    }
+	}
+	
+	/**
+	 * MAKE THIS FUNCTION
+	 * 
+	 * Modifies the space information corresponding to the index in the list.
+	 * @param row index of the element in the list
+	 * @param columnName attribute to modify
+	 * @param data value to supply
+	 * @throws Exception 
+	 */
+
+	// public void updateMovie(int row, String columnName, Object data) throws Exception {
+		
+	// 	Movie movie = list.get(row);
+	// 	String title = movie.getTitle();
+	// 	int year = movie.getYear();
+	// 	String sql = "update Movies set " + columnName + " = ?  where title= ? and year = ? ";
+	// 	PreparedStatement preparedStatement = null;
+	// 	try {
+	// 		preparedStatement = sConnection.prepareStatement(sql);
+	// 		if (data instanceof String)
+	// 			preparedStatement.setString(1, (String) data);
+	// 		else if (data instanceof Integer)
+	// 			preparedStatement.setInt(1, (Integer) data);
+	// 		preparedStatement.setString(2, title);
+	// 		preparedStatement.setInt(3, year);
+	// 		preparedStatement.executeUpdate();
+	// 	} catch (SQLException e) {
+	// 		e.printStackTrace();
+	// 		throw new Exception("Unable to add Movie: " + e.getMessage());
+	// 	} 
+		
+	// }
+
 	/**
 	 * method updateStaff updates staff member's telephone extension number
 	 * and/or vehicle license number.

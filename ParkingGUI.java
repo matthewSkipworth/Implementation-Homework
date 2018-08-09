@@ -50,7 +50,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 
 	private JPanel 	pnlButtons, pnlContent, pnlStaffList, pnlSpaceList, pnlMakeLot,
 					pnlMakeSpace,pnlUpdateStaff,pnlAssignSpot,pnlReserveSpot,pnlCheckSpace
-					,pnlViewCoveredSpace;
+					,pnlViewCoveredSpace,pnlAddLot;
 	
 	/**
 	 * Creates the frame and components and launches the GUI.
@@ -149,9 +149,28 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		pnlContent.add(scrollPane);
 		table.getModel().addTableModelListener(this);
 
-
 		add(pnlContent, BorderLayout.CENTER);
+
+		//Add Lot Panel
+		pnlAddLot = new JPanel();
+		pnlAddLot.setLayout(new GridLayout(4, 0));
+		//private Integer capacity,floors; ivate String location, lotName;
+		String labelNames[] = {"Enter Capacity: ", "Enter Floors: ", "Enter Location: ", "Enter Lot Name: "};
+		for (int i=0; i<labelNames.length; i++) {
+			JPanel panel = new JPanel();
+			txfLabel[i] = new JLabel(labelNames[i]);
+			txfField[i] = new JTextField(25);
+			panel.add(txfLabel[i]);
+			panel.add(txfField[i]);
+			pnlAddLot.add(panel);
+		}
+		JPanel panel = new JPanel();
+		btnMakeLot = new JButton("Add Lot");
+		btnMakeLot.addActionListener(this);
+		panel.add(btnMakeLot);
+		pnlAddLot.add(panel);
 		
+		add(pnlAddLot, BorderLayout.CENTER);		
 	}
 
 	/**
@@ -232,6 +251,22 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 			pnlContent.revalidate();
 			this.repaint();
 			
+		} else if (e.getSource() == btnMakeLot) {
+			
+			Lot lot = new Lot(Integer.parseInt(txfField[0].getText()), Integer.parseInt(txfField[1].getText())
+					,txfField[2].getText(), txfField[3].getText() );
+			try {
+				db.addLot(lot);
+			}
+			catch(Exception exception) {
+				JOptionPane.showMessageDialog(this, exception.getMessage());
+				return;
+			}
+			JOptionPane.showMessageDialog(null, "Added Successfully!");
+			for (int i=0; i<txfField.length; i++) {
+				txfField[i].setText("");
+			}
+			
 		}
 
 
@@ -247,13 +282,13 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
         TableModel model = (TableModel)e.getSource();
         String columnName = model.getColumnName(column);
         Object data = model.getValueAt(row, column);
-        // try {
-        // 	 db.updateMovie(row, columnName, data);;
-		// }
-		// catch(Exception exception) {
-		// 	JOptionPane.showMessageDialog(this, exception.getMessage());
-		// 	return;
-		// }
+        try {
+        	//  db.updateMovie(row, columnName, data);;
+		}
+		catch(Exception exception) {
+			JOptionPane.showMessageDialog(this, exception.getMessage());
+			return;
+		}
        
 		
 	}

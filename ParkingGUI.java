@@ -389,7 +389,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
         String columnName = model.getColumnName(column);
         Object data = model.getValueAt(row, column);
         try {
-        	//  db.updateMovie(row, columnName, data);
+        	//  db.update(row, columnName, data);
 		}
 		catch(Exception exception) {
 			JOptionPane.showMessageDialog(this, exception.getMessage());

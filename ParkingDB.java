@@ -12,10 +12,10 @@ import java.util.Properties;
  * A class that consists of the database operations to insert and update the Movie information.
  * @author  Jake McKenzie and Matthew Skipworth
  * @version 6 August 2018
- *
  */
 
 public class ParkingDB {
+	
 	private static String userName = "jake314";
 	private static String password = "Hersoyds";
 	private static String serverName = "cssgate.insttech.washington.edu";

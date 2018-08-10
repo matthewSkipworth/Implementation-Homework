@@ -70,14 +70,14 @@ public class ParkingDB {
 	 * @throws Exception 
 	 */
 	public void addSpace(Space space) throws Exception {
-		String sql = "insert into Space values " + "(?, ?, ?, null); ";
+		String sql = "INSERT INTO `Space` VALUES\n" + "\t(?, ?, ?); ";
 
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = sConnection.prepareStatement(sql);
 			preparedStatement.setInt(1, space.getSpaceNumber());
 			preparedStatement.setString(2, space.getSpaceType());
-			preparedStatement.setString(3, space.getLotName());
+			preparedStatement.setString(3, space.getSpaceType());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -90,7 +90,7 @@ public class ParkingDB {
 	 * @throws Exception 
 	 */
 	public void addStaff(Staff staff) throws Exception {
-		String sql = "insert into Staff values " + "(?, ?, ?, null); ";
+		String sql = "INSERT INTO Staff VALUES\n" + "\t(?, ?, ?); ";
 
 		PreparedStatement preparedStatement = null;
 		try {

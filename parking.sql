@@ -13,7 +13,7 @@ create table `Space`(spaceNumber integer,
                                 );
 
 create table Staff(staffNumber integer,
-							telephoneExt int, 
+							telephoneExt integer, 
                             vehicleLicenseNumber integer,
                             primary key(staffNumber)
                             );
@@ -60,6 +60,9 @@ insert into Staff values
 insert into `Space` values
 	(1,'Covered','Garage A'),
     (2,'Uncovered','Garage B');    
+    
+insert into `Space` values
+	(3,'Covered','Garage A');
     
 insert into CoveredSpace values
 	(1,2.17),

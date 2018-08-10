@@ -44,13 +44,14 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	private JTextField[] txfField = new JTextField[5];
 	private JButton btnAddMovie;
 
-	private JButton btnStaffList, btnSpaceList, btnMakeLot,btnMakeSpace,
+	private JButton btnStaffList, btnSpaceList, btnMakeLot,
 					btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
-					btnCheckSpace,btnViewCoveredSpace,btnAdd,btnAddLot;
+					btnCheckSpace,btnViewCoveredSpace,btnAdd,btnAddLot,
+					btnMakeSpace,btnAddSpace,btnAddStaff;
 
 	private JPanel 	pnlButtons, pnlContent, pnlStaffList, pnlSpaceList, pnlMakeLot,
 					pnlMakeSpace,pnlUpdateStaff,pnlAssignSpot,pnlReserveSpot,pnlCheckSpace
-					,pnlViewCoveredSpace,pnlAddLot;
+					,pnlViewCoveredSpace,pnlAddLot,pnlAddSpace,pnlAddStaff;
 	
 	/**
 	 * Creates the frame and components and launches the GUI.
@@ -97,11 +98,11 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		btnAddLot = new JButton("Add Lot");
 		btnAddLot.addActionListener(this);
 
-		btnMakeSpace = new JButton("Add Space");
-		btnMakeSpace.addActionListener(this);
+		btnAddSpace = new JButton("Add Space");
+		btnAddSpace.addActionListener(this);
 
-		btnMakeStaff = new JButton("Add Staff");
-		btnMakeStaff.addActionListener(this);
+		btnAddStaff = new JButton("Add Staff");
+		btnAddStaff.addActionListener(this);
 
 		btnUpdateStaff = new JButton("Update Staff");
 		btnUpdateStaff.addActionListener(this);
@@ -119,29 +120,14 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		pnlButtons.add(btnSpaceList);
 		pnlButtons.add(btnViewCoveredSpace);
 		pnlButtons.add(btnAddLot);
-		pnlButtons.add(btnMakeSpace);
-		pnlButtons.add(btnMakeStaff);
+		pnlButtons.add(btnAddSpace);
+		pnlButtons.add(btnAddStaff);
 		pnlButtons.add(btnUpdateStaff);
 		pnlButtons.add(btnAssignSpot);
 		pnlButtons.add(btnReserveSpot);
 		pnlButtons.add(btnCheckSpace);
 		add(pnlButtons, BorderLayout.NORTH);
 		
-		
-		// //Staff Panel
-		// pnlStaff = new JPanel();
-		// table = new JTable(data, columnNames);
-		// scrollPane = new JScrollPane(table);
-		// pnlStaff.add(scrollPane);
-		// table.getModel().addTableModelListener(this);
-
-		// // //Staff list button
-		// pnlStaffList = new JPanel();
-		// table = new JTable(data, columnNamesStaff);
-		// scrollPane = new JScrollPane(table);
-		// pnlStaffList.add(scrollPane);
-		// table.getModel().addTableModelListener(this);
-
 		//covered space button
 		pnlContent = new JPanel();
 		table = new JTable(data, columnNamesStaff);
@@ -170,7 +156,49 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		panel.add(btnMakeLot);
 		pnlAddLot.add(panel);
 		
-		add(pnlContent, BorderLayout.CENTER);		
+		add(pnlContent, BorderLayout.CENTER);
+		
+		//Add Space Panel
+		pnlAddSpace = new JPanel();
+		pnlAddSpace.setLayout(new GridLayout(3, 0));
+		//private Integer capacity,floors; ivate String location, lotName;
+		String labelNamesSpace[] = { "Enter Space Number: ", "Enter Space Type: ","Enter Lot Name: "};
+		for (int i=0; i<labelNamesSpace.length; i++) {
+			panel = new JPanel();
+			txfLabel[i] = new JLabel(labelNamesSpace[i]);
+			txfField[i] = new JTextField(25);
+			panel.add(txfLabel[i]);
+			panel.add(txfField[i]);
+			pnlAddSpace.add(panel);
+		}
+		panel = new JPanel();
+		btnMakeSpace = new JButton("Add Space");
+		btnMakeSpace.addActionListener(this);
+		panel.add(btnMakeSpace);
+		pnlAddSpace.add(panel);
+		
+		add(pnlContent, BorderLayout.CENTER);
+
+		//Add Staff Panel
+		pnlAddStaff = new JPanel();
+		pnlAddStaff.setLayout(new GridLayout(3, 0));
+		//private Integer capacity,floors; ivate String location, lotName;
+		String labelNamesStaff[] = { "Enter Staff Number: ", "Enter Telephone Extension: ","Enter License Plate: "};
+		for (int i=0; i<labelNamesStaff.length; i++) {
+			panel = new JPanel();
+			txfLabel[i] = new JLabel(labelNamesStaff[i]);
+			txfField[i] = new JTextField(25);
+			panel.add(txfLabel[i]);
+			panel.add(txfField[i]);
+			pnlAddStaff.add(panel);
+		}
+		panel = new JPanel();
+		btnMakeStaff = new JButton("Add Space");
+		btnMakeStaff.addActionListener(this);
+		panel.add(btnMakeStaff);
+		pnlAddStaff.add(panel);
+		
+		add(pnlContent, BorderLayout.CENTER);
 	}
 
 	/**
@@ -270,6 +298,51 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		} else if (e.getSource() == btnAddLot) {
 			pnlContent.removeAll();
 			pnlContent.add(pnlAddLot);
+			pnlContent.revalidate();
+			this.repaint();
+			
+		} else if (e.getSource() == btnMakeSpace) {
+			
+			Space space = new Space(Integer.parseInt(txfField[0].getText()), txfField[1].getText(), 
+							txfField[2].getText());
+			try {
+				db.addSpace(space);
+			}
+			catch(Exception exception) {
+				JOptionPane.showMessageDialog(this, exception.getMessage());
+				return;
+			}
+			JOptionPane.showMessageDialog(null, "Added Successfully!");
+			for (int i=0; i<txfField.length; i++) {
+				txfField[i].setText("");
+			}
+			
+		} else if (e.getSource() == btnAddSpace) {
+			pnlContent.removeAll();
+			pnlContent.add(pnlAddSpace);
+			pnlContent.revalidate();
+			this.repaint();
+			
+		} else if (e.getSource() == btnMakeStaff) {
+			
+			Staff staff = new Staff(Integer.parseInt(txfField[0].getText()),
+			Integer.parseInt(txfField[1].getText()),
+			Integer.parseInt(txfField[2].getText()));
+			try {
+				db.addStaff(staff);
+			}
+			catch(Exception exception) {
+				JOptionPane.showMessageDialog(this, exception.getMessage());
+				return;
+			}
+			JOptionPane.showMessageDialog(null, "Added Successfully!");
+			for (int i=0; i<txfField.length; i++) {
+				txfField[i].setText("");
+			}
+			
+		} else if (e.getSource() == btnAddStaff) {
+			pnlContent.removeAll();
+			pnlContent.add(pnlAddStaff);
 			pnlContent.revalidate();
 			this.repaint();
 			

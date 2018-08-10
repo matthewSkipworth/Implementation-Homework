@@ -13,56 +13,47 @@ create table `Space`(
     primary key(spaceNumber),
     constraint fk_lotNm foreign key(pLotName) references Lot(lotName)
 );
+                                
+
 
 create table Staff(
 	staffNumber integer,
-	telephoneExt integer, 
+	telephoneExt int, 
     vehicleLicenseNumber integer,
     primary key(staffNumber)
 );
 
-create table StaffSpace(
-	staffNum integer,
-    pSpaceNumber  integer,
-	primary key(staffNum),
-    primary key(pSpaceNumber),
-    constraint fk_staffNum
-		foreign key (staffNum) 
-			references Staff(staffNumber),
-	constraint fk_pSpaceNumber 
-		foreign key (pSpaceNumber)
-			references `Space`(spaceNumber)
-);
-                            
-create table SpaceBooking(
-	BookingId integer ,
-    spaceNum  integer,
-    staffN  integer, 
-    visitorLicence integer, 
-    dateOfVisit date,
-    primary key(BookingId),
-    foreign key(spaceNumber) 
-		references `Space`(spaceNumber),
-	foreign key (staffNumber) 
-		references Staff(staffNumber)
+create table CoveredSpace(
+	coveredSpaceNumber integer,
+	monthlyRate decimal(10,2),
+    primary key(coveredSpaceNumber),
+    constraint fk_coveredSpaceNumber foreign key(coveredSpaceNumber)references `Space`(spaceNumber)
 );
 
-create table 
-	CoveredSpace(spaceNumber integer, 
-    monthlyRate decimal(10,2),
-	primary key(spaceNumber),
-	foreign key(spaceNumber) 
-		references 
-			`Space`(spaceNumber)
+create table StaffSpace(
+	staffNum integer,
+	pSpaceNumber integer,
+    primary key(staffNum),
+    constraint fk_staffNum foreign key (staffNum) references Staff(staffNumber),
+    constraint fk_pSpaceNumber foreign key (pSpaceNumber) references CoveredSpace(coveredSpaceNumber)
+);
+                        
+create table SpaceBooking(
+	BookingId integer, 
+    spaceNum integer, 
+    staffN integer, 
+    visitorLicence integer, 
+    dateOfVisit date, primary key(BookingId),
+	constraint fk_spaceNum foreign key(spaceNum) references CoveredSpace(coveredSpaceNumber),
+	constraint fk_staffN foreign key (staffN) references Staff(staffNumber)
 );
 
 create table UncoveredSpace(
-	spaceNumber integer, 
-    primary key(spaceNumber),
-	foreign key (spaceNumber) 
-		references 
-			`Space`(spaceNumber)
+	uncoveredSpaceNumber integer,
+	primary key(uncoveredSpaceNumber),
+	constraint fk_uncoveredSpaceNumber foreign key (uncoveredSpaceNumber) references `Space`(spaceNumber)
 );
+     
 										primary key(spaceNumber),
 										foreign key (spaceNumber) references `Space`(spaceNumber)
 										);

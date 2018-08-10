@@ -182,7 +182,8 @@ public class ParkingDB {
 			createConnection();
 		}
 		Statement stmt = null;
-		String query = "select BookingId, spaceNumber, visitorLicense, "
+		String query = "select BookingId, spaceNum,"
+						+"staffN, visitorLicense, "
 						+ "dateOfVisit" + "from SpaceBooking";
 		bookingList = new ArrayList<SpaceBooking>();
 		try {
@@ -195,9 +196,6 @@ public class ParkingDB {
 				String dateOfVisit = rs.getString("dateOfVisit");
 				Integer staffNumber = rs.getInt("staffNumber");
 				
-
-			//	public SpaceBooking(Integer visitorLicense, String dateOfVisit, 
-			//						Integer spaceNumber, Integer BookingId, Integer staffNumber) {
 				SpaceBooking request = new SpaceBooking(visitorLicense, 
 						dateOfVisit, spaceNumber, BookingId, staffNumber);
 				bookingList.add(request);
@@ -227,7 +225,7 @@ public class ParkingDB {
 			StaffSpace staffSpace = staffSpaceList.get(row);
 			Integer spaceNumber = staffSpace.getSpaceNumber();
 			Integer staffNumber = staffSpace.getStaffNumber();
-			String sql = "update StaffSpace set " + columnName + " = ?  where spaceNumber= ? and staffNumber = ? ";
+			String sql = "update StaffSpace set " + columnName + " = ?  where pSpaceNumber= ? and staffNum = ? ";
 			PreparedStatement preparedStatement = null;
 			try {
 				preparedStatement = sConnection.prepareStatement(sql);
@@ -288,7 +286,7 @@ public class ParkingDB {
 			createConnection();
 		}
 		Statement stmt = null;
-		String query = "select spaceNumber, spaceType, lotName"
+		String query = "select spaceNumber, spaceType, pLotName"
 						+ " from Space";
 		
 		spaceList = new ArrayList<Space>();
@@ -298,7 +296,7 @@ public class ParkingDB {
 			while (rs.next()) {
 				Integer spaceNumber = rs.getInt("spaceNumber");
 				String spaceType = rs.getString("spaceType");
-				String lotName = rs.getString("lotName");
+				String lotName = rs.getString("pLotName");
 			//	String dateOfVisit = rs.getString("dateOfVisit");
 			//	Integer staffNumber = rs.getInt("staffNumber");
 				
@@ -325,14 +323,14 @@ public class ParkingDB {
 			createConnection();
 		}
 		Statement stmt = null;
-		String query = "select spaceNumber, monthlyRate" 
+		String query = "select coveredSpaceNumber, monthlyRate" 
 						+ " from CoveredSpace";
 		coveredSpaceList = new ArrayList<CoveredSpace>();
 		try {
 			stmt = sConnection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				Integer spaceNumber = rs.getInt("spaceNumber");
+				Integer spaceNumber = rs.getInt("coveredSpaceNumber");
 				Double monthlyRate = rs.getDouble("monthlyRate");
 				CoveredSpace newCoveredSpace = new CoveredSpace(spaceNumber, 
 																monthlyRate);
@@ -355,14 +353,14 @@ public class ParkingDB {
 			createConnection();
 		}
 		Statement stmt = null;
-		String query = "select spaceNumber" 
+		String query = "select uncoveredSpaceNumber" 
 						+ "from UncoveredSpace";
 		uncoveredSpaceList = new ArrayList<UncoveredSpace>();
 		try {
 			stmt = sConnection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				Integer spaceNumber = rs.getInt("spaceNumber");
+				Integer spaceNumber = rs.getInt("uncoveredSpaceNumber");
 				//Double monthlyRate = rs.getDouble("monthlyRate");
 				UncoveredSpace newUncoveredSpace = new UncoveredSpace(spaceNumber);
 				uncoveredSpaceList.add(newUncoveredSpace);

@@ -182,9 +182,7 @@ public class ParkingDB {
 			createConnection();
 		}
 		Statement stmt = null;
-		String query = "select BookingId, spaceNum,"
-						+"staffN, visitorLicense, "
-						+ "dateOfVisit" + "from SpaceBooking";
+		String query = "SELECT * " + "FROM SpaceBooking";
 		bookingList = new ArrayList<SpaceBooking>();
 		try {
 			stmt = sConnection.createStatement();
@@ -250,7 +248,7 @@ public class ParkingDB {
 			createConnection();
 		}
 		Statement stmt = null;
-		String query = "SELECT staffNumber, telephoneExt, vehicleLicenseNumber"
+		String query = "SELECT * "
 						+ " from Staff";
 		staffList = new ArrayList<Staff>();
 		try {
@@ -286,8 +284,7 @@ public class ParkingDB {
 			createConnection();
 		}
 		Statement stmt = null;
-		String query = "select spaceNumber, spaceType, pLotName"
-						+ " from Space";
+		String query = "select * "+"from Space";
 		
 		spaceList = new ArrayList<Space>();
 		try {
@@ -323,8 +320,7 @@ public class ParkingDB {
 			createConnection();
 		}
 		Statement stmt = null;
-		String query = "select coveredSpaceNumber, monthlyRate" 
-						+ " from CoveredSpace";
+		String query = "SELECT * FROM CoveredSpace";
 		coveredSpaceList = new ArrayList<CoveredSpace>();
 		try {
 			stmt = sConnection.createStatement();
@@ -353,8 +349,7 @@ public class ParkingDB {
 			createConnection();
 		}
 		Statement stmt = null;
-		String query = "select uncoveredSpaceNumber" 
-						+ "from UncoveredSpace";
+		String query = "SELECT * FROM UncoveredSpace";
 		uncoveredSpaceList = new ArrayList<UncoveredSpace>();
 		try {
 			stmt = sConnection.createStatement();

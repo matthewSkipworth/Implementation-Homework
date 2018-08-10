@@ -17,7 +17,8 @@ public class Lot {
 	 * @throws IllegalArgumentException if title or lot type or lot name are null or empty
 	 */
     public Lot(String lotName,String location, Integer capacity, Integer floors) {
-        setCapacity(capacity);
+		System.out.print("\n\n\nInside Lot!\n\n\n");
+		setCapacity(capacity);
         setFloors(floors);
 		setLocation(location);
 		setLotName(lotName);

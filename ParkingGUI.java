@@ -27,6 +27,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	private ParkingDB db;
 	
 	private List<CoveredSpace> listCoveredSpace;
+	private List<Space> listAvailableSpaces;
 	private List<Staff> listStaff;
 	private List<Space> listSpace;
 
@@ -51,7 +52,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 
 	private JButton btnStaffList, btnSpaceList, btnMakeLot,
 					btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
-					btnCheckSpace,btnViewCoveredSpace,btnAdd,btnAddLot,
+					btnAvailableSpaces,btnViewCoveredSpace,btnAdd,btnAddLot,
 					btnMakeSpace,btnAddSpace,btnAddStaff;
 
 	private JPanel 	pnlButtons, pnlContent, pnlStaffList, pnlSpaceList, pnlMakeLot,
@@ -118,8 +119,8 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		btnReserveSpot = new JButton("Reserve Visitor Spot");
 		btnReserveSpot.addActionListener(this);
 
-		btnCheckSpace = new JButton("Available Spaces");
-		btnCheckSpace.addActionListener(this);
+		btnAvailableSpaces = new JButton("Available Spaces");
+		btnAvailableSpaces.addActionListener(this);
 		
 		pnlButtons.add(btnStaffList);
 		pnlButtons.add(btnSpaceList);
@@ -130,7 +131,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		pnlButtons.add(btnUpdateStaff);
 		pnlButtons.add(btnAssignSpot);
 		pnlButtons.add(btnReserveSpot);
-		pnlButtons.add(btnCheckSpace);
+		pnlButtons.add(btnAvailableSpaces);
 		add(pnlButtons, BorderLayout.NORTH);
 		
 		//covered space button
@@ -145,7 +146,6 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		//Add Lot Panel
 		pnlAddLot = new JPanel();
 		pnlAddLot.setLayout(new GridLayout(4, 0));
-		//private Integer capacity,floors; ivate String location, lotName;
 		String labelNamesLot[] = { "Enter Lot Name: ", "Enter Location: ","Enter Capacity: ", "Enter Floors: "};
 		for (int i=0; i<labelNamesLot.length; i++) {
 			JPanel panel = new JPanel();
@@ -166,7 +166,6 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		//Add Space Panel
 		pnlAddSpace = new JPanel();
 		pnlAddSpace.setLayout(new GridLayout(3, 0));
-		//private Integer capacity,floors; ivate String location, lotName;
 		String labelNamesSpace[] = { "Enter Space Number: ", "Enter Space Type: ","Enter Lot Name: "};
 		for (int i=0; i<labelNamesSpace.length; i++) {
 			panel = new JPanel();
@@ -187,7 +186,6 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		//Add Staff Panel
 		pnlAddStaff = new JPanel();
 		pnlAddStaff.setLayout(new GridLayout(3, 0));
-		//private Integer capacity,floors; ivate String location, lotName;
 		String labelNamesStaff[] = { "Enter Staff Number: ", "Enter Telephone Extension: ","Enter License Plate: "};
 		for (int i=0; i<labelNamesStaff.length; i++) {
 			panel = new JPanel();
@@ -230,13 +228,33 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 			}
 			data = new Object[listStaff.size()][columnNamesStaff.length];
 			for (int i=0; i<listStaff.size(); i++) {
-				//private Integer staffNumber; private Integer telephoneExt; private Integer vehicleLicenseNumber;
 				data[i][0] = listStaff.get(i).getStaffNumber();
 				data[i][1] = listStaff.get(i).getTelephoneExt();
 				data[i][2] = listStaff.get(i).getVehicleLicenseNumber();
 			}
 			pnlContent.removeAll();
 			table = new JTable(data, columnNamesStaff);
+			table.getModel().addTableModelListener(this);
+			scrollPane = new JScrollPane(table);
+			pnlContent.add(scrollPane);
+			pnlContent.revalidate();
+			this.repaint();
+			
+		} else if (e.getSource() == btnAvailableSpaces) {
+			try {
+				listAvailableSpaces = db.getAvailableSpace();
+			} catch (Exception exception) {
+				JOptionPane.showMessageDialog(this, exception.getMessage());
+				return;
+			}
+			data = new Object[listAvailableSpaces.size()][columnNamesSpace.length];
+			for (int i=0; i<listAvailableSpaces.size(); i++) {
+				data[i][0] = listAvailableSpaces.get(i).getSpaceNumber();
+				data[i][1] = listAvailableSpaces.get(i).getSpaceType();
+				data[i][2] = listAvailableSpaces.get(i).getLotName();
+			}
+			pnlContent.removeAll();
+			table = new JTable(data, columnNamesCovered);
 			table.getModel().addTableModelListener(this);
 			scrollPane = new JScrollPane(table);
 			pnlContent.add(scrollPane);
@@ -371,7 +389,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
         String columnName = model.getColumnName(column);
         Object data = model.getValueAt(row, column);
         try {
-        	//  db.updateMovie(row, columnName, data);;
+        	//  db.updateMovie(row, columnName, data);
 		}
 		catch(Exception exception) {
 			JOptionPane.showMessageDialog(this, exception.getMessage());

@@ -76,6 +76,8 @@ insert into Lot values
     
 insert into `Space` values
     (354,'uncovered','a'),
+    (355,'uncovered','a'),
+    (356,'uncovered','a'),
     (687,'covered','b'),
     (688,'covered','b');
 
@@ -104,28 +106,6 @@ insert into SpaceBooking values
 #select * FROM StaffSpace;
 #select * FROM SpaceBooking;
 
-SELECT 
-    *
-FROM 
-    `Space`
-WHERE 
-    spaceNumber IN (
-        tSELECT spaceNumber
-		FROM 
-            `Space`
-        WHERE 
-            spaceNumber
-        NOT INCLUDE
-            (SELECT 
-                pSpaceNumber
-            FROM 
-                StaffSpace
-            UNION ALL
-            SELECT 
-                spaceNum
-            FROM
-                SpaceBooking)
-);
 
 SELECT * 
 FROM Space

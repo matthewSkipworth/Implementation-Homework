@@ -10,7 +10,7 @@ import java.util.Properties;
 
 /**
  * A class that consists of the database operations to insert and update the Movie information.
- * @author Matthew Skipworth and Jake McKenzie
+ * @author  Jake McKenzie and Matthew Skipworth
  * @version 6 August 2018
  *
  */
@@ -20,8 +20,6 @@ public class ParkingDB {
 	private static String password = "Hersoyds";
 	private static String serverName = "cssgate.insttech.washington.edu";
 	private static Connection sConnection;
-    // private List<Lot> lotList;
-    // private List<Space> spaceList;
     private List<StaffSpace> staffSpaceList;
     private List<Staff> staffList;
 	private List<SpaceBooking> bookingList;
@@ -106,38 +104,6 @@ public class ParkingDB {
 		} 
 	}
 	
-	/**
-	 * MAKE THIS FUNCTION
-	 * 
-	 * Modifies the space information corresponding to the index in the list.
-	 * @param row index of the element in the list
-	 * @param columnName attribute to modify
-	 * @param data value to supply
-	 * @throws Exception 
-	 */
-
-	// public void updateMovie(int row, String columnName, Object data) throws Exception {
-		
-	// 	Movie movie = list.get(row);
-	// 	String title = movie.getTitle();
-	// 	int year = movie.getYear();
-	// 	String sql = "update Movies set " + columnName + " = ?  where title= ? and year = ? ";
-	// 	PreparedStatement preparedStatement = null;
-	// 	try {
-	// 		preparedStatement = sConnection.prepareStatement(sql);
-	// 		if (data instanceof String)
-	// 			preparedStatement.setString(1, (String) data);
-	// 		else if (data instanceof Integer)
-	// 			preparedStatement.setInt(1, (Integer) data);
-	// 		preparedStatement.setString(2, title);
-	// 		preparedStatement.setInt(3, year);
-	// 		preparedStatement.executeUpdate();
-	// 	} catch (SQLException e) {
-	// 		e.printStackTrace();
-	// 		throw new Exception("Unable to add Movie: " + e.getMessage());
-	// 	} 
-		
-	// }
 
 	/**
 	 * method updateStaff updates staff member's telephone extension number
@@ -150,10 +116,9 @@ public class ParkingDB {
     public void updateStaff(int row, String columnName, Object data) throws Exception {
 		
 		Staff staff = staffList.get(row);
-		//String title = movie.getTitle();
         Integer telephoneExt = staff.getTelephoneExt();
         Integer vehicleLicenseNumber = staff.getVehicleLicenseNumber();
-		String sql = "update Staff set " + columnName + " = ?  where telephoneExt= ? and vehicleLicenseNumber = ? ";
+		String sql = "UPDATE Staff SET " + columnName + " = ?  WHERE telephoneExt= ? AND vehicleLicenseNumber = ? ";
 		PreparedStatement preparedStatement = null;
 		try {
 			preparedStatement = sConnection.prepareStatement(sql);
@@ -258,12 +223,6 @@ public class ParkingDB {
 				Integer staffNumber = rs.getInt("staffNumber");
 				Integer telephoneExt = rs.getInt("telephoneExt");
 				Integer vehicleLicenseNumber = rs.getInt("vehicleLicenseNumber");
-			//	String dateOfVisit = rs.getString("dateOfVisit");
-			//	Integer staffNumber = rs.getInt("staffNumber");
-				
-
-			//	public SpaceBooking(Integer visitorLicense, String dateOfVisit, 
-			//						Integer spaceNumber, Integer BookingId, Integer staffNumber) {
 				Staff staff = new Staff(staffNumber, telephoneExt, vehicleLicenseNumber);
 				staffList.add(staff);
 			}
@@ -294,12 +253,6 @@ public class ParkingDB {
 				Integer spaceNumber = rs.getInt("spaceNumber");
 				String spaceType = rs.getString("spaceType");
 				String lotName = rs.getString("pLotName");
-			//	String dateOfVisit = rs.getString("dateOfVisit");
-			//	Integer staffNumber = rs.getInt("staffNumber");
-				
-
-			//	public SpaceBooking(Integer visitorLicense, String dateOfVisit, 
-			//						Integer spaceNumber, Integer BookingId, Integer staffNumber) {
 				Space space = new Space(spaceNumber, spaceType, lotName);
 				spaceList.add(space);
 			}
@@ -343,8 +296,7 @@ public class ParkingDB {
 			}
 		}
 		return coveredSpaceList;
-	}
-	public List<UncoveredSpace> getUncoveredSpace() throws Exception {
+	} public List<UncoveredSpace> getUncoveredSpace() throws Exception {
 		if (sConnection == null) {
 			createConnection();
 		}
@@ -356,7 +308,6 @@ public class ParkingDB {
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
 				Integer spaceNumber = rs.getInt("uncoveredSpaceNumber");
-				//Double monthlyRate = rs.getDouble("monthlyRate");
 				UncoveredSpace newUncoveredSpace = new UncoveredSpace(spaceNumber);
 				uncoveredSpaceList.add(newUncoveredSpace);
 				
@@ -398,12 +349,13 @@ public class ParkingDB {
 		try {
 			stmt = sConnection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
+			
 			while (rs.next()) {
 				Integer spaceNumber = rs.getInt("spaceNumber");
 				String spaceType = rs.getString("spaceType");
 				String lotName = rs.getString("pLotName");
 				Space space = new Space(spaceNumber, spaceType, lotName);
-				spaceList.add(space);
+				spaceListAvailable.add(space);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

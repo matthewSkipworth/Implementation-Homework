@@ -20,12 +20,33 @@ public class ParkingDB {
 	private static String password = "Hersoyds";
 	private static String serverName = "cssgate.insttech.washington.edu";
 	private static Connection sConnection;
+	/**
+	 * List for storing the stack spaces
+	 */
     private List<StaffSpace> staffSpaceList;
-    private List<Staff> staffList;
+	/**
+	 * List for storing the employees
+	 */
+	private List<Staff> staffList;
+	/**
+	 * List for storing the bookings for spaces
+	 */
 	private List<SpaceBooking> bookingList;
+	/**
+	 * List for storing the covered spaces
+	 */
 	private List<CoveredSpace> coveredSpaceList;
+	/**
+	 * List for storing the uncovered spaces
+	 */
 	private List<UncoveredSpace> uncoveredSpaceList;
+	/**
+	 * list for storing the spaces
+	 */
 	private List<Space> spaceList;
+	/**
+	 * list for storing the available spaces
+	 */
 	private List<Space> spaceListAvailable;
 
 
@@ -35,10 +56,16 @@ public class ParkingDB {
 	 * @throws SQLException
 	 */
 	public static void createConnection() throws SQLException {
-		sConnection =  DriverManager
-				.getConnection("jdbc:mysql://" + serverName + "/" + userName + "?user=" + userName + "&password=" + password);
-	
-		//Uncomment For Debugging - System.out.println("Connected to database");
+		sConnection =  	DriverManager
+						.getConnection(
+						"jdbc:mysql://" + 
+						serverName + 
+						"/" + 
+						userName + 
+						"?user=" + 
+						userName + 
+						"&password=" + 
+						password);
 	}
 
 
@@ -76,14 +103,66 @@ public class ParkingDB {
 			preparedStatement = sConnection.prepareStatement(sql);
 			preparedStatement.setInt(1, space.getSpaceNumber());
 			preparedStatement.setString(2, space.getSpaceType());
-			preparedStatement.setString(3, space.getSpaceType());
+			preparedStatement.setString(3, space.getLotName());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new Exception("Unable to add Space: " + e.getMessage());
 		} 
 	}
+
+	/**
+	 * Adds a new space to the space table.
+	 * @param space 
+	 * @throws Exception 
+	 */
+	public void addSpaceBooking(SpaceBooking sb) throws Exception {
+		String sql = "INSERT INTO SpaceBooking VALUES\n" + "\t(?, ?, ?, ?, ?); ";
+
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = sConnection.prepareStatement(sql);
+			preparedStatement.setInt(1, sb.getBookingId());
+			preparedStatement.setInt(2, sb.getSpaceNumber());
+			preparedStatement.setInt(3, sb.getStaffNumber());
+			preparedStatement.setInt(4, sb.getVisitorLicense());
+			preparedStatement.setString(5, sb.getDateOfVisit());
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new Exception("Unable to add Space Booking: " + e.getMessage());
+		} 
+	}
+
     /**
+	 * Modifies a staff member's telephone and license plate number.
+	 * @param staff 
+	 * @throws Exception 
+	 */
+	public void changeStaff(Staff staff) throws Exception {
+		if (sConnection == null) {
+			createConnection();
+		}
+		Statement stmt = null;
+		String sql = "UPDATE Staff"+"\n"+
+		"SET telephoneExt = ?"+
+		", vehicleLicenseNumber= ?\n"+
+		"WHERE staffNumber = ?;";
+		
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = sConnection.prepareStatement(sql);
+			preparedStatement.setInt(1, staff.getTelephoneExt());
+			preparedStatement.setInt(2, staff.getVehicleLicenseNumber());
+			preparedStatement.setInt(3, staff.getStaffNumber());
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new Exception("Unable to update Staff: " + e.getMessage());
+		} 
+	}
+
+	/**
 	 * Adds a new staff member to the staff table.
 	 * @param staff 
 	 * @throws Exception 
@@ -131,50 +210,50 @@ public class ParkingDB {
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new Exception("Unable to add Movie: " + e.getMessage());
+			throw new Exception("Unable to add an employee: " + e.getMessage());
 		} 
 		
 	}
     /**
-     * method getVisitorSpaces returns all records of visitor space booking
+     * method getSpaceBookings returns all records of visitor space booking
      * requests.
      * @return returns all records of visitor space booking
      * requests.
      * @throws Exception
      */
     //returns the SpaceBooking object
-    public List<SpaceBooking> getSpaceBooking() throws Exception {
-		if (sConnection == null) {
-			createConnection();
-		}
-		Statement stmt = null;
-		String query = "SELECT * " + "FROM SpaceBooking";
-		bookingList = new ArrayList<SpaceBooking>();
-		try {
-			stmt = sConnection.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				Integer BookingId = rs.getInt("BookingId");
-				Integer spaceNumber = rs.getInt("spaceNumber");
-				Integer visitorLicense = rs.getInt("visitorLicense");
-				String dateOfVisit = rs.getString("dateOfVisit");
-				Integer staffNumber = rs.getInt("staffNumber");
+    // public List<SpaceBooking> getSpaceBooking() throws Exception {
+	// 	if (sConnection == null) {
+	// 		createConnection();
+	// 	}
+	// 	Statement stmt = null;
+	// 	String query = "SELECT * " + "FROM SpaceBooking";
+	// 	bookingList = new ArrayList<SpaceBooking>();
+	// 	try {
+	// 		stmt = sConnection.createStatement();
+	// 		ResultSet rs = stmt.executeQuery(query);
+	// 		while (rs.next()) {
+	// 			Integer BookingId = rs.getInt("BookingId");
+	// 			Integer spaceNumber = rs.getInt("spaceNumber");
+	// 			Integer visitorLicense = rs.getInt("visitorLicense");
+	// 			String dateOfVisit = rs.getString("dateOfVisit");
+	// 			Integer staffNumber = rs.getInt("staffNumber");
 				
-				SpaceBooking request = new SpaceBooking(visitorLicense, 
-						dateOfVisit, spaceNumber, BookingId, staffNumber);
-				bookingList.add(request);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new Exception("Unable to retrieve list of visitor space "
-					+ "booking requests." + e.getMessage());
-		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-		}
-		return bookingList;
-	}
+	// 			SpaceBooking request = new SpaceBooking(visitorLicense, 
+	// 					dateOfVisit, spaceNumber, BookingId, staffNumber);
+	// 			bookingList.add(request);
+	// 		}
+	// 	} catch (SQLException e) {
+	// 		e.printStackTrace();
+	// 		throw new Exception("Unable to retrieve list of visitor space "
+	// 				+ "booking requests." + e.getMessage());
+	// 	} finally {
+	// 		if (stmt != null) {
+	// 			stmt.close();
+	// 		}
+	// 	}
+	// 	return bookingList;
+	// }
     
     /**
 	 * Modifies the staffSpace information corresponding to the index in the list.
@@ -189,7 +268,7 @@ public class ParkingDB {
 			StaffSpace staffSpace = staffSpaceList.get(row);
 			Integer spaceNumber = staffSpace.getSpaceNumber();
 			Integer staffNumber = staffSpace.getStaffNumber();
-			String sql = "update StaffSpace set " + columnName + " = ?  where pSpaceNumber= ? and staffNum = ? ";
+			String sql = "UPDATE StaffSpace SET " + columnName + " = ?  WHERE pSpaceNumber= ? AND staffNum = ? ";
 			PreparedStatement preparedStatement = null;
 			try {
 				preparedStatement = sConnection.prepareStatement(sql);
@@ -237,13 +316,17 @@ public class ParkingDB {
 		}
 		return staffList;
 	}
-
+	/**
+	 * method getSpace returns the records for spaces.
+	 * @return returns the company's space history.
+	 * @throws Exception
+	 */
 	public List<Space> getSpace() throws Exception {
 		if (sConnection == null) {
 			createConnection();
 		}
 		Statement stmt = null;
-		String query = "select * "+"from Space";
+		String query = "SELECT * "+"FROM Space";
 		
 		spaceList = new ArrayList<Space>();
 		try {
@@ -267,7 +350,11 @@ public class ParkingDB {
 		}
 		return spaceList;
 	}
-
+	/**
+	 * method getCoveredSpace returns the records for covered spaces.
+	 * @return returns the company's covered space history.
+	 * @throws Exception
+	 */
 	public List<CoveredSpace> getCoveredSpace() throws Exception {
 		if (sConnection == null) {
 			createConnection();
@@ -296,7 +383,13 @@ public class ParkingDB {
 			}
 		}
 		return coveredSpaceList;
-	} public List<UncoveredSpace> getUncoveredSpace() throws Exception {
+	} 
+	/**
+	 * method getUncoveredSpace returns the records for uncovered spaces.
+	 * @return returns the company's uncovered space history.
+	 * @throws Exception
+	 */
+	public List<UncoveredSpace> getUncoveredSpace() throws Exception {
 		if (sConnection == null) {
 			createConnection();
 		}
@@ -323,7 +416,11 @@ public class ParkingDB {
 		}
 		return uncoveredSpaceList;
 	}
-
+	/**
+	 * method getAvailableSpace return only available spaces.
+	 * @return returns the company's space availability.
+	 * @throws Exception
+	 */
 	public List<Space> getAvailableSpace() throws Exception {
 		if (sConnection == null) {
 			createConnection();

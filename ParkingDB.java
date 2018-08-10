@@ -161,10 +161,10 @@ public class ParkingDB {
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
 				Integer BookingId = rs.getInt("BookingId");
-				Integer spaceNumber = rs.getInt("spaceNumber");
+				Integer spaceNumber = rs.getInt("spaceNum");
 				Integer visitorLicense = rs.getInt("visitorLicense");
 				String dateOfVisit = rs.getString("dateOfVisit");
-				Integer staffNumber = rs.getInt("staffNumber");
+				Integer staffNumber = rs.getInt("staffN");
 				
 
 			//	public SpaceBooking(Integer visitorLicense, String dateOfVisit, 
@@ -196,15 +196,15 @@ public class ParkingDB {
 	public void updateStaffSpace(int row, String columnName, Object data) throws Exception {
 			
 			StaffSpace staffSpace = staffSpaceList.get(row);
-			Integer spaceNumber = staffSpace.getSpaceNumber();
-			Integer staffNumber = staffSpace.getStaffNumber();
-			String sql = "update StaffSpace set " + columnName + " = ?  where spaceNumber= ? and staffNumber = ? ";
+			Integer pSpaceNumber = staffSpace.getSpaceNumber();
+			Integer staffNum = staffSpace.getStaffNumber();
+			String sql = "update StaffSpace set " + columnName + " = ?  where pSpaceNumber = ? and staffNum = ? ";
 			PreparedStatement preparedStatement = null;
 			try {
 				preparedStatement = sConnection.prepareStatement(sql);
 				 if (data instanceof Integer)
-					preparedStatement.setInt(1, spaceNumber);
-					preparedStatement.setInt(2, staffNumber);
+					preparedStatement.setInt(1, pSpaceNumber);
+					preparedStatement.setInt(2, staffNum);
 					//preparedStatement.setInt(3, year);
 					preparedStatement.executeUpdate();
 			} catch (SQLException e) {
@@ -380,16 +380,21 @@ public class ParkingDB {
 			createConnection();
 		}
 		Statement stmt = null;
+				
 		String query = "SELECT *\n"
-					+ "FROM Space\n"
-					+ "WHERE spaceNumber IN (SELECT spaceNumber\n"
-						+ "FROM Space\n"
-						+ "MINUS\n"
-						+ "SELECT spaceNumber\n"
-						+ "FROM StaffSpace\n"
-						+ "UNION\n"
-						+ "SELECT spaceNumber\n"
-						+ "FROM SpaceBooking)";
+					+ "FROM `Space`\n"
+					+ "WHERE spaceNumber IN (\n"
+						+ "\tSELECT spaceNumber\n"
+						+ "\tFROM `Space`\n"
+						+ "\tWHERE spaceNumber \n"
+						+ "\tNOT IN\n"
+							+ "\t\t(SELECT pSpaceNumber\n"
+							+ "\t\tFROM StaffSpace\n"
+							+ "\t\tUNION ALL\n"
+							+ "\t\tSELECT spaceNum\n"
+							+ "\t\tFROM SpaceBooking)\n"
+						+ "\t);";
+		
 		availableSpaceList = new ArrayList<Space>();
 		try {
 			stmt = sConnection.createStatement();
@@ -397,13 +402,13 @@ public class ParkingDB {
 			while (rs.next()) {
 				Integer spaceNumber = rs.getInt("spaceNumber");
 				String spaceType = rs.getString("spaceType");
-				String lotName = rs.getString("lotName");
+				String pLotName = rs.getString("pLotName");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new Exception("Unable to retrieve spaces.");
 		} finally {
-			if (stmt !=null) {
+			if (stmt != null) {
 				stmt.close();
 			}
 		}

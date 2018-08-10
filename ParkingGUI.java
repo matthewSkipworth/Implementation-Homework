@@ -13,172 +13,211 @@ import javax.swing.table.TableModel;
  * A user interface to view the movies, add a new movie and to update an existing movie.
  * The list is a table with all the movie information in it. The TableModelListener listens to
  * any changes to the cells to modify the values for reach movie.
+ * 
+ * This was compiled in the command line with the following commands:
+ * 
+ * javac -cp .:parking.jar *.java -Xlint:unchecked
+ * 
  * @author Matthew Skipworth and Jake McKenzie
  * @version 6 August 2018
  */
 public class ParkingGUI extends JFrame implements ActionListener, TableModelListener {
 	private static final long serialVersionUID = 7295690032713970188L;
-<<<<<<< HEAD
-	private JButton btnStaffList, 
-					btnSpaceList, 
-					btnMakeLot, 
-					btnMakeSpace, 
-					btnMakeStaff,
-					btnUpdateStaff,
-					btnAssignSpot,
-					btnReserveSpot,
-					btnCheckSpace;
-	
-	private JPanel pnlButtons, 
-					pnlContent;
-	private ParkingDB db;
-	private List<Lot> lotList;
-    private List<Space> spaceList;
-    private List<StaffSpace> staffSpaceList;
-    private List<Staff> staffList;
-    private List<SpaceBooking> bookingList;
-    
-	private String[] columnNames = {"Title",
-            "Year",
-            "Length",
-            "Genre",
-            "StudioName"};
-=======
-	private JButton btnStaffList, btnSpaceList, btnMakeLot,btnMakeSpace,
-					btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
-					btnCheckSpace;
-	private JPanel pnlButtons, pnlContent;
-	private ParkingDB db;
-	
-	private List<Lot> list;
 
-	private String[] columnNames = {"capacity",
-            "floors",
-            "location",
-			"lotName",};
->>>>>>> e264f9a2075975b5d96c85b84d0bd9ddd3d06bf2
+	private ParkingDB db;
+	
+	private List<CoveredSpace> listCoveredSpace;
+	private List<Staff> listStaff;
+	private List<Space> listSpace;
+	private List<Space> availableSpaces;
+
+	private String[] columnNamesCovered = {"Space Number", "Monthly Rate"};
+	private String[] columnNamesStaff = {"Staff Number", "Telephone Extensionm", "License Plate Number"};
+	private String[] columnNamesSpace = {"Space Number", "Space Type", "Lot Name"};
+	
 	
 	private Object[][] data;
-	private JTable table;
-	private JScrollPane scrollPane;
 
-	private JPanel pnlSearch;
+	private JTable table;
 	
-	private JLabel lblTitle;
-	private JTextField txfTitle;
+	private JScrollPane scrollPane;
 	
-	private JButton btnTitleSearch;
-	
-	private JPanel pnlAdd;
 	private JLabel[] txfLabel = new JLabel[5];
 	private JTextField[] txfField = new JTextField[5];
 	private JButton btnAddMovie;
-	
+
+	private JButton btnStaffList, btnSpaceList, btnMakeLot,
+					btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
+					btnCheckSpace,btnViewCoveredSpace,btnAdd,btnAddLot,
+					btnMakeSpace,btnAddSpace,btnAddStaff;
+
+	private JPanel 	pnlButtons, pnlContent, pnlStaffList, pnlSpaceList, pnlMakeLot,
+					pnlMakeSpace,pnlUpdateStaff,pnlAssignSpot,pnlReserveSpot,pnlCheckSpace
+					,pnlViewCoveredSpace,pnlAddLot,pnlAddSpace,pnlAddStaff;
 	
 	/**
 	 * Creates the frame and components and launches the GUI.
 	 */
 	public ParkingGUI() {
-<<<<<<< HEAD
-		super("Movie Store");
-=======
-		super("Parking Lot");
->>>>>>> e264f9a2075975b5d96c85b84d0bd9ddd3d06bf2
-		
+		super("Staff List");
 		db = new ParkingDB();
-		try
-		{
-			lotList = db.();
-			
-			data = new Object[list.size()][columnNames.length];
-			for (int i=0; i<list.size(); i++) {
-				data[i][0] = list.get(i).getTitle();
-				data[i][1] = list.get(i).getYear();
-				data[i][2] = list.get(i).getLength();
-				data[i][3] = list.get(i).getGenre();
-				data[i][4] = list.get(i).getStudioName();
-				
+		try {
+			listStaff = db.getStaff();
+			data = new Object[listStaff.size()][columnNamesStaff.length];
+			for (int i=0; i<listStaff.size(); i++) {
+				data[i][0] = listStaff.get(i).getStaffNumber();
+				data[i][1] = listStaff.get(i).getTelephoneExt();
+				data[i][2] = listStaff.get(i).getVehicleLicenseNumber();
 			}
 			
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this,"Error: " + e.getMessage());
 			return;
 		}
 		createComponents();
 		setVisible(true);
-		setSize(500, 500);
+		setSize(1200, 500);
 	}
+
+	
     
 	/**
 	 * Creates panels for Movie list, search, add and adds the corresponding 
 	 * components to each panel.
 	 */
-	private void createComponents()
-	{
+	private void createComponents() {
 		pnlButtons = new JPanel();
-		btnList = new JButton("Movie List");
-		btnList.addActionListener(this);
+
+		btnStaffList = new JButton("Staff List");
+		btnStaffList.addActionListener(this);
 		
-		btnSearch = new JButton("Movie Search");
-		btnSearch.addActionListener(this);
+		btnViewCoveredSpace = new JButton("View Covered Space");
+		btnViewCoveredSpace.addActionListener(this);
 		
-		btnAdd = new JButton("Add Movie");
-		btnAdd.addActionListener(this);
+		btnSpaceList = new JButton("Spaces List");
+		btnSpaceList.addActionListener(this);
 		
-		pnlButtons.add(btnList);
-		pnlButtons.add(btnSearch);
-		pnlButtons.add(btnAdd);
+		btnAddLot = new JButton("Add Lot");
+		btnAddLot.addActionListener(this);
+
+		btnAddSpace = new JButton("Add Space");
+		btnAddSpace.addActionListener(this);
+
+		btnAddStaff = new JButton("Add Staff");
+		btnAddStaff.addActionListener(this);
+
+		btnUpdateStaff = new JButton("Update Staff");
+		btnUpdateStaff.addActionListener(this);
+
+		btnAssignSpot = new JButton("Assign Staff Spot");
+		btnAssignSpot.addActionListener(this);
+
+		btnReserveSpot = new JButton("Reserve Visitor Spot");
+		btnReserveSpot.addActionListener(this);
+
+		btnCheckSpace = new JButton("Check Availability");
+		btnCheckSpace.addActionListener(this);
+		
+		pnlButtons.add(btnStaffList);
+		pnlButtons.add(btnSpaceList);
+		pnlButtons.add(btnViewCoveredSpace);
+		pnlButtons.add(btnAddLot);
+		pnlButtons.add(btnAddSpace);
+		pnlButtons.add(btnAddStaff);
+		pnlButtons.add(btnUpdateStaff);
+		pnlButtons.add(btnAssignSpot);
+		pnlButtons.add(btnReserveSpot);
+		pnlButtons.add(btnCheckSpace);
 		add(pnlButtons, BorderLayout.NORTH);
 		
-		//List Panel
+		//covered space button
 		pnlContent = new JPanel();
-		table = new JTable(data, columnNames);
+		table = new JTable(data, columnNamesStaff);
 		scrollPane = new JScrollPane(table);
 		pnlContent.add(scrollPane);
 		table.getModel().addTableModelListener(this);
+
+		add(pnlContent, BorderLayout.CENTER);
 		
-		//Search Panel
-		pnlSearch = new JPanel();
-		lblTitle = new JLabel("Enter Title: ");
-		txfTitle = new JTextField(25);
-		btnTitleSearch = new JButton("Search");
-		btnTitleSearch.addActionListener(this);
-		pnlSearch.add(lblTitle);
-		pnlSearch.add(txfTitle);
-		pnlSearch.add(btnTitleSearch);
+		//Lot Availability Panel
+		pnlCheckSpace = new JPanel();
+		table = new JTable(data, columnNamesSpace);
+		scrollPane = new JScrollPane(table);
+		pnlCheckSpace.add(scrollPane);
+		table.getModel().addTableModelListener(this);
 		
-		//Add Panel
-		pnlAdd = new JPanel();
-		pnlAdd.setLayout(new GridLayout(6, 0));
-		String labelNames[] = {"Enter Title: ", "Enter Year: ", "Enter Length: ", "Enter Genre: ", "Enter Studio Name: "};
-		for (int i=0; i<labelNames.length; i++) {
+		add(pnlContent, BorderLayout.CENTER);
+
+		//Add Lot Panel
+		pnlAddLot = new JPanel();
+		pnlAddLot.setLayout(new GridLayout(4, 0));
+		//private Integer capacity,floors; ivate String location, lotName;
+		String labelNamesLot[] = { "Enter Lot Name: ", "Enter Location: ","Enter Capacity: ", "Enter Floors: "};
+		for (int i=0; i<labelNamesLot.length; i++) {
 			JPanel panel = new JPanel();
-			txfLabel[i] = new JLabel(labelNames[i]);
+			txfLabel[i] = new JLabel(labelNamesLot[i]);
 			txfField[i] = new JTextField(25);
 			panel.add(txfLabel[i]);
 			panel.add(txfField[i]);
-			pnlAdd.add(panel);
+			pnlAddLot.add(panel);
 		}
 		JPanel panel = new JPanel();
-		btnAddMovie = new JButton("Add");
-		btnAddMovie.addActionListener(this);
-		panel.add(btnAddMovie);
-		pnlAdd.add(panel);
+		btnMakeLot = new JButton("Add Lot");
+		btnMakeLot.addActionListener(this);
+		panel.add(btnMakeLot);
+		pnlAddLot.add(panel);
 		
 		add(pnlContent, BorderLayout.CENTER);
 		
+		//Add Space Panel
+		pnlAddSpace = new JPanel();
+		pnlAddSpace.setLayout(new GridLayout(3, 0));
+		//private Integer capacity,floors; ivate String location, lotName;
+		String labelNamesSpace[] = { "Enter Space Number: ", "Enter Space Type: ","Enter Lot Name: "};
+		for (int i=0; i<labelNamesSpace.length; i++) {
+			panel = new JPanel();
+			txfLabel[i] = new JLabel(labelNamesSpace[i]);
+			txfField[i] = new JTextField(25);
+			panel.add(txfLabel[i]);
+			panel.add(txfField[i]);
+			pnlAddSpace.add(panel);
+		}
+		panel = new JPanel();
+		btnMakeSpace = new JButton("Add Space");
+		btnMakeSpace.addActionListener(this);
+		panel.add(btnMakeSpace);
+		pnlAddSpace.add(panel);
 		
+		add(pnlContent, BorderLayout.CENTER);
+
+		//Add Staff Panel
+		pnlAddStaff = new JPanel();
+		pnlAddStaff.setLayout(new GridLayout(3, 0));
+		//private Integer capacity,floors; ivate String location, lotName;
+		String labelNamesStaff[] = { "Enter Staff Number: ", "Enter Telephone Extension: ","Enter License Plate: "};
+		for (int i=0; i<labelNamesStaff.length; i++) {
+			panel = new JPanel();
+			txfLabel[i] = new JLabel(labelNamesStaff[i]);
+			txfField[i] = new JTextField(25);
+			panel.add(txfLabel[i]);
+			panel.add(txfField[i]);
+			pnlAddStaff.add(panel);
+		}
+		panel = new JPanel();
+		btnMakeStaff = new JButton("Add Space");
+		btnMakeStaff.addActionListener(this);
+		panel.add(btnMakeStaff);
+		pnlAddStaff.add(panel);
+		
+		add(pnlContent, BorderLayout.CENTER);
 	}
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args)
-	{
-		MovieGUI movieGUI = new MovieGUI();
-		movieGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+	public static void main(String[] args) {
+		ParkingGUI parkingGUI = new ParkingGUI();
+		parkingGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	/**
@@ -187,71 +226,81 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnList) {
+		if (e.getSource() == btnStaffList) {
+			
 			try {
-				list = db.getMovies();
+				listStaff = db.getStaff();
 			} catch (Exception exception) {
 				JOptionPane.showMessageDialog(this, exception.getMessage());
 				return;
 			}
-			data = new Object[list.size()][columnNames.length];
-			for (int i=0; i<list.size(); i++) {
-				data[i][0] = list.get(i).getTitle();
-				data[i][1] = list.get(i).getYear();
-				data[i][2] = list.get(i).getLength();
-				data[i][3] = list.get(i).getGenre();
-				data[i][4] = list.get(i).getStudioName();
+			data = new Object[listStaff.size()][columnNamesStaff.length];
+			for (int i=0; i<listStaff.size(); i++) {
+				//private Integer staffNumber; private Integer telephoneExt; private Integer vehicleLicenseNumber;
+				data[i][0] = listStaff.get(i).getStaffNumber();
+				data[i][1] = listStaff.get(i).getTelephoneExt();
+				data[i][2] = listStaff.get(i).getVehicleLicenseNumber();
 			}
 			pnlContent.removeAll();
-			table = new JTable(data, columnNames);
+			table = new JTable(data, columnNamesStaff);
 			table.getModel().addTableModelListener(this);
 			scrollPane = new JScrollPane(table);
 			pnlContent.add(scrollPane);
 			pnlContent.revalidate();
 			this.repaint();
 			
-		} else if (e.getSource() == btnSearch) {
+		} else if (e.getSource() == btnViewCoveredSpace) {
+			try {
+				listCoveredSpace = db.getCoveredSpace();
+			} catch (Exception exception) {
+				JOptionPane.showMessageDialog(this, exception.getMessage());
+				return;
+			}
+			data = new Object[listCoveredSpace.size()][columnNamesCovered.length];
+			for (int i=0; i<listCoveredSpace.size(); i++) {
+				data[i][0] = listCoveredSpace.get(i).getSpaceNumber();
+				data[i][1] = listCoveredSpace.get(i).getMonthlyRate();
+			}
 			pnlContent.removeAll();
-			pnlContent.add(pnlSearch);
-			pnlContent.revalidate();
-			this.repaint();
-		} else if (e.getSource() == btnAdd) {
-			pnlContent.removeAll();
-			pnlContent.add(pnlAdd);
+			table = new JTable(data, columnNamesCovered);
+			table.getModel().addTableModelListener(this);
+			scrollPane = new JScrollPane(table);
+			pnlContent.add(scrollPane);
 			pnlContent.revalidate();
 			this.repaint();
 			
-		} else if (e.getSource() == btnTitleSearch) {
-			String title = txfTitle.getText();
-			if (title.length() > 0) {
-				try {
-					list = db.getMovies(title);
-				}
-				catch(Exception exception) {
-					JOptionPane.showMessageDialog(this, exception.getMessage());
-					return;
-				}
-				data = new Object[list.size()][columnNames.length];
-				for (int i=0; i<list.size(); i++) {
-					data[i][0] = list.get(i).getTitle();
-					data[i][1] = list.get(i).getYear();
-					data[i][2] = list.get(i).getLength();
-					data[i][3] = list.get(i).getGenre();
-					data[i][4] = list.get(i).getStudioName();
-				}
-				pnlContent.removeAll();
-				table = new JTable(data, columnNames);
-				table.getModel().addTableModelListener(this);
-				scrollPane = new JScrollPane(table);
-				pnlContent.add(scrollPane);
-				pnlContent.revalidate();
-				this.repaint();
-			}
-		} else if (e.getSource() == btnAddMovie) {
-			Movie movie = new Movie(txfField[0].getText(), Integer.parseInt(txfField[1].getText())
-					,Integer.parseInt(txfField[2].getText()), txfField[3].getText(), txfField[4].getText() );
+		} else if (e.getSource() == btnSpaceList) {
 			try {
-				db.addMovie(movie);
+				listSpace = db.getSpace();
+			} catch (Exception exception) {
+				JOptionPane.showMessageDialog(this, exception.getMessage());
+				return;
+			}
+			data = new Object[listSpace.size()][columnNamesSpace.length];
+			for (int i=0; i<listSpace.size(); i++) {
+				data[i][0] = listSpace.get(i).getSpaceNumber();
+				data[i][1] = listSpace.get(i).getSpaceType();
+				data[i][2] = listSpace.get(i).getLotName();
+			}
+			pnlContent.removeAll();
+			table = new JTable(data, columnNamesSpace);
+			table.getModel().addTableModelListener(this);
+			scrollPane = new JScrollPane(table);
+			pnlContent.add(scrollPane);
+			pnlContent.revalidate();
+			this.repaint();
+			
+		} else if (e.getSource() == btnMakeLot) {
+			
+			Lot lot = new Lot(
+					Integer.parseInt(txfField[0].getText()), 
+					Integer.parseInt(txfField[1].getText()),  
+					txfField[2].getText(), 
+					txfField[3].getText()
+			);
+			
+			try {
+				db.addLot(lot);
 			}
 			catch(Exception exception) {
 				JOptionPane.showMessageDialog(this, exception.getMessage());
@@ -261,8 +310,81 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 			for (int i=0; i<txfField.length; i++) {
 				txfField[i].setText("");
 			}
+			
+		} else if (e.getSource() == btnAddLot) {
+			pnlContent.removeAll();
+			pnlContent.add(pnlAddLot);
+			pnlContent.revalidate();
+			this.repaint();
+			
+		} else if (e.getSource() == btnMakeSpace) {
+			
+			Space space = new Space(Integer.parseInt(txfField[0].getText()), txfField[1].getText(), 
+							txfField[2].getText());
+			try {
+				db.addSpace(space);
+			}
+			catch(Exception exception) {
+				JOptionPane.showMessageDialog(this, exception.getMessage());
+				return;
+			}
+			JOptionPane.showMessageDialog(null, "Added Successfully!");
+			for (int i=0; i<txfField.length; i++) {
+				txfField[i].setText("");
+			}
+			
+		} else if (e.getSource() == btnAddSpace) {
+			pnlContent.removeAll();
+			pnlContent.add(pnlAddSpace);
+			pnlContent.revalidate();
+			this.repaint();
+			
+		} else if (e.getSource() == btnMakeStaff) {
+			
+			Staff staff = new Staff(Integer.parseInt(txfField[0].getText()),
+			Integer.parseInt(txfField[1].getText()),
+			Integer.parseInt(txfField[2].getText()));
+			try {
+				db.addStaff(staff);
+			}
+			catch(Exception exception) {
+				JOptionPane.showMessageDialog(this, exception.getMessage());
+				return;
+			}
+			JOptionPane.showMessageDialog(null, "Added Successfully!");
+			for (int i=0; i<txfField.length; i++) {
+				txfField[i].setText("");
+			}
+			
+		} else if (e.getSource() == btnAddStaff) {
+			pnlContent.removeAll();
+			pnlContent.add(pnlAddStaff);
+			pnlContent.revalidate();
+			this.repaint();
+		///	
+		} else if (e.getSource() == btnCheckSpace) {
+			try {
+				availableSpaces = db.getAvailableSpaces();
+			} catch (Exception exception) {
+				JOptionPane.showMessageDialog(this, exception.getMessage());
+				return;
+			}
+			data = new Object[availableSpaces.size()][columnNamesSpace.length];
+			for (int i=0; i<availableSpaces.size(); i++) {
+				data[i][0] = availableSpaces.get(i).getSpaceNumber();
+				data[i][1] = availableSpaces.get(i).getSpaceType();
+				data[i][2] = availableSpaces.get(i).getLotName();
+			}
+			pnlContent.removeAll();
+			table = new JTable(data, columnNamesSpace);
+			table.getModel().addTableModelListener(this);
+			scrollPane = new JScrollPane(table);
+			pnlContent.add(scrollPane);
+			pnlContent.revalidate();
+			this.repaint();
 		}
-		
+		///
+
 	}
 
 	/**
@@ -276,7 +398,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
         String columnName = model.getColumnName(column);
         Object data = model.getValueAt(row, column);
         try {
-        	 db.updateMovie(row, columnName, data);;
+        	//  db.updateMovie(row, columnName, data);;
 		}
 		catch(Exception exception) {
 			JOptionPane.showMessageDialog(this, exception.getMessage());

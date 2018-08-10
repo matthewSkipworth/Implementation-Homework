@@ -28,6 +28,7 @@ public class ParkingDB {
 	private List<CoveredSpace> coveredSpaceList;
 	private List<UncoveredSpace> uncoveredSpaceList;
 	private List<Space> spaceList;
+	private List<Space> spaceListAvailable;
 
 
 	/**
@@ -248,8 +249,7 @@ public class ParkingDB {
 			createConnection();
 		}
 		Statement stmt = null;
-		String query = "SELECT * "
-						+ " from Staff";
+		String query = "SELECT * FROM Staff";
 		staffList = new ArrayList<Staff>();
 		try {
 			stmt = sConnection.createStatement();
@@ -372,6 +372,51 @@ public class ParkingDB {
 		}
 		return uncoveredSpaceList;
 	}
+
+	public List<Space> getAvailableSpace() throws Exception {
+		if (sConnection == null) {
+			createConnection();
+		}
+		Statement stmt = null;
+		String query = "SELECT *\n"+ 
+		"FROM `Space`\n"+
+		"WHERE spaceNumber IN (\n"+
+		"	SELECT spaceNumber\n"+ 
+		"    FROM `Space`\n"+
+		"    WHERE spaceNumber\n"+
+		"    NOT IN\n"+
+		"		(SELECT pSpaceNumber\n"+
+		"		FROM StaffSpace\n"+
+		"		UNION ALL\n"+
+		"		SELECT spaceNum\n"+
+		"		FROM SpaceBooking)\n"+
+		");\n";
+
+		
+		
+		spaceListAvailable = new ArrayList<Space>();
+		try {
+			stmt = sConnection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				Integer spaceNumber = rs.getInt("spaceNumber");
+				String spaceType = rs.getString("spaceType");
+				String lotName = rs.getString("pLotName");
+				Space space = new Space(spaceNumber, spaceType, lotName);
+				spaceList.add(space);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new Exception("Unable to retrieve list of Spaces: "
+					 + e.getMessage());
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+		return spaceListAvailable;
+	}
+
 	/**
 	 * Filters the movie list to find the given title. Returns a list with the
 	 * movie objects that match the title provided.

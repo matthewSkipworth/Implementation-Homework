@@ -44,6 +44,8 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	private JTextField[] txfFieldLot = new JTextField[5];
 	private JLabel[] txfLabelSpace = new JLabel[5];
 	private JTextField[] txfFieldSpace = new JTextField[5];
+	private JLabel[] txfLabelStaff = new JLabel[5];
+	private JTextField[] txfFieldStaff = new JTextField[5];
 
 	private JButton btnAddMovie;
 
@@ -116,7 +118,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		btnReserveSpot = new JButton("Reserve Visitor Spot");
 		btnReserveSpot.addActionListener(this);
 
-		btnCheckSpace = new JButton("Check Spot");
+		btnCheckSpace = new JButton("Available Spaces");
 		btnCheckSpace.addActionListener(this);
 		
 		pnlButtons.add(btnStaffList);
@@ -182,26 +184,26 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		
 		add(pnlContent, BorderLayout.CENTER);
 
-		// //Add Staff Panel
-		// pnlAddStaff = new JPanel();
-		// pnlAddStaff.setLayout(new GridLayout(3, 0));
-		// //private Integer capacity,floors; ivate String location, lotName;
-		// String labelNamesStaff[] = { "Enter Staff Number: ", "Enter Telephone Extension: ","Enter License Plate: "};
-		// for (int i=0; i<labelNamesStaff.length; i++) {
-		// 	panel = new JPanel();
-		// 	txfLabel[i] = new JLabel(labelNamesStaff[i]);
-		// 	txfField[i] = new JTextField(25);
-		// 	panel.add(txfLabel[i]);
-		// 	panel.add(txfField[i]);
-		// 	pnlAddStaff.add(panel);
-		// }
-		// panel = new JPanel();
-		// btnMakeStaff = new JButton("Add Space");
-		// btnMakeStaff.addActionListener(this);
-		// panel.add(btnMakeStaff);
-		// pnlAddStaff.add(panel);
+		//Add Staff Panel
+		pnlAddStaff = new JPanel();
+		pnlAddStaff.setLayout(new GridLayout(3, 0));
+		//private Integer capacity,floors; ivate String location, lotName;
+		String labelNamesStaff[] = { "Enter Staff Number: ", "Enter Telephone Extension: ","Enter License Plate: "};
+		for (int i=0; i<labelNamesStaff.length; i++) {
+			panel = new JPanel();
+			txfLabelStaff[i] = new JLabel(labelNamesStaff[i]);
+			txfFieldStaff[i] = new JTextField(25);
+			panel.add(txfLabelStaff[i]);
+			panel.add(txfFieldStaff[i]);
+			pnlAddStaff.add(panel);
+		}
+		panel = new JPanel();
+		btnMakeStaff = new JButton("Add Staff");
+		btnMakeStaff.addActionListener(this);
+		panel.add(btnMakeStaff);
+		pnlAddStaff.add(panel);
 		
-		// add(pnlContent, BorderLayout.CENTER);
+		add(pnlContent, BorderLayout.CENTER);
 	}
 
 	/**
@@ -307,9 +309,8 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 			pnlContent.revalidate();
 			this.repaint();
 			
-		} 
-		else if (e.getSource() == btnMakeSpace) {
-			
+		} else if (e.getSource() == btnMakeSpace) {
+			System.out.println(txfFieldSpace[1].getText());
 			Space space = new Space(Integer.parseInt(txfFieldSpace[0].getText()), txfFieldSpace[1].getText(), 
 							txfFieldSpace[2].getText());
 			try {
@@ -331,30 +332,30 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 			this.repaint();
 			
 		} 
-		// else if (e.getSource() == btnMakeStaff) {
+		else if (e.getSource() == btnMakeStaff) {
 			
-		// 	Staff staff = new Staff(Integer.parseInt(txfField[0].getText()),
-		// 	Integer.parseInt(txfField[1].getText()),
-		// 	Integer.parseInt(txfField[2].getText()));
-		// 	try {
-		// 		db.addStaff(staff);
-		// 	}
-		// 	catch(Exception exception) {
-		// 		JOptionPane.showMessageDialog(this, exception.getMessage());
-		// 		return;
-		// 	}
-		// 	JOptionPane.showMessageDialog(null, "Added Successfully!");
-		// 	for (int i=0; i<txfField.length; i++) {
-		// 		txfField[i].setText("");
-		// 	}
+			Staff staff = new Staff(Integer.parseInt(txfFieldStaff[0].getText()),
+			Integer.parseInt(txfFieldStaff[1].getText()),
+			Integer.parseInt(txfFieldStaff[2].getText()));
+			try {
+				db.addStaff(staff);
+			}
+			catch(Exception exception) {
+				JOptionPane.showMessageDialog(this, exception.getMessage());
+				return;
+			}
+			JOptionPane.showMessageDialog(null, "Added Successfully!");
+			for (int i=0; i<txfFieldStaff.length; i++) {
+				txfFieldStaff[i].setText("");
+			}
 			
-		// } else if (e.getSource() == btnAddStaff) {
-		// 	pnlContent.removeAll();
-		// 	pnlContent.add(pnlAddStaff);
-		// 	pnlContent.revalidate();
-		// 	this.repaint();
+		} else if (e.getSource() == btnAddStaff) {
+			pnlContent.removeAll();
+			pnlContent.add(pnlAddStaff);
+			pnlContent.revalidate();
+			this.repaint();
 			
-		// }
+		}
 
 
 	}

@@ -48,25 +48,30 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	
 	private JScrollPane scrollPane;
 	
-	private JLabel[] txfLabelLot = new JLabel[5];
-	private JTextField[] txfFieldLot = new JTextField[5];
-	private JLabel[] txfLabelSpace = new JLabel[5];
-	private JTextField[] txfFieldSpace = new JTextField[5];
-	private JLabel[] txfLabelStaff = new JLabel[5];
-	private JTextField[] txfFieldStaff = new JTextField[5];
-	private JLabel[] txfLabelUpdate = new JLabel[5];
-	private JTextField[] txfFieldUpdate = new JTextField[5];
+	private JLabel[] txfLabelLot = new JLabel[4];
+	private JTextField[] txfFieldLot = new JTextField[4];
+	private JLabel[] txfLabelSpace = new JLabel[3];
+	private JTextField[] txfFieldSpace = new JTextField[3];
+	private JLabel[] txfLabelStaff = new JLabel[3];
+	private JTextField[] txfFieldStaff = new JTextField[3];
+	private JLabel[] txfLabelUpdate = new JLabel[3];
+	private JTextField[] txfFieldUpdate = new JTextField[3];
+	private JLabel[] txfLabelSpaceBooking = new JLabel[5];
+	private JTextField[] txfFieldSpaceBooking = new JTextField[5];
 
 	private JButton btnAddMovie;
 
 	private JButton btnStaffList, btnSpaceList, btnMakeLot,
 					btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
 					btnAvailableSpaces,btnViewCoveredSpace,btnAdd,btnAddLot,
-					btnMakeSpace,btnAddSpace,btnAddStaff, btnChangeStaff;
+					btnMakeSpace,btnAddSpace,btnAddStaff, btnChangeStaff,
+					btnMakeSpaceBooking,btnAddSpaceBooking;
 
 	private JPanel 	pnlButtons, pnlContent, pnlStaffList, pnlSpaceList, pnlMakeLot,
-					pnlMakeSpace,pnlUpdateStaff,pnlChangedStaff,pnlAssignSpot,pnlReserveSpot,pnlCheckSpace
-					,pnlViewCoveredSpace,pnlAddLot,pnlAddSpace,pnlAddStaff,pnlChangeStaff;
+					pnlMakeSpace,pnlUpdateStaff,pnlChangedStaff,pnlAssignSpot,
+					pnlReserveSpot,pnlCheckSpace,pnlViewCoveredSpace,pnlAddLot,
+					pnlAddSpace,pnlAddStaff,pnlChangeStaff,pnlMakeSpaceBooking,
+					pnlAddSpaceBooking;
 	
 	/**
 	 * Creates the frame and components and launches the GUI.
@@ -125,8 +130,8 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		btnAssignSpot = new JButton("Assign Staff Spot");
 		btnAssignSpot.addActionListener(this);
 
-		btnReserveSpot = new JButton("Reserve Visitor Spot");
-		btnReserveSpot.addActionListener(this);
+		btnAddSpaceBooking = new JButton("Reserve Visitor Spot");
+		btnAddSpaceBooking.addActionListener(this);
 
 		btnAvailableSpaces = new JButton("Available Spaces");
 		btnAvailableSpaces.addActionListener(this);
@@ -139,7 +144,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		pnlButtons.add(btnAddStaff);
 		pnlButtons.add(btnUpdateStaff);
 		pnlButtons.add(btnAssignSpot);
-		pnlButtons.add(btnReserveSpot);
+		pnlButtons.add(btnAddSpaceBooking);
 		pnlButtons.add(btnAvailableSpaces);
 		add(pnlButtons, BorderLayout.NORTH);
 		
@@ -155,7 +160,10 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		//Add Lot Panel
 		pnlAddLot = new JPanel();
 		pnlAddLot.setLayout(new GridLayout(4, 0));
-		String labelNamesLot[] = { "Enter Lot Name: ", "Enter Location: ","Enter Capacity: ", "Enter Floors: "};
+		String labelNamesLot[] = { "Enter Lot Name: ", 
+		"Enter Location: ",
+		"Enter Capacity: ",
+		"Enter Floors: "};
 		for (int i=0; i<labelNamesLot.length; i++) {
 			JPanel panel = new JPanel();
 			txfLabelLot[i] = new JLabel(labelNamesLot[i]);
@@ -175,7 +183,9 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		//Add Space Panel
 		pnlAddSpace = new JPanel();
 		pnlAddSpace.setLayout(new GridLayout(3, 0));
-		String labelNamesSpace[] = { "Enter Space Number: ", "Enter Space Type: ","Enter Lot Name: "};
+		String labelNamesSpace[] = { "Enter Space Number: ", 
+		"Enter Space Type: ",
+		"Enter Lot Name: "};
 		for (int i=0; i<labelNamesSpace.length; i++) {
 			panel = new JPanel();
 			txfLabelSpace[i] = new JLabel(labelNamesSpace[i]);
@@ -189,6 +199,29 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		btnMakeSpace.addActionListener(this);
 		panel.add(btnMakeSpace);
 		pnlAddSpace.add(panel);
+		
+		add(pnlContent, BorderLayout.CENTER);
+
+		//Add Space Booking Panel
+		pnlAddSpaceBooking = new JPanel();
+		pnlAddSpaceBooking.setLayout(new GridLayout(5, 0));
+		String labelNamesSpaceBooking[] = { "Enter Booking ID: ", 
+		"Enter Space Number: ", "Enter Staff Number: ",
+		"Enter Visitor License: ", "Enter Date of Visit: "};
+		for (int i=0; i<labelNamesSpaceBooking.length; i++) {
+			panel = new JPanel();
+			
+			txfLabelSpaceBooking[i] = new JLabel(labelNamesSpaceBooking[i]);
+			txfFieldSpaceBooking[i] = new JTextField(25);
+			panel.add(txfLabelSpaceBooking[i]);
+			panel.add(txfFieldSpaceBooking[i]);
+			pnlAddSpaceBooking.add(panel);
+		}
+		panel = new JPanel();
+		btnMakeSpaceBooking = new JButton("Assign Staff Spot");
+		btnMakeSpaceBooking.addActionListener(this);
+		panel.add(btnMakeSpaceBooking);
+		pnlAddSpaceBooking.add(panel);
 		
 		add(pnlContent, BorderLayout.CENTER);
 
@@ -283,7 +316,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 				data[i][2] = listAvailableSpaces.get(i).getLotName();
 			}
 			pnlContent.removeAll();
-			table = new JTable(data, columnNamesCovered);
+			table = new JTable(data, columnNamesSpace);
 			table.getModel().addTableModelListener(this);
 			scrollPane = new JScrollPane(table);
 			pnlContent.add(scrollPane);
@@ -301,9 +334,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 				return;
 			}
 			JOptionPane.showMessageDialog(null, "Change Successful!");
-			for (int i=0; i<txfFieldLot.length; i++) {
-				txfFieldLot[i].setText("");
-			}
+			
 		}  else if (e.getSource() == btnUpdateStaff) {
 			pnlContent.removeAll();
 			pnlContent.add(pnlChangeStaff);
@@ -361,9 +392,6 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 				return;
 			}
 			JOptionPane.showMessageDialog(null, "Added Successfully!");
-			for (int i=0; i<txfFieldLot.length; i++) {
-				txfFieldLot[i].setText("");
-			}
 			
 		} else if (e.getSource() == btnAddLot) {
 			pnlContent.removeAll();
@@ -372,7 +400,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 			this.repaint();
 			
 		} else if (e.getSource() == btnMakeSpace) {
-			System.out.println(txfFieldSpace[1].getText());
+
 			Space space = new Space(Integer.parseInt(txfFieldSpace[0].getText()), txfFieldSpace[1].getText(), 
 							txfFieldSpace[2].getText());
 			try {
@@ -383,13 +411,32 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 				return;
 			}
 			JOptionPane.showMessageDialog(null, "Added Successfully!");
-			for (int i=0; i<txfFieldSpace.length; i++) {
-				txfFieldSpace[i].setText("");
-			}
 			
 		} else if (e.getSource() == btnAddSpace) {
 			pnlContent.removeAll();
 			pnlContent.add(pnlAddSpace);
+			pnlContent.revalidate();
+			this.repaint();
+			
+		} else if (e.getSource() == btnMakeSpaceBooking) {
+			
+			SpaceBooking sb = new SpaceBooking(Integer.parseInt(txfFieldSpaceBooking[0].getText()),
+			Integer.parseInt(txfFieldSpaceBooking[1].getText()),
+			Integer.parseInt(txfFieldSpaceBooking[2].getText()),
+			Integer.parseInt(txfFieldSpaceBooking[3].getText()),
+			txfFieldSpaceBooking[4].getText());
+			try {
+				db.addSpaceBooking(sb);
+			}
+			catch(Exception exception) {
+				JOptionPane.showMessageDialog(this, exception.getMessage());
+				return;
+			}
+			JOptionPane.showMessageDialog(null, "Added Successfully!");
+			
+		} else if (e.getSource() == btnAddSpaceBooking) {
+			pnlContent.removeAll();
+			pnlContent.add(pnlAddSpaceBooking);
 			pnlContent.revalidate();
 			this.repaint();
 			
@@ -406,9 +453,6 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 				return;
 			}
 			JOptionPane.showMessageDialog(null, "Added Successfully!");
-			for (int i=0; i<txfFieldStaff.length; i++) {
-				txfFieldStaff[i].setText("");
-			}
 			
 		} else if (e.getSource() == btnAddStaff) {
 			pnlContent.removeAll();

@@ -103,13 +103,37 @@ public class ParkingDB {
 			preparedStatement = sConnection.prepareStatement(sql);
 			preparedStatement.setInt(1, space.getSpaceNumber());
 			preparedStatement.setString(2, space.getSpaceType());
-			preparedStatement.setString(3, space.getSpaceType());
+			preparedStatement.setString(3, space.getLotName());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new Exception("Unable to add Space: " + e.getMessage());
 		} 
 	}
+
+	/**
+	 * Adds a new space to the space table.
+	 * @param space 
+	 * @throws Exception 
+	 */
+	public void addSpaceBooking(SpaceBooking sb) throws Exception {
+		String sql = "INSERT INTO SpaceBooking VALUES\n" + "\t(?, ?, ?, ?, ?); ";
+
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = sConnection.prepareStatement(sql);
+			preparedStatement.setInt(1, sb.getBookingId());
+			preparedStatement.setInt(2, sb.getSpaceNumber());
+			preparedStatement.setInt(3, sb.getStaffNumber());
+			preparedStatement.setInt(4, sb.getVisitorLicense());
+			preparedStatement.setString(5, sb.getDateOfVisit());
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new Exception("Unable to add Space Booking: " + e.getMessage());
+		} 
+	}
+
     /**
 	 * Modifies a staff member's telephone and license plate number.
 	 * @param staff 
@@ -198,38 +222,38 @@ public class ParkingDB {
      * @throws Exception
      */
     //returns the SpaceBooking object
-    public List<SpaceBooking> getSpaceBooking() throws Exception {
-		if (sConnection == null) {
-			createConnection();
-		}
-		Statement stmt = null;
-		String query = "SELECT * " + "FROM SpaceBooking";
-		bookingList = new ArrayList<SpaceBooking>();
-		try {
-			stmt = sConnection.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				Integer BookingId = rs.getInt("BookingId");
-				Integer spaceNumber = rs.getInt("spaceNumber");
-				Integer visitorLicense = rs.getInt("visitorLicense");
-				String dateOfVisit = rs.getString("dateOfVisit");
-				Integer staffNumber = rs.getInt("staffNumber");
+    // public List<SpaceBooking> getSpaceBooking() throws Exception {
+	// 	if (sConnection == null) {
+	// 		createConnection();
+	// 	}
+	// 	Statement stmt = null;
+	// 	String query = "SELECT * " + "FROM SpaceBooking";
+	// 	bookingList = new ArrayList<SpaceBooking>();
+	// 	try {
+	// 		stmt = sConnection.createStatement();
+	// 		ResultSet rs = stmt.executeQuery(query);
+	// 		while (rs.next()) {
+	// 			Integer BookingId = rs.getInt("BookingId");
+	// 			Integer spaceNumber = rs.getInt("spaceNumber");
+	// 			Integer visitorLicense = rs.getInt("visitorLicense");
+	// 			String dateOfVisit = rs.getString("dateOfVisit");
+	// 			Integer staffNumber = rs.getInt("staffNumber");
 				
-				SpaceBooking request = new SpaceBooking(visitorLicense, 
-						dateOfVisit, spaceNumber, BookingId, staffNumber);
-				bookingList.add(request);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new Exception("Unable to retrieve list of visitor space "
-					+ "booking requests." + e.getMessage());
-		} finally {
-			if (stmt != null) {
-				stmt.close();
-			}
-		}
-		return bookingList;
-	}
+	// 			SpaceBooking request = new SpaceBooking(visitorLicense, 
+	// 					dateOfVisit, spaceNumber, BookingId, staffNumber);
+	// 			bookingList.add(request);
+	// 		}
+	// 	} catch (SQLException e) {
+	// 		e.printStackTrace();
+	// 		throw new Exception("Unable to retrieve list of visitor space "
+	// 				+ "booking requests." + e.getMessage());
+	// 	} finally {
+	// 		if (stmt != null) {
+	// 			stmt.close();
+	// 		}
+	// 	}
+	// 	return bookingList;
+	// }
     
     /**
 	 * Modifies the staffSpace information corresponding to the index in the list.

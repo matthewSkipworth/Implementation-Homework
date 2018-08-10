@@ -19,8 +19,8 @@ public class SpaceBooking {
  * staff member doing the booking.
  */
 	
-	public SpaceBooking(Integer visitorLicense, String dateOfVisit, 
-						Integer spaceNumber, Integer BookingId, Integer staffNumber) {
+	public SpaceBooking(Integer BookingId,Integer spaceNumber,
+	Integer staffNumber, Integer visitorLicense, String dateOfVisit) {
 		this.visitorLicense = visitorLicense;
 		this.dateOfVisit = dateOfVisit;
 		this.spaceNumber = spaceNumber;

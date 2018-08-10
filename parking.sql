@@ -2,68 +2,70 @@
 #Implementation Homework
 #August 10 2018
 
+#You told me to not worry about the 20 visitor limit. I would 
+
 SET FOREIGN_KEY_CHECKS = 0;    
 DROP TABLE Lot;
 Drop TABLE `Space`;
 Drop TABLE Staff;
-Drop TABLE StaffSpace;
-Drop TABLE SpaceBooking;
 DROP TABLE CoveredSpace;
 Drop TABLE UncoveredSpace;
+Drop TABLE StaffSpace;
+Drop TABLE SpaceBooking;
 SET FOREIGN_KEY_CHECKS = 1;
 
-create table Lot(
-	lotName varchar(20),
-	location varchar(20), 
-    capacity integer, 
-    floors integer,
-    primary key(lotName)
+CREATE TABLE Lot(
+	lotName VARCHAR(20),
+	location VARCHAR(20), 
+    capacity INTEGER, 
+    floors INTEGER,
+    PRIMARY KEY(lotName)
 );
 
-create table `Space`(
-	spaceNumber integer,
-	spaceType varchar(20),
-    pLotName varchar(20), 
-    primary key(spaceNumber),
-    constraint fk_lotNm foreign key(pLotName) references Lot(lotName)
+CREATE TABLE `Space`(
+	spaceNumber INTEGER,
+	spaceType VARCHAR(20),
+    pLotName VARCHAR(20), 
+    PRIMARY KEY(spaceNumber),
+    CONSTRAINT fk_lotNm FOREIGN KEY(pLotName) REFERENCES Lot(lotName)
 );
 
-create table Staff(
-	staffNumber integer,
+CREATE TABLE Staff(
+	staffNumber INTEGER,
 	telephoneExt int, 
-    vehicleLicenseNumber integer,
-    primary key(staffNumber)
+    vehicleLicenseNumber INTEGER,
+    PRIMARY KEY(staffNumber)
 );
 
-create table CoveredSpace(
-	coveredSpaceNumber integer,
+CREATE TABLE CoveredSpace(
+	coveredSpaceNumber INTEGER,
 	monthlyRate decimal(10,2),
-    primary key(coveredSpaceNumber),
-    constraint fk_coveredSpaceNumber foreign key(coveredSpaceNumber)references `Space`(spaceNumber)
+    PRIMARY KEY(coveredSpaceNumber),
+    CONSTRAINT fk_coveredSpaceNumber FOREIGN KEY(coveredSpaceNumber)REFERENCES `Space`(spaceNumber)
 );
 
-create table UncoveredSpace(
-	uncoveredSpaceNumber integer,
-	primary key(uncoveredSpaceNumber),
-	constraint fk_uncoveredSpaceNumber foreign key (uncoveredSpaceNumber) references `Space`(spaceNumber)
+CREATE TABLE UncoveredSpace(
+	uncoveredSpaceNumber INTEGER,
+	PRIMARY KEY(uncoveredSpaceNumber),
+	CONSTRAINT fk_uncoveredSpaceNumber FOREIGN KEY (uncoveredSpaceNumber) REFERENCES `Space`(spaceNumber)
 );
 
-create table StaffSpace(
-	staffNum integer,
-	pSpaceNumber integer,
-    primary key(staffNum),
-    constraint fk_staffNum foreign key (staffNum) references Staff(staffNumber),
-    constraint fk_pSpaceNumber foreign key (pSpaceNumber) references CoveredSpace(coveredSpaceNumber)
+CREATE TABLE StaffSpace(
+	staffNum INTEGER,
+	pSpaceNumber INTEGER,
+    PRIMARY KEY(staffNum),
+    CONSTRAINT fk_staffNum FOREIGN KEY (staffNum) REFERENCES Staff(staffNumber),
+    CONSTRAINT fk_pSpaceNumber FOREIGN KEY (pSpaceNumber) REFERENCES CoveredSpace(coveredSpaceNumber)
 );
                         
-create table SpaceBooking(
-	BookingId integer, 
-    spaceNum integer, 
-    staffN integer, 
-    visitorLicence integer, 
-    dateOfVisit varchar(20), primary key(BookingId),
-	constraint fk_spaceNum foreign key(spaceNum) references CoveredSpace(coveredSpaceNumber),
-	constraint fk_staffN foreign key (staffN) references Staff(staffNumber)
+CREATE TABLE SpaceBooking(
+	BookingId INTEGER, 
+    spaceNum INTEGER, 
+    staffN INTEGER, 
+    visitorLicence INTEGER, 
+    dateOfVisit VARCHAR(20), PRIMARY KEY(BookingId),
+	CONSTRAINT fk_spaceNum FOREIGN KEY(spaceNum) REFERENCES CoveredSpace(coveredSpaceNumber),
+	CONSTRAINT fk_staffN FOREIGN KEY (staffN) REFERENCES Staff(staffNumber)
 );
 
 insert into Staff values
@@ -107,19 +109,19 @@ insert into SpaceBooking values
 #select * FROM SpaceBooking;
 
 
-SELECT * 
-FROM Space
-WHERE spaceNumber IN (
-	SELECT spaceNumber 
-    FROM `Space`
-    WHERE spaceNumber
-    NOT IN
-		(SELECT pSpaceNumber
-		FROM StaffSpace
-		UNION ALL
-		SELECT spaceNum
-		FROM SpaceBooking)
-);
+#SELECT * 
+#FROM `Space`
+#WHERE spaceNumber IN (
+#	SELECT spaceNumber 
+#    FROM `Space`
+#    WHERE spaceNumber
+#    NOT IN
+#		(SELECT pSpaceNumber
+#		FROM StaffSpace
+#		UNION ALL
+#		SELECT spaceNum
+#		FROM SpaceBooking)
+#);
 
 #UPDATE Staff
 #SET telephoneExt = ?, vehicleLicenseNumber= ?

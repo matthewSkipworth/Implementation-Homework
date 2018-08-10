@@ -22,10 +22,17 @@ import javax.swing.table.TableModel;
  * @version 6 August 2018
  */
 public class ParkingGUI extends JFrame implements ActionListener, TableModelListener {
+	/**
+	 * I don't know what this does but it was included in our assignment so I included it.
+	 * The internet does not appear to have a good answer either.
+	 * 
+	 * I randomly generated my own that followed the format as to make the ID unique.
+	 */
 	private static final long serialVersionUID = 7295690032713970188L;
-
+	/**
+	 * The parking database object.
+	 */
 	private ParkingDB db;
-	
 	private List<CoveredSpace> listCoveredSpace;
 	private List<Space> listAvailableSpaces;
 	private List<Staff> listStaff;
@@ -47,17 +54,19 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	private JTextField[] txfFieldSpace = new JTextField[5];
 	private JLabel[] txfLabelStaff = new JLabel[5];
 	private JTextField[] txfFieldStaff = new JTextField[5];
+	private JLabel[] txfLabelUpdate = new JLabel[5];
+	private JTextField[] txfFieldUpdate = new JTextField[5];
 
 	private JButton btnAddMovie;
 
 	private JButton btnStaffList, btnSpaceList, btnMakeLot,
 					btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
 					btnAvailableSpaces,btnViewCoveredSpace,btnAdd,btnAddLot,
-					btnMakeSpace,btnAddSpace,btnAddStaff;
+					btnMakeSpace,btnAddSpace,btnAddStaff, btnChangeStaff;
 
 	private JPanel 	pnlButtons, pnlContent, pnlStaffList, pnlSpaceList, pnlMakeLot,
-					pnlMakeSpace,pnlUpdateStaff,pnlAssignSpot,pnlReserveSpot,pnlCheckSpace
-					,pnlViewCoveredSpace,pnlAddLot,pnlAddSpace,pnlAddStaff;
+					pnlMakeSpace,pnlUpdateStaff,pnlChangedStaff,pnlAssignSpot,pnlReserveSpot,pnlCheckSpace
+					,pnlViewCoveredSpace,pnlAddLot,pnlAddSpace,pnlAddStaff,pnlChangeStaff;
 	
 	/**
 	 * Creates the frame and components and launches the GUI.
@@ -202,6 +211,26 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		pnlAddStaff.add(panel);
 		
 		add(pnlContent, BorderLayout.CENTER);
+
+		//Update Staff Panel
+		pnlChangeStaff = new JPanel();
+		pnlChangeStaff.setLayout(new GridLayout(3, 0));
+		String labelNamesUpdate[] = {"Enter Staff Number: ", "Enter New Telephone Extension: ", "Enter New License Plate: "};
+		for (int i=0; i<labelNamesUpdate.length; i++) {
+			panel = new JPanel();
+			txfLabelUpdate[i] = new JLabel(labelNamesUpdate[i]);
+			txfFieldUpdate[i] = new JTextField(25);
+			panel.add(txfLabelUpdate[i]);
+			panel.add(txfFieldUpdate[i]);
+			pnlChangeStaff.add(panel);
+		}
+		panel = new JPanel();
+		btnChangeStaff = new JButton("Update Staff");
+		btnChangeStaff.addActionListener(this);
+		panel.add(btnChangeStaff);
+		pnlChangeStaff.add(panel);
+		
+		add(pnlContent, BorderLayout.CENTER);
 	}
 
 	/**
@@ -261,6 +290,25 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 			pnlContent.revalidate();
 			this.repaint();
 			
+		}  else if (e.getSource() == btnChangeStaff) {
+			Staff staff = new Staff(Integer.parseInt(txfFieldUpdate[0].getText()),
+			Integer.parseInt(txfFieldUpdate[1].getText()),
+			Integer.parseInt(txfFieldUpdate[2].getText()));
+			try {
+				db.changeStaff(staff);
+			} catch(Exception exception) {
+				JOptionPane.showMessageDialog(this, exception.getMessage());
+				return;
+			}
+			JOptionPane.showMessageDialog(null, "Change Successful!");
+			for (int i=0; i<txfFieldLot.length; i++) {
+				txfFieldLot[i].setText("");
+			}
+		}  else if (e.getSource() == btnUpdateStaff) {
+			pnlContent.removeAll();
+			pnlContent.add(pnlChangeStaff);
+			pnlContent.revalidate();
+			this.repaint();
 		} else if (e.getSource() == btnViewCoveredSpace) {
 			try {
 				listCoveredSpace = db.getCoveredSpace();
@@ -306,14 +354,10 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 
 			Lot lot = new Lot(txfFieldLot[0].getText(), txfFieldLot[1].getText(), 
 			Integer.parseInt(txfFieldLot[2].getText().trim()), Integer.parseInt(txfFieldLot[3].getText()));
-			System.out.print(2);
 			try {
-				System.out.print(3);
 				db.addLot(lot);
 			} catch(Exception exception) {
-				System.out.print(4);
 				JOptionPane.showMessageDialog(this, exception.getMessage());
-				System.out.print(5);
 				return;
 			}
 			JOptionPane.showMessageDialog(null, "Added Successfully!");
@@ -349,8 +393,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 			pnlContent.revalidate();
 			this.repaint();
 			
-		} 
-		else if (e.getSource() == btnMakeStaff) {
+		} else if (e.getSource() == btnMakeStaff) {
 			
 			Staff staff = new Staff(Integer.parseInt(txfFieldStaff[0].getText()),
 			Integer.parseInt(txfFieldStaff[1].getText()),
@@ -389,7 +432,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
         String columnName = model.getColumnName(column);
         Object data = model.getValueAt(row, column);
         try {
-        	//  db.update(row, columnName, data);
+        	  db.updateStaff(row, columnName, data);
 		}
 		catch(Exception exception) {
 			JOptionPane.showMessageDialog(this, exception.getMessage());

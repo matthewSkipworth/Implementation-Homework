@@ -30,7 +30,7 @@ create table `Space`(
 
 create table Staff(
 	staffNumber integer,
-	telephoneExt integer, 
+	telephoneExt int, 
     vehicleLicenseNumber integer,
     primary key(staffNumber)
 );
@@ -120,3 +120,7 @@ WHERE spaceNumber IN (
 		SELECT spaceNum
 		FROM SpaceBooking)
 );
+
+#UPDATE Staff
+#SET telephoneExt = ?, vehicleLicenseNumber= ?
+#WHERE staffNumber = ?;

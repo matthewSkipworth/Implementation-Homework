@@ -1,50 +1,68 @@
-create table Lot(lotName varchar(20),
-						location varchar(20), 
-                        capacity integer, 
-                        floors integer,
-                        primary key(lotName)
-                        );
+create table Lot(
+	lotName varchar(20),
+	location varchar(20), 
+    capacity integer, 
+    floors integer,
+    primary key(lotName)
+);
 
-create table `Space`(spaceNumber integer,
-								spaceType varchar(20),
-                                lotName varchar(20), 
-                                primary key(spaceNumber),
-                                foreign key(lotName) references Lot(lotName)
-                                );
+create table `Space`(
+	spaceNumber integer,
+	spaceType varchar(20),
+    pLotName varchar(20), 
+    primary key(spaceNumber),
+    constraint fk_lotNm foreign key(pLotName) references Lot(lotName)
+);
 
-create table Staff(staffNumber integer,
-							telephoneExt integer, 
-                            vehicleLicenseNumber integer,
-                            primary key(staffNumber)
-                            );
+create table Staff(
+	staffNumber integer,
+	telephoneExt integer, 
+    vehicleLicenseNumber integer,
+    primary key(staffNumber)
+);
 
-create table StaffSpace(staffNumber integer,
-										spaceNumber integer,
-                                        primary key(staffNumber, spaceNumber),
-                                        foreign key (staffNumber) references Staff(staffNumber),
-                                        foreign key (spaceNumber) references `Space`(spaceNumber)
-                                        );
+create table StaffSpace(
+	staffNum integer,
+    pSpaceNumber  integer,
+	primary key(staffNum),
+    primary key(pSpaceNumber),
+    constraint fk_staffNum
+		foreign key (staffNum) 
+			references Staff(staffNumber),
+	constraint fk_pSpaceNumber 
+		foreign key (pSpaceNumber)
+			references `Space`(spaceNumber)
+);
                             
-create table SpaceBooking(BookingId integer ,
-											spaceNumber integer,
-											staffNumber integer, 
-											visitorLicence integer, 
-											dateOfVisit date,
-											primary key(BookingId),
-											foreign key(spaceNumber) references `Space`(spaceNumber),
-											foreign key (staffNumber) references Staff(staffNumber)
-											);
+create table SpaceBooking(
+	BookingId integer ,
+    spaceNum  integer,
+    staffN  integer, 
+    visitorLicence integer, 
+    dateOfVisit date,
+    primary key(BookingId),
+    foreign key(spaceNumber) 
+		references `Space`(spaceNumber),
+	foreign key (staffNumber) 
+		references Staff(staffNumber)
+);
 
-create table CoveredSpace(spaceNumber integer,
-											monthlyRate decimal(10,2),
-                                            primary key(spaceNumber),
-                                            foreign key(spaceNumber) references `Space`(spaceNumber));
+create table 
+	CoveredSpace(spaceNumber integer, 
+    monthlyRate decimal(10,2),
+	primary key(spaceNumber),
+	foreign key(spaceNumber) 
+		references 
+			`Space`(spaceNumber)
+);
 
-create table UncoveredSpace(spaceNumber integer,
-												primary key(spaceNumber),
-												foreign key (spaceNumber) references `Space`(spaceNumber)
-												);                  
-
+create table UncoveredSpace(
+	spaceNumber integer, 
+    primary key(spaceNumber),
+	foreign key (spaceNumber) 
+		references 
+			`Space`(spaceNumber)
+);
 										primary key(spaceNumber),
 										foreign key (spaceNumber) references `Space`(spaceNumber)
 										);

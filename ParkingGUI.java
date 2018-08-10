@@ -280,14 +280,17 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 			this.repaint();
 			
 		} else if (e.getSource() == btnMakeLot) {
-			
-			Lot lot = new Lot(txfField[0].getText(), txfField[1].getText(),
+			System.out.print(1);
+			Lot lot = new Lot(txfField[0].getText(), txfField[1].getText(), 
 			Integer.parseInt(txfField[2].getText()), Integer.parseInt(txfField[3].getText()));
+			System.out.print(2);
 			try {
+				System.out.print(3);
 				db.addLot(lot);
-			}
-			catch(Exception exception) {
+			} catch(Exception exception) {
+				System.out.print(4);
 				JOptionPane.showMessageDialog(this, exception.getMessage());
+				System.out.print(5);
 				return;
 			}
 			JOptionPane.showMessageDialog(null, "Added Successfully!");

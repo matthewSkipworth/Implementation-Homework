@@ -30,7 +30,7 @@ create table `Space`(
 
 create table Staff(
 	staffNumber integer,
-	telephoneExt int, 
+	telephoneExt integer, 
     vehicleLicenseNumber integer,
     primary key(staffNumber)
 );

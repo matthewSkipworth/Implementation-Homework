@@ -22,13 +22,14 @@ create table Staff(staffNumber integer,
 
 create table StaffSpace(staffNum integer,
 										pSpaceNumber integer,
-                                        primary key(staffNum, pSpaceNumber),
+                                        primary key(staffNum), 
+                                        primary key(pSpaceNumber),
                                         constraint fk_staffNum foreign key (staffNum) references Staff(staffNumber),
-                                        constraint fk_pSpaceNumber foreign key (pSpaceNumber) references CoveredSpace(spaceNumber)
+                                        constraint fk_pSpaceNumber foreign key (pSpaceNumber) references CoveredSpace(coveredSpaceNumber)
                                         );
                             
 create table SpaceBooking(BookingId integer, spaceNum integer, staffN integer, visitorLicence integer, dateOfVisit date, primary key(BookingId),
-											constraint fk_spaceNum foreign key(spaceNum) references CoveredSpace(spaceNumber),
+											constraint fk_spaceNum foreign key(spaceNum) references CoveredSpace(coveredSpaceNumber),
 											constraint fk_staffN foreign key (staffN) references Staff(staffNumber)
 											);
 

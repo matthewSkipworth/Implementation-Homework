@@ -12,7 +12,7 @@ public class StaffSpace {
      * @param staffNumber
 	 * @throws IllegalArgumentException if title or lot type or lot name are null or empty
 	 */
-    public StaffSpace(Integer spaceNumber, Integer monthlyRate) {
+    public StaffSpace(Integer staffNumber, Integer spaceNumber) {
         setSpaceNumber(spaceNumber);
         setStaffNumber(staffNumber);
 	}

@@ -62,15 +62,22 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 	private JTextField[] txfFieldUpdate = new JTextField[3];
 	private JLabel[] txfLabelSpaceBooking = new JLabel[5];
 	private JTextField[] txfFieldSpaceBooking = new JTextField[5];
+	private JLabel[] txfLabelStaffSpace = new JLabel[2];
+	private JTextField[] txfFieldStaffSpace = new JTextField[2];
 
+<<<<<<< HEAD
 	private JButton btnAddMovie;
 >>>>>>> jake-branch
 
 	private JButton btnStaffList, btnSpaceList, btnMakeLot,
+=======
+	private JButton btnAddMovie,btnStaffList, btnSpaceList, btnMakeLot,
+>>>>>>> jake-branch
 					btnMakeStaff,btnUpdateStaff,btnAssignSpot,btnReserveSpot,
 					btnAvailableSpaces,btnViewCoveredSpace,btnAdd,btnAddLot,
 					btnMakeSpace,btnAddSpace,btnAddStaff, btnChangeStaff,
-					btnMakeSpaceBooking,btnAddSpaceBooking;
+					btnMakeSpaceBooking,btnAddSpaceBooking,btnMakeStaffSpace,
+					btnAddStaffSpace;
 
 	private JPanel 	pnlButtons, pnlContent, pnlStaffList, pnlSpaceList, pnlMakeLot,
 <<<<<<< HEAD
@@ -85,7 +92,11 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 					pnlMakeSpace,pnlUpdateStaff,pnlChangedStaff,pnlAssignSpot,
 					pnlReserveSpot,pnlCheckSpace,pnlViewCoveredSpace,pnlAddLot,
 					pnlAddSpace,pnlAddStaff,pnlChangeStaff,pnlMakeSpaceBooking,
+<<<<<<< HEAD
 					pnlAddSpaceBooking;
+>>>>>>> jake-branch
+=======
+					pnlAddSpaceBooking, pnlMakeStaffSpace, pnlAddStaffSpace;
 >>>>>>> jake-branch
 	
 	/**
@@ -156,8 +167,8 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		btnUpdateStaff = new JButton("Update Staff");
 		btnUpdateStaff.addActionListener(this);
 
-		btnAssignSpot = new JButton("Assign Staff Spot");
-		btnAssignSpot.addActionListener(this);
+		btnAddStaffSpace = new JButton("Assign Staff Spot");
+		btnAddStaffSpace.addActionListener(this);
 
 		btnAddSpaceBooking = new JButton("Reserve Visitor Spot");
 		btnAddSpaceBooking.addActionListener(this);
@@ -190,7 +201,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		pnlButtons.add(btnAddSpace);
 		pnlButtons.add(btnAddStaff);
 		pnlButtons.add(btnUpdateStaff);
-		pnlButtons.add(btnAssignSpot);
+		pnlButtons.add(btnAddStaffSpace);
 		pnlButtons.add(btnAddSpaceBooking);
 		pnlButtons.add(btnAvailableSpaces);
 >>>>>>> jake-branch
@@ -285,7 +296,7 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 			pnlAddSpaceBooking.add(panel);
 		}
 		panel = new JPanel();
-		btnMakeSpaceBooking = new JButton("Assign Staff Spot");
+		btnMakeSpaceBooking = new JButton("Reserve Visitor Spot");
 		btnMakeSpaceBooking.addActionListener(this);
 		panel.add(btnMakeSpaceBooking);
 		pnlAddSpaceBooking.add(panel);
@@ -309,6 +320,27 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		btnMakeStaff.addActionListener(this);
 		panel.add(btnMakeStaff);
 		pnlAddStaff.add(panel);
+		
+		add(pnlContent, BorderLayout.CENTER);
+
+		//Add Staff Space Panel
+		pnlAddStaffSpace = new JPanel();
+		pnlAddStaffSpace.setLayout(new GridLayout(2, 0));
+		String labelNamesStaffSpace[] = { "Enter Staff Number: ", 
+		"Enter Space Number: "};
+		for (int i=0; i<labelNamesStaffSpace.length; i++) {
+			panel = new JPanel();
+			txfLabelStaffSpace[i] = new JLabel(labelNamesStaffSpace[i]);
+			txfFieldStaffSpace[i] = new JTextField(25);
+			panel.add(txfLabelStaffSpace[i]);
+			panel.add(txfFieldStaffSpace[i]);
+			pnlAddStaffSpace.add(panel);
+		}
+		panel = new JPanel();
+		btnMakeStaffSpace = new JButton("Assign Staff Spot");
+		btnMakeStaffSpace.addActionListener(this);
+		panel.add(btnMakeStaffSpace);
+		pnlAddStaffSpace.add(panel);
 		
 		add(pnlContent, BorderLayout.CENTER);
 
@@ -531,6 +563,25 @@ public class ParkingGUI extends JFrame implements ActionListener, TableModelList
 		} else if (e.getSource() == btnAddSpaceBooking) {
 			pnlContent.removeAll();
 			pnlContent.add(pnlAddSpaceBooking);
+			pnlContent.revalidate();
+			this.repaint();
+			
+		} else if (e.getSource() == btnMakeStaffSpace) {
+			
+			StaffSpace ss = new StaffSpace(Integer.parseInt(txfFieldStaffSpace[0].getText()),
+			Integer.parseInt(txfFieldStaffSpace[1].getText()));
+			try {
+				db.addStaffSpace(ss);
+			}
+			catch(Exception exception) {
+				JOptionPane.showMessageDialog(this, exception.getMessage());
+				return;
+			}
+			JOptionPane.showMessageDialog(null, "Added Successfully!");
+			
+		} else if (e.getSource() == btnAddStaffSpace) {
+			pnlContent.removeAll();
+			pnlContent.add(pnlAddStaffSpace);
 			pnlContent.revalidate();
 			this.repaint();
 			

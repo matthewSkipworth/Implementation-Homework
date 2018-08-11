@@ -2,7 +2,7 @@
 #Implementation Homework
 #August 10 2018
 
-#You told me to not worry about the 20 visitor limit. I would 
+#You told me to not worry about the 20 visitor limit so I did not take care of section g.
 
 SET FOREIGN_KEY_CHECKS = 0;    
 DROP TABLE Lot;
@@ -68,46 +68,51 @@ CREATE TABLE SpaceBooking(
 	CONSTRAINT fk_staffN FOREIGN KEY (staffN) REFERENCES Staff(staffNumber)
 );
 
-insert into Staff values
+INSERT INTO Staff VALUES
 	(1,1,1),
     (2,2,2);
 
-insert into Lot values
+INSERT INTO Lot VALUES
 	('a','lot a',25,4),
     ('b','lot b',36,2);
     
-insert into `Space` values
+INSERT INTO `Space` VALUES
     (354,'uncovered','a'),
     (355,'uncovered','a'),
     (356,'uncovered','a'),
     (687,'covered','b'),
-    (688,'covered','b');
+    (688,'covered','b'),
+    (689,'covered','b'),
+    (690,'covered','b');
 
-insert into CoveredSpace values
+INSERT INTO CoveredSpace VALUES
 	(687,2.17),
-    (688,3.14);
+    (688,3.14),
+    (689,1.0),
+    (690,78.2);
     
 
-insert into UncoveredSpace values
-	(354);
+INSERT INTO UncoveredSpace VALUES
+	(354),
+    (355),
+    (356);
     
-insert into StaffSpace values
+INSERT INTO StaffSpace VALUES
 	(1,687),
     (2,688);
     
-insert into SpaceBooking values
+INSERT INTO SpaceBooking VALUES
 	(656,687,1,3884,'tuesday'),
     (897,688,2,232342,'funday');
     
-#select * FROM Staff;
-#select * FROM `Space`;
-#select * FROM CoveredSpace;
-#select * FROM Lot;
-#select * FROM Staff;
-#select * FROM UncoveredSpace;
-#select * FROM StaffSpace;
-#select * FROM SpaceBooking;
-
+#SELECT * FROM Staff;
+#SELECT * FROM `Space`;
+#SELECT * FROM CoveredSpace;
+#SELECT * FROM Lot;
+#SELECT * FROM Staff;
+#SELECT * FROM UncoveredSpace;
+#SELECT * FROM StaffSpace;
+#SELECT * FROM SpaceBooking;
 
 #SELECT * 
 #FROM `Space`

@@ -183,6 +183,26 @@ public class ParkingDB {
 		} 
 	}
 	
+	/**
+	 * Adds a new staff member to the staff table.
+	 * @param staffspace
+	 * @throws Exception 
+	 */
+	public void addStaffSpace(StaffSpace staffspace) throws Exception {
+		String sql = "INSERT INTO StaffSpace VALUES\n" + "\t(?, ?); ";
+
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = sConnection.prepareStatement(sql);
+			preparedStatement.setInt(1, staffspace.getStaffNumber());
+			preparedStatement.setInt(2, staffspace.getSpaceNumber());
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new Exception("Unable to assign a staff space: " + e.getMessage());
+		} 
+	}
+
 
 	/**
 	 * method updateStaff updates staff member's telephone extension number
